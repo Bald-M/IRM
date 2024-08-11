@@ -8,8 +8,12 @@
         <img src="@/assets/Industry Internship System Logo.svg" class="industry-internship-system-logo" />
       </div>
 
-      <el-form-item label="Email or username">
-        <el-input v-model="form.email" clearable placeholder="id@student.wintec.ac.nz" />
+      <el-form-item label="Email">
+        <el-input v-model="form.email" :prefix-icon="Message" clearable placeholder="id@student.wintec.ac.nz" />
+      </el-form-item>
+
+      <el-form-item label="Username">
+        <el-input v-model="form.username" :prefix-icon="User" clearable placeholder="Wintec username" />
       </el-form-item>
 
       <el-form-item label="Password">
@@ -32,7 +36,7 @@
       </el-form-item>
 
       <div style="text-align: center;">
-        <el-text size="small">Already have account? <RouterLink to="/login">Log in</RouterLink> </el-text>
+        <el-text size="small">Already have an account? <RouterLink to="/login">Log in</RouterLink> </el-text>
       </div>
 
     </el-form>
@@ -46,10 +50,11 @@
 <script lang="ts" setup>
 import { ref, reactive } from 'vue'
 import type { FormProps } from 'element-plus'
-//import { Message } from '@element-plus/icons-vue'
+import { Message, User } from '@element-plus/icons-vue'
 
 const form = reactive({
   email: '',
+  username: '',
   password: ''
 })
 
@@ -86,6 +91,7 @@ button {
 .container {
   height: 100%;
   display: flex;
+  background: linear-gradient(to top, #FEA734, #FE3434);
   align-items: center;
   justify-content: center;
 }
@@ -103,7 +109,7 @@ button {
 @media screen and (max-width: 768px) {
   .form {
     width: 280px;
-    height: 540px;
+    height: 620px;
     border-radius: 24px;
     padding: 1rem;
     background-color: rgba(250, 250, 250, 0.8);
@@ -125,7 +131,7 @@ button {
 @media screen and (max-width: 992px) and (min-width: 768px) {
   .form {
     width: 480px;
-    height: 600px;
+    height: 680px;
     border-radius: 24px;
     padding: 2rem;
     background-color: rgba(250, 250, 250, 0.8);
@@ -147,7 +153,7 @@ button {
 @media screen and (min-width: 992px) {
   .form {
     width: 480px;
-    height: 600px;
+    height: 680px;
     border-radius: 24px;
     padding: 2rem;
     background-color: rgba(250, 250, 250, 0.8);

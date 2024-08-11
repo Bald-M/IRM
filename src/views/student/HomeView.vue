@@ -1,6 +1,8 @@
 <template>
   <div class="container">
 
+    <Header />
+
     <div class="tool">
       
       <el-badge is-dot>
@@ -121,6 +123,7 @@
 import { ref, reactive } from 'vue'
 import type { FormProps } from 'element-plus'
 import { Bell, User } from '@element-plus/icons-vue'
+import Header from '@/components/Header.vue'
 
 const form = reactive({
   declaration: 'Yes',

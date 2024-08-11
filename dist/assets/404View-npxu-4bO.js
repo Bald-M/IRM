@@ -1,0 +1,1 @@
+import{_ as s,o as c,c as e}from"./index-BLqJglMk.js";const o="/IRM/assets/Mockup_App%20404%20Page-DkKds-rs.svg",t={},_={src:o};function r(a,n){return c(),e("img",_)}const d=s(t,[["render",r],["__scopeId","data-v-48585c90"]]);export{d as default};

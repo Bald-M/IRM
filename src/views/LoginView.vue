@@ -8,8 +8,8 @@
         <img src="@/assets/Industry Internship System Logo.svg" class="industry-internship-system-logo" />
       </div>
 
-      <el-form-item label="Email" class="mt-2">
-        <el-input v-model="form.email" :prefix-icon="Message" clearable placeholder="id@student.wintec.ac.nz" />
+      <el-form-item label="Email / Username" class="mt-2">
+        <el-input v-model="form.email" clearable placeholder="id@student.wintec.ac.nz" />
       </el-form-item>
 
       <el-form-item label="Password">
@@ -36,7 +36,6 @@
 <script lang="ts" setup>
 import { inject, reactive, ref } from 'vue'
 import type { FormProps } from 'element-plus'
-import { Message } from '@element-plus/icons-vue'
 import type { Router } from 'vue-router'
 
 const router: Router = inject('$router') as Router
@@ -72,6 +71,7 @@ button {
 .container {
   height: 100%;
   display: flex;
+  background: linear-gradient(to top, #FEA734, #FE3434);
   align-items: center;
   justify-content: center;
 }
@@ -83,6 +83,7 @@ button {
 .mt-3 {
   margin-top: 3rem;
 }
+
 
 /* Phone */
 @media screen and (max-width: 768px) {
