@@ -1,0 +1,1 @@
+import{_ as e,o as c,c as o}from"./index-BXku4atf.js";const t={},s={class:"container"};function _(n,a){return c(),o("div",s)}const d=e(t,[["render",_],["__scopeId","data-v-45299f78"]]);export{d as default};
