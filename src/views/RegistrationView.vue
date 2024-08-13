@@ -24,8 +24,8 @@
         <el-input v-model="form.confirmedPassword" type="password" clearable placeholder="******" show-password />
       </el-form-item>
 
-      <el-form-item label="Role">
-        <el-radio-group v-model="role">
+      <el-form-item label="Role" prop="role">
+        <el-radio-group v-model="form.role">
           <el-radio value="Student" size="large" class="radio">Student</el-radio>
           <el-radio value="Industry" size="large" class="radio">Industry</el-radio>
         </el-radio-group>
@@ -55,14 +55,16 @@ interface RuleForm {
   email: string,
   username: string,
   password: string,
-  confirmedPassword: string
+  confirmedPassword: string,
+  role: string
 }
 
 const form = reactive<RuleForm>({
   email: '',
   username: '',
   password: '',
-  confirmedPassword: ''
+  confirmedPassword: '',
+  role: ''
 })
 
 // Validate if two passwords inputed are correct
@@ -84,14 +86,13 @@ const rules = reactive<FormRules<RuleForm>>({
   confirmedPassword: [
     { required: true, message: 'This field is required', trigger: 'blur'},
     { validator: passwordValidation, trigger: 'blur' }
+  ],
+  role: [
+    { required: true, message: 'This field is requried', trigger: 'blur'}
   ]
 })
 
-
-
 const top = ref<FormProps['labelPosition']>('top')
-
-const role = ref()
 
 
 
