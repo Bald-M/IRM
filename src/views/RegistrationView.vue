@@ -16,12 +16,12 @@
         <el-input v-model="form.username" :prefix-icon="User" clearable placeholder="Wintec username" />
       </el-form-item>
 
-      <el-form-item label="Password">
-        <el-input v-model="form.password" clearable placeholder="******" />
+      <el-form-item label="Password" prop="password">
+        <el-input v-model="form.password" type="password" clearable placeholder="******" show-password />
       </el-form-item>
 
-      <el-form-item label="Confim Password">
-        <el-input v-model="form.password" clearable placeholder="******" />
+      <el-form-item label="Confim Password" prop="confirmedPassword">
+        <el-input v-model="form.confirmedPassword" type="password" clearable placeholder="******" show-password />
       </el-form-item>
 
       <el-form-item label="Role">
@@ -54,19 +54,36 @@ import { Message, User } from '@element-plus/icons-vue'
 interface RuleForm {
   email: string,
   username: string,
-  password: string
+  password: string,
+  confirmedPassword: string
 }
 
 const form = reactive<RuleForm>({
   email: '',
   username: '',
-  password: ''
+  password: '',
+  confirmedPassword: ''
 })
+
+// Validate if two passwords inputed are correct
+const passwordValidation = (rule: any, value: any, callback: any) => {
+  if (value !== form.password) {
+    callback(new Error('Passwords do not match'))
+  }
+}
 
 const rules = reactive<FormRules<RuleForm>>({
   email: [
     { required: true, message: 'This field is required', trigger: 'blur'},
     { type: 'email', message: 'Invalid email address', trigger: 'blur'}
+  ],
+  password: [
+    { required: true, message: 'This field is requried', trigger: 'blur'},
+    { min: 8, message: 'Password must be at least 8 characters long and contain a mix of uppercase, lowercase, and special characters', trigger: 'blur'}
+  ],
+  confirmedPassword: [
+    { required: true, message: 'This field is required', trigger: 'blur'},
+    { validator: passwordValidation, trigger: 'blur' }
   ]
 })
 
