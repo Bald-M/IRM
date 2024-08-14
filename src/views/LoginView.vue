@@ -1,19 +1,19 @@
 <template>
 
   <div class="container">
-    <el-form :model="form" label-width="auto" class="form" :label-position="top">
+    <el-form :model="form" :rules="rules" label-width="auto" class="form" :label-position="top" status-icon>
 
       <!-- Wintec Logo -->
       <div style="display: flex; justify-content: center;">
         <img src="@/assets/Industry Internship System Logo.svg" class="industry-internship-system-logo" />
       </div>
 
-      <el-form-item label="Email / Username" class="mt-2">
+      <el-form-item label="Email / Username" class="mt-2" prop="email">
         <el-input v-model="form.email" clearable placeholder="id@student.wintec.ac.nz" />
       </el-form-item>
 
-      <el-form-item label="Password">
-        <el-input v-model="form.password" type="password" clearable placeholder="******" />
+      <el-form-item label="Password" prop="password">
+        <el-input v-model="form.password" type="password" clearable placeholder="******" show-password />
       </el-form-item>
 
 
@@ -35,14 +35,31 @@
 
 <script lang="ts" setup>
 import { inject, reactive, ref } from 'vue'
-import type { FormProps } from 'element-plus'
+import type { FormProps, FormRules } from 'element-plus'
 import type { Router } from 'vue-router'
 
 const router: Router = inject('$router') as Router
 
-const form = reactive({
+interface RuleForm {
+  email: string,
+  username: string,
+  password: string,
+}
+
+const form = reactive<RuleForm>({
   email: '',
+  username: '',
   password: ''
+})
+
+const rules = reactive<FormRules<RuleForm>>({
+  email: [
+    { required: true, message: 'This field is required', trigger: 'blur'},
+    { type: 'email', message: 'Invalid email address', trigger: 'blur'}
+  ],
+  password: [
+    { required: true, message: 'This field is requried', trigger: 'blur'}
+  ]
 })
 
 const top = ref<FormProps['labelPosition']>('top')
