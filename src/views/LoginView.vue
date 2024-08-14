@@ -8,8 +8,8 @@
         <img src="@/assets/Industry Internship System Logo.svg" class="industry-internship-system-logo" />
       </div>
 
-      <el-form-item label="Email / Username" class="mt-2" prop="email">
-        <el-input v-model="form.email" clearable placeholder="id@student.wintec.ac.nz" />
+      <el-form-item label="Email / Username" class="mt-2" prop="emailOrUsername">
+        <el-input v-model="form.emailOrUsername" clearable placeholder="id@student.wintec.ac.nz" />
       </el-form-item>
 
       <el-form-item label="Password" prop="password">
@@ -41,24 +41,39 @@ import type { Router } from 'vue-router'
 const router: Router = inject('$router') as Router
 
 interface RuleForm {
-  email: string,
-  username: string,
+  emailOrUsername: string,
   password: string,
 }
 
 const form = reactive<RuleForm>({
-  email: '',
-  username: '',
+  emailOrUsername: '',
   password: ''
 })
 
+const validateEmailOrUsername = (rule: any, value: any, callback: any) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const usernameRegex = /^[a-zA-Z0-9_]+$/;
+
+  if (!value) {
+    return callback(new Error('Please enter email or username'));
+  } else if (emailRegex.test(value)) {
+    return callback(); // Valid email
+  } else if (usernameRegex.test(value)) {
+    return callback(); // Valid username
+  } else {
+    return callback(new Error('Invalid email or username'));
+  }
+}
+
+
+
 const rules = reactive<FormRules<RuleForm>>({
-  email: [
-    { required: true, message: 'This field is required', trigger: 'blur'},
-    { type: 'email', message: 'Invalid email address', trigger: 'blur'}
+  emailOrUsername: [
+    { required: true, message: 'This field is required', trigger: 'blur' },
+    { validator: validateEmailOrUsername, trigger: 'blur'}
   ],
   password: [
-    { required: true, message: 'This field is requried', trigger: 'blur'}
+    { required: true, message: 'This field is requried', trigger: 'blur' }
   ]
 })
 
@@ -148,5 +163,4 @@ button {
     height: 150px;
   }
 }
-
 </style>
