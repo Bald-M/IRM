@@ -25,7 +25,7 @@
       </el-form-item>
 
       <div style="text-align: center;">
-        <el-text size="small">No account? <RouterLink to="/registration">Register Now
+        <el-text size="small">No account yet? <RouterLink to="/registration">Create account
           </RouterLink></el-text>
       </div>
 
