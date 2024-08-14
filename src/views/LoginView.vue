@@ -16,8 +16,11 @@
         <el-input v-model="form.password" type="password" clearable placeholder="******" show-password />
       </el-form-item>
 
+      <div style="display: flex; flex-flow: row-reverse;">
+        <el-text size="small"><RouterLink to="/" style="color: #6B7280;">Forgot password?</RouterLink></el-text>
+      </div>
 
-      <el-form-item>
+      <el-form-item class="mt-1">
         <el-button type="primary" @click="login">Log In</el-button>
       </el-form-item>
 
@@ -108,6 +111,10 @@ button {
   justify-content: center;
 }
 
+.mt-1 {
+  margin-top: 1rem;
+}
+
 .mt-2 {
   margin-top: 2rem;
 }
@@ -121,7 +128,7 @@ button {
 @media screen and (max-width: 768px) {
   .form {
     width: 280px;
-    height: 440px;
+    height: 460px;
     border-radius: 24px;
     padding: 1rem;
     background-color: rgba(250, 250, 250, 0.8);
@@ -137,7 +144,7 @@ button {
 @media screen and (max-width: 992px) and (min-width: 768px) {
   .form {
     width: 480px;
-    height: 480px;
+    height: 500px;
     border-radius: 24px;
     padding: 2rem;
     background-color: rgba(250, 250, 250, 0.8);
@@ -153,7 +160,7 @@ button {
 @media screen and (min-width: 992px) {
   .form {
     width: 480px;
-    height: 480px;
+    height: 500px;
     border-radius: 24px;
     padding: 2rem;
     background-color: rgba(250, 250, 250, 0.8);
