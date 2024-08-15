@@ -19,6 +19,9 @@
         Contact Us
       </el-link>
 
+      <!-- Dynamic -->
+      <!-- Display username if login -->
+      <!-- Display sign in if not login -->
       <el-link href="/" :underline="false">
         <el-icon class="el-icon--left">
           <Edit />

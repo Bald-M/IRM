@@ -6,7 +6,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: '/login',
+      redirect: '/home',
     },
     {
       path: '/student/home',
@@ -40,28 +40,28 @@ const router = createRouter({
 })
 
 // Navigation Guard
-router.beforeEach(async (to) => {
-  const isLogin = localStorage.getItem('authToken')
-  // If the User is login
-  if (!isLogin) {
-    // 允许访问登录页面或注册页面
-    if (to.name === 'login' || to.name === 'registration') {
-      return true // 继续导航
-    } 
-    // 否则，重定向到登录页面
-    else {
-      return { name: 'login' }
-    }
-  } 
+// router.beforeEach(async (to) => {
+//   const isLogin = localStorage.getItem('authToken')
+//   // If the User is login
+//   if (!isLogin) {
+//     // 允许访问登录页面或注册页面
+//     if (to.name === 'login' || to.name === 'registration') {
+//       return true // 继续导航
+//     } 
+//     // 否则，重定向到登录页面
+//     else {
+//       return { name: 'login' }
+//     }
+//   } 
   
-  // 如果用户已经登录，且试图访问登录页面 （如果用户是学生）
-  if (isLogin && to.name === 'login') {
-    return { name: 'studentHome' }
-  }
+//   // 如果用户已经登录，且试图访问登录页面 （如果用户是学生）
+//   if (isLogin && to.name === 'login') {
+//     return { name: 'studentHome' }
+//   }
   
-  // 其他情况下继续导航
-  return true
+//   // 其他情况下继续导航
+//   return true
 
-})
+// })
 
 export default router
