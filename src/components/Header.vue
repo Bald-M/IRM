@@ -1,27 +1,73 @@
 <template>
   <header>
-    <div class="logo">
-      l1
+    <div>
+      <img src="@/assets/IIS & Wintec Logo.svg" class="logo" />
     </div>
 
     <nav>
-      <RouterLink to="/">My Application</RouterLink>
-      <RouterLink to="/">Contact Us</RouterLink>
-      <RouterLink to="/">My Application</RouterLink>
+      <el-link href="/" :underline="false">
+        <el-icon class="el-icon--left">
+          <Edit />
+        </el-icon>
+        Application
+      </el-link>
+
+      <el-link href="/" :underline="false">
+        <el-icon class="el-icon--left">
+          <Edit />
+        </el-icon>
+        Contact Us
+      </el-link>
+
+      <el-link href="/" :underline="false">
+        <el-icon class="el-icon--left">
+          <Edit />
+        </el-icon>
+        Sign In
+      </el-link>
+
     </nav>
+
   </header>
 
 </template>
 
-<style scoped>
+<script lang="ts" setup>
+import { Edit, House } from '@element-plus/icons-vue'
 
+</script>
+
+<style scoped>
 header {
   width: 100%;
+  display: flex;
+  justify-content: space-between;
+  background-color: #333333;
+  padding: 20px 30px;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+}
+
+.el-link {
+  color: white;
+  margin: 0 20px;
+  font-size: 20px;
+}
+
+.el-link:hover {
+  color: #FB9333;
+}
+
+.el-icon--left {
+  margin-right: 8px;
 }
 
 .logo {
-  display: flex;
-  justify-content: start;
+  height: 80px;
 }
+
 
 </style>
