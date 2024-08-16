@@ -14,7 +14,7 @@
 
       <el-link href="/" :underline="false">
         <el-icon class="el-icon--left">
-          <Edit />
+          <ChatLineRound />
         </el-icon>
         Contact Us
       </el-link>
@@ -22,9 +22,10 @@
       <!-- Dynamic -->
       <!-- Display username if login -->
       <!-- Display sign in if not login -->
+      <!-- Navigate to login view if not login -->
       <el-link href="/" :underline="false">
         <el-icon class="el-icon--left">
-          <Edit />
+          <Avatar />
         </el-icon>
         Sign In
       </el-link>
@@ -36,7 +37,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Edit, House } from '@element-plus/icons-vue'
+import { Edit, ChatLineRound, Avatar } from '@element-plus/icons-vue'
 
 </script>
 
