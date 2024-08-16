@@ -4,6 +4,9 @@
 
     <Banner style="margin-top: 6rem;" :title="title" :content="content" :imgPath="backgroundImage" path="test" />
 
+    
+
+
     <Footer style="margin-top: 5rem;" />
   </div>
 </template>
