@@ -17,7 +17,7 @@
       </el-form-item>
 
       <div style="display: flex; flex-flow: row-reverse;">
-        <el-text size="small"><RouterLink to="/" style="color: #6B7280;">Forgot password?</RouterLink></el-text>
+        <el-text size="small"><RouterLink to="/reset-password/request" style="color: #6B7280;">Forgot password?</RouterLink></el-text>
       </div>
 
       <el-form-item class="mt-1">
@@ -67,8 +67,6 @@ const validateEmailOrUsername = (rule: any, value: any, callback: any) => {
     return callback(new Error('Invalid email or username'));
   }
 }
-
-
 
 const rules = reactive<FormRules<RuleForm>>({
   emailOrUsername: [

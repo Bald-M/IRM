@@ -5,30 +5,30 @@
     </div>
 
     <nav>
-      <el-link href="/" :underline="false">
+      <RouterLink to="/">
         <el-icon class="el-icon--left">
           <Edit />
         </el-icon>
         Application
-      </el-link>
+      </RouterLink>
 
-      <el-link href="/" :underline="false">
+      <RouterLink to="/">
         <el-icon class="el-icon--left">
           <ChatLineRound />
         </el-icon>
         Contact Us
-      </el-link>
+      </RouterLink>
 
       <!-- Dynamic -->
       <!-- Display username if login -->
       <!-- Display sign in if not login -->
       <!-- Navigate to login view if not login -->
-      <el-link href="/" :underline="false">
+      <RouterLink to="/login">
         <el-icon class="el-icon--left">
           <Avatar />
         </el-icon>
         Sign In
-      </el-link>
+      </RouterLink>
 
     </nav>
 
@@ -55,13 +55,14 @@ nav {
   align-items: center;
 }
 
-.el-link {
+a {
   color: white;
   margin: 0 20px;
   font-size: 20px;
+  text-decoration: none;
 }
 
-.el-link:hover {
+a:hover {
   color: #FB9333;
 }
 

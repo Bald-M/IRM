@@ -123,7 +123,7 @@
 import { ref, reactive } from 'vue'
 import type { FormProps } from 'element-plus'
 import { Bell, User } from '@element-plus/icons-vue'
-import Header from '@/components/Header.vue'
+import Header from '@/components/HeaderComponent.vue'
 
 const form = reactive({
   declaration: 'Yes',
