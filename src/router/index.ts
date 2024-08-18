@@ -29,7 +29,12 @@ const router = createRouter({
     {
       path: '/reset-password/request',
       name: 'requestResetPassword',
-      component: () => import('@/views/RequestResetPassword.vue')
+      component: () => import('@/views/RequestResetPasswordView.vue')
+    },
+    {
+      path: '/reset-password/confirmation',
+      name: 'ConfirmResetEmail',
+      component: () => import('@/views/ConfirmResetEmailView.vue')
     },
     {
       path: '/home',
