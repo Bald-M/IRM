@@ -1,1 +1,0 @@
-import{_ as s,o as e,c}from"./index-CwiBpFNn.js";const o="/IRM/assets/Mockup_App%20404%20Page-DCjsxdhn.svg",t={},_={src:o};function n(r,a){return e(),c("img",_)}const d=s(t,[["render",n],["__scopeId","data-v-88789b80"]]);export{d as default};
