@@ -24,6 +24,7 @@
       <div class="image-section">
         <img :src="imgPath" />
       </div>
+
     </div>
 
   </div>
@@ -52,8 +53,8 @@ const handleLinkButton = (path: string) => {
 
 .section {
   display: flex;
-  justify-content: space-between;
-  padding: 0 180px;
+  /* padding: 0 180px; */
+  justify-content: center;
 }
 
 .text-section {
@@ -61,13 +62,15 @@ const handleLinkButton = (path: string) => {
   display: block;
 }
 
-/* .image-section {
-  padding-top: 30px;
-} */
+.image-section {
+  margin-left: 100px;
+}
 
 .image-section>img {
-  width: 690px;
+  /* width: 890px;
   height: 400px;
+  background-size: cover; */
+  width: 100%;
 }
 
 .text-section > div:first-child, .text-section > div:nth-child(2), .text-section > div:last-child {
