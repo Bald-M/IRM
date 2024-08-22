@@ -205,8 +205,8 @@
 </template>
 
 <script lang="ts" setup>
-import Header from '@/components/HeaderComponent.vue'
-import Footer from '@/components/Footer.vue'
+import Header from '@/components/SiteHeaderComponent.vue'
+import Footer from '@/components/FooterComponent.vue'
 import Banner from '@/components/BannerComponent.vue'
 import backgroundImage from '@/assets/Background Image.jpg'
 import { ref } from 'vue'

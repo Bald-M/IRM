@@ -22,24 +22,24 @@
 
       <nav>
 
-        <div class="nav-item" :class="{ active : selected === 'students' }" @click=" selected = 'students'">
+        <div class="nav-item" :class="{ active : selected === 1 }" :index="1" @click="handleRouter">
           <img src="@/assets/icon_facebook.svg" class="icon" />
-          <router-link to="/admin/panel">Students</router-link>
+          <a>Students</a>
         </div>
 
-        <div class="nav-item" :class="{ active : selected === 'candidates' }" @click="selected = 'candidates'">
+        <div class="nav-item" :class="{ active : selected === 2 }" :index="2" @click="handleRouter">
           <img src="@/assets/icon_facebook.svg" class="icon" />
-          <router-link to="/admin/panel">Candidates</router-link>
+          <a>Candidates</a>
         </div>
 
-        <div class="nav-item" :class="{ active : selected === 'changePassword' }" @click="selected = 'changePassword'">
+        <div class="nav-item" :class="{ active : selected === 3 }" :index="3" @click="handleRouter">
           <img src="@/assets/icon_facebook.svg" class="icon" />
-          <router-link to="/admin/panel">Change Password</router-link>
+          <a>Change Password</a>
         </div>
 
-        <div class="nav-item" :class="{ active : selected === 'logOut' }" @click="selected = 'logOut'">
+        <div class="nav-item" :class="{ active : selected === 4 }" :index="4" @click="handleRouter">
           <img src="@/assets/icon_facebook.svg" class="icon" />
-          <router-link to="/admin/panel">Log Out</router-link>
+          <a>Log Out</a>
         </div>
 
       </nav>
@@ -53,7 +53,32 @@
 <script lang="ts" setup>
 
 import { ref } from 'vue'
-const selected = ref('')
+import { useRouter } from 'vue-router'
+import type { Router } from 'vue-router'
+
+const selected = ref()
+
+const router: Router = useRouter() as Router
+
+const handleRouter = (event: any) => {
+
+  const targetElement = event.currentTarget as HTMLElement
+  const indexValue = targetElement.getAttribute('index')
+
+  selected.value = Number(indexValue)
+
+  switch (selected.value) {
+    case 1:
+      router.push('/admin/panel/studentsList')
+      break
+    case 2:
+      break
+    case 3:
+      break
+    case 4:
+      break
+  }
+}
 
 
 </script>
@@ -67,7 +92,7 @@ const selected = ref('')
 
 .container {
   height: 100vh;
-  width: 20%;
+  width: 100%;
   background-color: #FB9333;
 }
 

@@ -54,7 +54,15 @@ const router = createRouter({
     {
       path: '/admin/panel',
       name: 'panel',
-      component: () => import('@/views/admin/PanelView.vue')
+      component: () => import('@/views/admin/PanelView.vue'),
+      children: [
+        {
+          path: '/admin/panel/studentsList',
+          name: 'studentsList',
+          component: () => import('@/views/admin/StudentsListView.vue')
+        }
+      ]
+
     },
     {
       path: '/:pathMatch(.*)*',
