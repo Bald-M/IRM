@@ -52,12 +52,19 @@ const router = createRouter({
       component: () => import('@/views/HomeView.vue')
     },
     {
+      path: '/admin/panel',
+      name: 'panel',
+      component: () => import('@/views/admin/PanelView.vue')
+    },
+    {
       path: '/:pathMatch(.*)*',
       name: 'not-found',
       component: () => import('@/views/404View.vue')
     }
   ]
 })
+
+// child
 
 // Navigation Guard
 // router.beforeEach(async (to) => {
