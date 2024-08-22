@@ -22,24 +22,24 @@
 
       <nav>
 
-        <div class="nav-item">
+        <div class="nav-item" :class="{ active : selected === 'students' }" @click=" selected = 'students'">
           <img src="@/assets/icon_facebook.svg" class="icon" />
-          <router-link to="/">Students</router-link>
+          <router-link to="/admin/panel">Students</router-link>
         </div>
 
-        <div class="nav-item">
+        <div class="nav-item" :class="{ active : selected === 'candidates' }" @click="selected = 'candidates'">
           <img src="@/assets/icon_facebook.svg" class="icon" />
-          <router-link to="/">Candidates</router-link>
+          <router-link to="/admin/panel">Candidates</router-link>
         </div>
 
-        <div class="nav-item">
+        <div class="nav-item" :class="{ active : selected === 'changePassword' }" @click="selected = 'changePassword'">
           <img src="@/assets/icon_facebook.svg" class="icon" />
-          <router-link to="/">Change Password</router-link>
+          <router-link to="/admin/panel">Change Password</router-link>
         </div>
 
-        <div class="nav-item">
+        <div class="nav-item" :class="{ active : selected === 'logOut' }" @click="selected = 'logOut'">
           <img src="@/assets/icon_facebook.svg" class="icon" />
-          <router-link to="/">Log Out</router-link>
+          <router-link to="/admin/panel">Log Out</router-link>
         </div>
 
       </nav>
@@ -49,6 +49,14 @@
   </div>
 
 </template>
+
+<script lang="ts" setup>
+
+import { ref } from 'vue'
+const selected = ref('')
+
+
+</script>
 
 
 <style scoped>
@@ -104,11 +112,10 @@ nav {
   padding-left: 10px;
 }
 
-.nav-item:hover {
+.nav-item:hover, .active {
   background-color: rgb(238,140,48);
   border-radius: 8px;
 }
-
 
 a {
   text-decoration: none;
@@ -120,14 +127,6 @@ a {
   width: 18px;
   height: 18px;
 }
-
-/* Override */
-/* .el-menu {
-  width: 300px;
-  padding: 0 20px;
-} */
-
-/* Override */
 
 
 
