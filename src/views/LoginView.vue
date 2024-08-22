@@ -1,7 +1,7 @@
 <template>
 
   <div class="container">
-    <el-form :model="form" :rules="rules" label-width="auto" class="form" :label-position="top" status-icon>
+    <el-form :model="form" :rules="rules" ref="ruleFormRef" label-width="auto" class="form" :label-position="top" status-icon>
 
       <!-- Wintec Logo -->
       <div style="display: flex; justify-content: center;">
@@ -21,7 +21,7 @@
       </div>
 
       <el-form-item class="mt-1">
-        <el-button type="primary" @click="login">Log In</el-button>
+        <el-button type="primary" @click="login(ruleFormRef)">Log In</el-button>
       </el-form-item>
 
       <div style="text-align: center;">
@@ -37,11 +37,16 @@
 
 
 <script lang="ts" setup>
-import { inject, reactive, ref } from 'vue'
-import type { FormProps, FormRules } from 'element-plus'
+import { reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+import type { FormProps, FormRules, FormInstance } from 'element-plus'
 import type { Router } from 'vue-router'
 
-const router: Router = inject('$router') as Router
+
+const router: Router = useRouter() as Router
+
+const ruleFormRef = ref<FormInstance>()
 
 interface RuleForm {
   emailOrUsername: string,
@@ -50,7 +55,7 @@ interface RuleForm {
 
 const form = reactive<RuleForm>({
   emailOrUsername: '',
-  password: ''
+  password: '123456'
 })
 
 const validateEmailOrUsername = (rule: any, value: any, callback: any) => {
@@ -83,9 +88,29 @@ const top = ref<FormProps['labelPosition']>('top')
 // It depends
 // student -> /student/home
 // industry -> /industry/home
-const login = () => {
-  localStorage.setItem('authToken', 'TESTJSONWEBTOKEN123')
-  router.push('/student/home')
+// admin -> /admin/panel
+const login = async (formEl: FormInstance | undefined) => {
+  if(!formEl) return
+  await formEl.validate((valid, fields) => {
+    if (valid) {
+      console.log('submit')
+
+      if (form.emailOrUsername.toLowerCase() === 'sue') {
+        localStorage.setItem('authToken', 'TESTJSONWEBTOKENADMIN')
+        router.push('/admin/panel')
+      }
+      else if (form.emailOrUsername.includes('student.wintec.ac.nz')) {
+        localStorage.setItem('authToken', 'TESTJSONWEBTOKENSTUDENT')
+        router.push('/student/home')
+      }
+      else {
+        alert('Username: sue or your wintec student email, leave the password field, then press log in')
+      }
+    }
+    else {
+      console.log('error submit', fields)
+    }
+  })
 }
 
 </script>
