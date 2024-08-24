@@ -54,6 +54,7 @@ const router = createRouter({
     {
       path: '/admin/panel',
       name: 'panel',
+      redirect: '/admin/panel/studentsList',
       component: () => import('@/views/admin/PanelView.vue'),
       children: [
         {

@@ -52,13 +52,36 @@
 
 <script lang="ts" setup>
 
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import type { Router } from 'vue-router'
+import { ref, watch } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import type { Router, RouteLocationNormalizedLoaded } from 'vue-router'
 
-const selected = ref()
+
+const selected = ref(0)
 
 const router: Router = useRouter() as Router
+const route: RouteLocationNormalizedLoaded = useRoute()
+
+
+// Watch for route changes and update the selected value accordingly
+watch(
+  () => route.path,
+  (newPath) => {
+    if (newPath.includes('studentsList')) {
+      selected.value = 1
+    } else if (newPath.includes('candidatesList')) {
+      selected.value = 2
+    } else if (newPath.includes('changePassword')) {
+      selected.value = 3
+    } else if (newPath.includes('logOut')) {
+      selected.value = 4
+    } else {
+      selected.value = 0 // Default case
+    }
+  },
+  { immediate: true } // Run immediately on component mount
+)
+
 
 const handleRouter = (event: any) => {
 

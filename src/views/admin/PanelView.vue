@@ -35,9 +35,14 @@ import Header from '@/components/PanelHeaderComponent.vue'
   width: 240px
 }
 
-.el-header {
+.el-header, .el-main {
   padding: 0;
 }
+
+.el-header {
+  height: 100px;
+}
+
 
 
 </style>
