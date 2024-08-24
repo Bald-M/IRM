@@ -8,12 +8,15 @@
         <img src="@/assets/Industry Internship System Logo.svg" class="industry-internship-system-logo" />
       </div>
 
-      <el-form-item label="Email" prop="email">
-        <el-input v-model="form.email" :prefix-icon="Message" clearable placeholder="id@student.wintec.ac.nz" />
+      <el-form-item label="Role" prop="role" class="mt-2">
+        <el-radio-group v-model="form.role">
+          <el-radio value="Student" size="large" class="radio">Student</el-radio>
+          <el-radio value="Industry" size="large" class="radio">Industry</el-radio>
+        </el-radio-group>
       </el-form-item>
 
-      <el-form-item label="Username">
-        <el-input v-model="form.username" :prefix-icon="User" clearable placeholder="Wintec username" />
+      <el-form-item label="Email" prop="email">
+        <el-input v-model="form.email" :prefix-icon="Message" clearable placeholder="id@student.wintec.ac.nz" />
       </el-form-item>
 
       <el-form-item label="Password" prop="password">
@@ -24,15 +27,8 @@
         <el-input v-model="form.confirmedPassword" type="password" clearable placeholder="******" show-password />
       </el-form-item>
 
-      <el-form-item label="Role" prop="role">
-        <el-radio-group v-model="form.role">
-          <el-radio value="Student" size="large" class="radio">Student</el-radio>
-          <el-radio value="Industry" size="large" class="radio">Industry</el-radio>
-        </el-radio-group>
-      </el-form-item>
-
       <el-form-item>
-        <el-button type="primary" style="margin: 0 auto;">Register</el-button>
+        <el-button type="primary" style="margin: 0 auto;">Create Account</el-button>
       </el-form-item>
 
       <div style="text-align: center;">
@@ -49,11 +45,10 @@
 <script lang="ts" setup>
 import { ref, reactive } from 'vue'
 import type { FormProps, FormRules } from 'element-plus'
-import { Message, User } from '@element-plus/icons-vue'
+import { Message } from '@element-plus/icons-vue'
 
 interface RuleForm {
   email: string,
-  username: string,
   password: string,
   confirmedPassword: string,
   role: string
@@ -61,7 +56,6 @@ interface RuleForm {
 
 const form = reactive<RuleForm>({
   email: '',
-  username: '',
   password: '',
   confirmedPassword: '',
   role: ''
@@ -93,8 +87,6 @@ const rules = reactive<FormRules<RuleForm>>({
 })
 
 const top = ref<FormProps['labelPosition']>('top')
-
-
 
 </script>
 
@@ -153,7 +145,7 @@ button {
 
   .radio {
     flex: 0 0 43%;
-    border-radius: 1.5rem;
+    border-radius: 9px;
     background-color: white;
   }
 }
@@ -162,7 +154,7 @@ button {
 @media screen and (max-width: 992px) and (min-width: 768px) {
   .form {
     width: 480px;
-    height: 680px;
+    height: 640px;
     border-radius: 24px;
     padding: 2rem;
     background-color: rgba(250, 250, 250, 0.8);
@@ -175,7 +167,7 @@ button {
 
   .radio {
     flex: 0 0 45%;
-    border-radius: 1.5rem;
+    border-radius: 9px;
     background-color: white;
   }
 }
@@ -184,7 +176,7 @@ button {
 @media screen and (min-width: 992px) {
   .form {
     width: 480px;
-    height: 680px;
+    height: 640px;
     border-radius: 24px;
     padding: 2rem;
     background-color: rgba(250, 250, 250, 0.8);
@@ -196,7 +188,7 @@ button {
 
   .radio {
     flex: 0 0 45%;
-    border-radius: 1.5rem;
+    border-radius: 9px;
     background-color: white;
   }
 }

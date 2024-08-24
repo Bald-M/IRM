@@ -1,15 +1,25 @@
 <template>
 
   <div class="container">
-    <el-form :model="form" :rules="rules" ref="ruleFormRef" label-width="auto" class="form" :label-position="top" status-icon>
+    <el-form :model="form" :rules="rules" ref="ruleFormRef" label-width="auto" class="form" :label-position="top"
+      status-icon>
 
       <!-- Wintec Logo -->
       <div style="display: flex; justify-content: center;">
         <img src="@/assets/Industry Internship System Logo.svg" class="industry-internship-system-logo" />
       </div>
 
-      <el-form-item label="Email / Username" class="mt-2" prop="emailOrUsername">
-        <el-input v-model="form.emailOrUsername" clearable placeholder="id@student.wintec.ac.nz" />
+      <el-form-item label="Role" class="mt-2" prop="role">
+        <el-radio-group v-model="form.role" @change="handleChange">
+          <el-radio value="Student" size="large" class="radio">Student</el-radio>
+          <el-radio value="Industry" size="large" class="radio">Industry</el-radio>
+        </el-radio-group>
+      </el-form-item>
+
+      <el-form-item label="Email" class="mt-2" prop="email">
+        <el-input v-model="form.email" clearable placeholder="id@student.wintec.ac.nz" v-if="autoComplete === true"
+          @blur="handleBlur" />
+        <el-input v-model="form.email" clearable placeholder="id@student.wintec.ac.nz" v-else />
       </el-form-item>
 
       <el-form-item label="Password" prop="password">
@@ -17,7 +27,9 @@
       </el-form-item>
 
       <div style="display: flex; flex-flow: row-reverse;">
-        <el-text size="small"><RouterLink to="/reset-password/request" style="color: #6B7280;">Forgot password?</RouterLink></el-text>
+        <el-text size="small">
+          <RouterLink to="/reset-password/request" style="color: #6B7280;">Forgot password?</RouterLink>
+        </el-text>
       </div>
 
       <el-form-item class="mt-1">
@@ -37,7 +49,7 @@
 
 
 <script lang="ts" setup>
-import { reactive, ref } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 
 import type { FormProps, FormRules, FormInstance } from 'element-plus'
@@ -48,14 +60,18 @@ const router: Router = useRouter() as Router
 
 const ruleFormRef = ref<FormInstance>()
 
+const autoComplete = ref(true)
+
 interface RuleForm {
-  emailOrUsername: string,
+  email: string,
   password: string,
+  role: string
 }
 
 const form = reactive<RuleForm>({
-  emailOrUsername: '',
-  password: '123456'
+  email: '',
+  password: '123456',
+  role: 'Student'
 })
 
 const validateEmailOrUsername = (rule: any, value: any, callback: any) => {
@@ -74,9 +90,9 @@ const validateEmailOrUsername = (rule: any, value: any, callback: any) => {
 }
 
 const rules = reactive<FormRules<RuleForm>>({
-  emailOrUsername: [
+  email: [
     { required: true, message: 'This field is required', trigger: 'blur' },
-    { validator: validateEmailOrUsername, trigger: 'blur'}
+    { type: 'email', trigger: 'blur' }
   ],
   password: [
     { required: true, message: 'This field is requried', trigger: 'blur' }
@@ -90,16 +106,16 @@ const top = ref<FormProps['labelPosition']>('top')
 // industry -> /industry/home
 // admin -> /admin/panel
 const login = async (formEl: FormInstance | undefined) => {
-  if(!formEl) return
+  if (!formEl) return
   await formEl.validate((valid, fields) => {
     if (valid) {
       console.log('submit')
 
-      if (form.emailOrUsername.toLowerCase() === 'sue') {
+      if (form.email.toLowerCase() === 'sue') {
         localStorage.setItem('authToken', 'TESTJSONWEBTOKENADMIN')
         router.push('/admin/panel')
       }
-      else if (form.emailOrUsername.includes('student.wintec.ac.nz')) {
+      else if (form.email.includes('student.wintec.ac.nz')) {
         localStorage.setItem('authToken', 'TESTJSONWEBTOKENSTUDENT')
         router.push('/student/home')
       }
@@ -113,10 +129,31 @@ const login = async (formEl: FormInstance | undefined) => {
   })
 }
 
+const handleChange = () => {
+  switch (form.role) {
+    case "Student":
+      autoComplete.value = true
+      break
+    case "Industry":
+      autoComplete.value = false
+      break
+  }
+}
+
+const handleBlur = () => {
+  const correctDomain = '@student.wintec.ac.nz'
+  if (!form.email.endsWith(correctDomain)) {
+    if (form.email.includes('@')) {
+      form.email = form.email.split('@')[0] + correctDomain;
+    } else {
+      form.email += correctDomain;
+    }
+  }
+}
+
 </script>
 
 <style scoped>
-/* Override */
 a {
   text-decoration: none;
   color: #FB9333;
@@ -126,11 +163,12 @@ button {
   width: 100%;
 }
 
-.container {
-  height: 100%;
+.el-radio-group {
+  width: 100%;
+}
+
+.el-radio {
   display: flex;
-  background: linear-gradient(to top, #FEA734, #FE3434);
-  align-items: center;
   justify-content: center;
 }
 
@@ -146,6 +184,13 @@ button {
   margin-top: 3rem;
 }
 
+.container {
+  height: 100%;
+  display: flex;
+  background: linear-gradient(to top, #FEA734, #FE3434);
+  align-items: center;
+  justify-content: center;
+}
 
 /* Phone */
 @media screen and (max-width: 768px) {
@@ -161,13 +206,19 @@ button {
   .industry-internship-system-logo {
     height: 120px;
   }
+
+  .radio {
+    flex: 0 0 43%;
+    border-radius: 9px;
+    background-color: white;
+  }
 }
 
 /* Tablet */
 @media screen and (max-width: 992px) and (min-width: 768px) {
   .form {
     width: 480px;
-    height: 500px;
+    height: 600px;
     border-radius: 24px;
     padding: 2rem;
     background-color: rgba(250, 250, 250, 0.8);
@@ -176,6 +227,12 @@ button {
 
   .industry-internship-system-logo {
     height: 150px;
+  }
+
+  .radio {
+    flex: 0 0 45%;
+    border-radius: 9px;
+    background-color: white;
   }
 }
 
@@ -183,7 +240,7 @@ button {
 @media screen and (min-width: 992px) {
   .form {
     width: 480px;
-    height: 500px;
+    height: 600px;
     border-radius: 24px;
     padding: 2rem;
     background-color: rgba(250, 250, 250, 0.8);
@@ -191,6 +248,12 @@ button {
 
   .industry-internship-system-logo {
     height: 150px;
+  }
+
+  .radio {
+    flex: 0 0 45%;
+    border-radius: 9px;
+    background-color: white;
   }
 }
 </style>
