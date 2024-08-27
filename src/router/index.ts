@@ -53,7 +53,6 @@ const router = createRouter({
     },
     {
       path: '/admin/panel',
-      name: 'panel',
       redirect: '/admin/panel/studentsList',
       component: () => import('@/views/admin/PanelView.vue'),
       children: [
@@ -63,7 +62,10 @@ const router = createRouter({
           component: () => import('@/views/admin/StudentsListView.vue')
         }
       ]
-
+    },
+    {
+      path: '/client/panel',
+      component: () => import('@/views/client/PanelView.vue')
     },
     {
       path: '/:pathMatch(.*)*',
