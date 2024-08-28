@@ -1,54 +1,47 @@
 <template>
 
-  <div class="container">
-    <el-form :model="form" :rules="rules" ref="ruleFormRef" label-width="auto" class="form" :label-position="top"
-      status-icon>
+    <AuthSlot>
 
-      <!-- Wintec Logo -->
-      <div style="display: flex; justify-content: center;">
-        <img src="@/assets/Industry Internship System Logo.svg" class="industry-internship-system-logo" />
-      </div>
+        <el-form :model="form" :rules="rules" ref="ruleFormRef" label-width="auto" :label-position="top"
+            status-icon>
 
-      <el-form-item label="Role" class="mt-2" prop="role">
-        <el-radio-group v-model="form.role" @change="handleChange">
-          <el-radio value="Student" size="large" class="radio">Student</el-radio>
-          <el-radio value="Industry" size="large" class="radio">Industry</el-radio>
-        </el-radio-group>
-      </el-form-item>
+            <el-form-item label="Role" class="mt-2" prop="role">
+                <el-radio-group v-model="form.role" @change="handleChange">
+                    <el-radio value="Student" size="large" class="radio">Student</el-radio>
+                    <el-radio value="Industry" size="large" class="radio">Industry</el-radio>
+                </el-radio-group>
+            </el-form-item>
 
-      <el-form-item label="Email" class="mt-2" prop="email">
-        <el-input v-model="form.email" clearable placeholder="id@student.wintec.ac.nz" v-if="autoComplete === true"
-          @blur="handleBlur" />
-        <el-input v-model="form.email" clearable placeholder="id@student.wintec.ac.nz" v-else />
-      </el-form-item>
+            <el-form-item label="Email" class="mt-2" prop="email">
+                <el-input v-model="form.email" clearable placeholder="id@student.wintec.ac.nz"
+                    v-if="autoComplete === true" @blur="handleBlur" />
+                <el-input v-model="form.email" clearable placeholder="id@student.wintec.ac.nz" v-else />
+            </el-form-item>
 
-      <el-form-item label="Password" prop="password">
-        <el-input v-model="form.password" type="password" clearable placeholder="******" show-password />
-      </el-form-item>
+            <el-form-item label="Password" prop="password">
+                <el-input v-model="form.password" type="password" clearable placeholder="******" show-password />
+            </el-form-item>
 
-      <div style="display: flex; flex-flow: row-reverse;">
-        <el-text size="small">
-          <RouterLink to="/reset-password/request" style="color: #6B7280;">Forgot password?</RouterLink>
-        </el-text>
-      </div>
+            <div style="display: flex; flex-flow: row-reverse;">
+                <el-text size="small">
+                    <RouterLink to="/reset-password/request" style="color: #6B7280;">Forgot password?</RouterLink>
+                </el-text>
+            </div>
 
-      <el-form-item class="mt-1">
-        <el-button type="primary" @click="login(ruleFormRef)">Log In</el-button>
-      </el-form-item>
+            <el-form-item class="mt-1">
+                <el-button type="primary" @click="login(ruleFormRef)">Log In</el-button>
+            </el-form-item>
 
-      <div style="text-align: center;">
-        <el-text size="small">No account yet? <RouterLink to="/registration">Create account
-          </RouterLink></el-text>
-      </div>
+        </el-form>
 
-    </el-form>
+    </AuthSlot>
 
-  </div>
 
 </template>
 
-
 <script lang="ts" setup>
+import AuthSlot from '@/slots/AuthSlot.vue'
+
 import { reactive, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 
@@ -154,6 +147,7 @@ const handleBlur = () => {
 </script>
 
 <style scoped>
+
 a {
   text-decoration: none;
   color: #FB9333;
@@ -184,17 +178,17 @@ button {
   margin-top: 3rem;
 }
 
-.container {
+/* .container {
   height: 100%;
   display: flex;
   background: linear-gradient(to top, #FEA734, #FE3434);
   align-items: center;
   justify-content: center;
-}
+} */
 
 /* Phone */
 @media screen and (max-width: 768px) {
-  .form {
+  .container {
     width: 280px;
     height: 460px;
     border-radius: 24px;
@@ -216,7 +210,7 @@ button {
 
 /* Tablet */
 @media screen and (max-width: 992px) and (min-width: 768px) {
-  .form {
+  .container {
     width: 480px;
     height: 600px;
     border-radius: 24px;
@@ -238,12 +232,15 @@ button {
 
 /* Computer */
 @media screen and (min-width: 992px) {
-  .form {
+  .container {
     width: 480px;
     height: 600px;
     border-radius: 24px;
     padding: 2rem;
     background-color: rgba(250, 250, 250, 0.8);
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
   }
 
   .industry-internship-system-logo {
@@ -256,4 +253,6 @@ button {
     background-color: white;
   }
 }
+
+
 </style>

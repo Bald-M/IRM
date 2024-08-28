@@ -25,19 +25,19 @@
 
     <div class="table-section mt-2">
       <el-table :data="tableData" style="width: 100%">
-        <el-table-column fixed prop="date" label="NAME" width="120" />
-        <el-table-column prop="name" label="STUDENT ID" width="120" />
-        <el-table-column prop="state" label="SPECIALIZATION" width="120" />
-        <el-table-column prop="city" label="PROGRAMME" width="120" />
-        <el-table-column prop="address" label="EMAIL" width="120" />
-        <el-table-column prop="zip" label="PHONE NUMBER" width="120" />
-        <el-table-column prop="zip" label="STATUS" width="120" />
-        <el-table-column fixed="right" label="OPERATIONS" min-width="120">
+        <el-table-column prop="name" label="NAME" width="120" />
+        <el-table-column prop="id" label="STUDENT ID" width="120" />
+        <el-table-column prop="specialization" label="SPECIALIZATION" width="200" />
+        <el-table-column prop="programme" label="PROGRAMME" width="140" />
+        <el-table-column prop="email" label="EMAIL" width="220" />
+        <el-table-column prop="number" label="PHONE NUMBER" width="200" />
+        <el-table-column prop="status" label="STATUS" width="200" />
+        <el-table-column fixed="right" label="OPERATIONS" min-width="250">
           <template #default>
-            <el-button link type="primary" size="large">
-              DELETE
+            <el-button type="danger" size="large" :icon="Delete">
+              Delete
             </el-button>
-            <el-button link type="primary" size="large">Edit</el-button>
+            <el-button type="primary" size="large" :icon="Edit">Edit</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -60,8 +60,9 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { Search } from '@element-plus/icons-vue'
+import { Search, Edit, Delete } from '@element-plus/icons-vue'
 import type { ComponentSize } from 'element-plus'
+
 
 // Select
 const programme = ref('')
@@ -78,6 +79,8 @@ const size = ref<ComponentSize>('default')
 const background = ref(true)
 const disabled = ref(false)
 
+// Should be watching all the time
+// Once the value has been changed, sorting algorithum should be executed
 const programmes = [
   {
     value: 'Bachelor',
@@ -93,6 +96,8 @@ const programmes = [
   }
 ]
 
+// Should be watching all the time
+// Once the value has been changed, sorting algorithum should be executed
 const specialisations = [
   {
     value: 'Software Engineering',
@@ -108,6 +113,8 @@ const specialisations = [
   }
 ]
 
+// Should be watching all the time
+// Once the value has been changed, sorting algorithum should be executed
 const internshipStatus = [
   {
     value: 'Available',
@@ -123,43 +130,80 @@ const internshipStatus = [
   }
 ]
 
+// GET Method
 const tableData = [
   {
-    date: '2016-05-03',
-    name: 'Tom',
-    state: 'California',
-    city: 'Los Angeles',
-    address: 'No. 189, Grove St, Los Angeles',
-    zip: 'CA 90036',
-    tag: 'Home',
+    name: 'Sue Pearson',
+    id: '18470661',
+    specialization: 'Networking Engineering',
+    programme: 'Postgraduate',
+    email: 'zihzha36@student.wintec.ac.nz',
+    number: '02902045309',
+    status: 'Ready for IRM Interview',
   },
   {
-    date: '2016-05-02',
     name: 'Tom',
-    state: 'California',
-    city: 'Los Angeles',
-    address: 'No. 189, Grove St, Los Angeles',
-    zip: 'CA 90036',
-    tag: 'Office',
+    id: '111111',
+    specialization: 'Software Engineering',
+    programme: 'Bachelor',
+    email: 'tom@student.wintec.ac.nz',
+    number: '123456',
+    status: 'Avilable',
   },
   {
-    date: '2016-05-04',
-    name: 'Tom',
-    state: 'California',
-    city: 'Los Angeles',
-    address: 'No. 189, Grove St, Los Angeles',
-    zip: 'CA 90036',
-    tag: 'Home',
+    name: 'David',
+    id: '111111',
+    specialization: 'Software Engineering',
+    programme: 'Bachelor',
+    email: 'david@student.wintec.ac.nz',
+    number: '123456',
+    status: 'Avilable',
   },
   {
-    date: '2016-05-01',
-    name: 'Tom',
-    state: 'California',
-    city: 'Los Angeles',
-    address: 'No. 189, Grove St, Los Angeles',
-    zip: 'CA 90036',
-    tag: 'Office',
+    name: 'David',
+    id: '111111',
+    specialization: 'Software Engineering',
+    programme: 'Bachelor',
+    email: 'david@student.wintec.ac.nz',
+    number: '123456',
+    status: 'Avilable',
   },
+  {
+    name: 'David',
+    id: '111111',
+    specialization: 'Software Engineering',
+    programme: 'Bachelor',
+    email: 'david@student.wintec.ac.nz',
+    number: '123456',
+    status: 'Avilable',
+  },
+  {
+    name: 'David',
+    id: '111111',
+    specialization: 'Software Engineering',
+    programme: 'Bachelor',
+    email: 'david@student.wintec.ac.nz',
+    number: '123456',
+    status: 'Avilable',
+  },
+  {
+    name: 'David',
+    id: '111111',
+    specialization: 'Software Engineering',
+    programme: 'Bachelor',
+    email: 'david@student.wintec.ac.nz',
+    number: '123456',
+    status: 'Avilable',
+  },
+  {
+    name: 'David',
+    id: '111111',
+    specialization: 'Software Engineering',
+    programme: 'Bachelor',
+    email: 'david@student.wintec.ac.nz',
+    number: '123456',
+    status: 'Avilable',
+  }
 ]
 
 
@@ -169,6 +213,10 @@ const tableData = [
 .select-section {
   display: flex;
   justify-content: space-between;
+}
+
+.table-section {
+  width: 100%;
 }
 
 .pagination-section {

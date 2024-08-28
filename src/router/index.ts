@@ -68,6 +68,10 @@ const router = createRouter({
       component: () => import('@/views/client/PanelView.vue')
     },
     {
+      path: '/test',
+      component: () => import('@/views/TestView.vue')
+    },
+    {
       path: '/:pathMatch(.*)*',
       name: 'not-found',
       component: () => import('@/views/404View.vue')

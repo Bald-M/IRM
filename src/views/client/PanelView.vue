@@ -27,7 +27,7 @@
 
 
 <script lang="ts" setup>
-import Nav from '@/components/LeftNavComponent.vue'
+import Nav from '@/components/AdminPanelLeftNavComponent.vue'
 import Header from '@/components/PanelHeaderComponent.vue'
 
 </script>
