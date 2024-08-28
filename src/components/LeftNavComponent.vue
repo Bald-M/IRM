@@ -32,6 +32,7 @@
           <a>Candidates</a>
         </div>
 
+        <!-- Setting /Change Password /Log Out -->
         <div class="nav-item" :class="{ active : selected === 3 }" :index="3" @click="handleRouter">
           <img src="@/assets/icon_facebook.svg" class="icon" />
           <a>Change Password</a>
