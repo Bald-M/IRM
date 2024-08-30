@@ -171,7 +171,6 @@ const handleRegistration = async (formEl: FormInstance | undefined) => {
           email: form.email,
           password: form.password,
           role: form.role,
-          username: form.email.split('@')[0]
         },
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
