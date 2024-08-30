@@ -9,14 +9,14 @@
         <el-icon class="el-icon--left">
           <Edit />
         </el-icon>
-        Application
+        <span>Application</span>
       </RouterLink>
 
       <RouterLink to="/">
         <el-icon class="el-icon--left">
           <ChatLineRound />
         </el-icon>
-        Contact Us
+        <span>Contact Us</span>
       </RouterLink>
 
       <!-- Dynamic -->
@@ -27,7 +27,7 @@
         <el-icon class="el-icon--left">
           <Avatar />
         </el-icon>
-        Sign In
+        <span>Sign In</span>
       </RouterLink>
 
     </nav>
@@ -75,4 +75,39 @@ a:hover {
 }
 
 
+
+/* Phone */
+@media screen and (max-width: 768px) {
+  span {
+    font-size: 12px;
+  }
+
+  .logo {
+    height: 40px;
+    width: 40px;
+  }
+}
+
+/* Tablet */
+@media screen and (max-width: 992px) and (min-width: 768px) {
+  span {
+    font-size: 18px;
+  }
+
+  .logo {
+    height: 80px;
+  }
+}
+
+/* Computer */
+@media screen and (min-width: 992px) {
+  span {
+    font-size: 20px;
+  }
+
+  .logo {
+    height: 80px;
+  }
+
+}
 </style>

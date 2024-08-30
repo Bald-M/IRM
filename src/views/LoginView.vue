@@ -19,7 +19,7 @@
       <el-form-item label="Email" class="mt-2" prop="email">
         <el-input v-model="form.email" clearable placeholder="id@student.wintec.ac.nz" v-if="autoComplete === true"
           @blur="handleBlur" />
-        <el-input v-model="form.email" clearable placeholder="id@student.wintec.ac.nz" v-else />
+        <el-input v-model="form.email" clearable placeholder="mail@example.com" v-else />
       </el-form-item>
 
       <el-form-item label="Password" prop="password">
@@ -106,6 +106,7 @@ const top = ref<FormProps['labelPosition']>('top')
 // industry -> /client/panel
 // admin -> /admin/panel
 const login = async (formEl: FormInstance | undefined) => {
+  console.log(formEl)
   if (!formEl) return
   await formEl.validate((valid, fields) => {
     if (valid) {
@@ -113,11 +114,11 @@ const login = async (formEl: FormInstance | undefined) => {
 
       if (form.email.toLowerCase() === 'sue') {
         localStorage.setItem('authToken', 'TESTJSONWEBTOKENADMIN')
-        router.push('/admin/panel')
+        //router.push('/admin/panel')
       }
       else if (form.email.includes('student.wintec.ac.nz')) {
         localStorage.setItem('authToken', 'TESTJSONWEBTOKENSTUDENT')
-        router.push('/student/home')
+        //router.push('/student/home')
       }
       else {
         alert('Username: sue or your wintec student email, leave the password field, then press log in')
