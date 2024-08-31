@@ -13,4 +13,18 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   }
+  // CORS 
 })
+
+
+// server: {
+//   host: '0.0.0.0',
+//   port: import.meta.env.VITE_APP_PORT,
+//   proxy: {
+//     'api': {
+//       target: import.meta.env.VITE_APP_API_BASEURL,
+//       changeOrigin: true,
+//       rewrite: (path) => path.replace(/^\/api/, '')
+//     }
+//   }
+// }

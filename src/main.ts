@@ -4,7 +4,7 @@ import 'element-plus/dist/index.css'
 import '@/assets/theme.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import ElementPlus from 'element-plus'
-import axios from 'axios'
+import axios from '../utils/http'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
@@ -20,9 +20,10 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 app.config.globalProperties.$router = router
 app.provide('$router', router)
 
-//axios.defaults.baseURL = 'http://47.250.88.49:7001/'
-axios.defaults.baseURL = 'http://127.0.0.1:7001/'
+app.config.globalProperties.$axios = axios
 app.provide('$axios', axios)
+
+//console.log(import.meta.env)
 
 app.use(ElementPlus)
 app.use(createPinia())
