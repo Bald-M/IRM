@@ -12,17 +12,17 @@
 
         <div>
           <!-- <el-text>The Industry Internship System helps students through providing working experience and expertise.</el-text> -->
-          <el-text line-clamp="3">{{ content }}</el-text>
+          <el-text line-clamp="5">{{ content }}</el-text>
         </div>
 
         <div>
-          <el-button type="primary" @click="handleLinkButton(path)">Get Involved</el-button>
+          <el-button type="primary">Get Involved</el-button>
         </div>
 
       </div>
 
       <div class="image-section">
-        <img :src="imgPath" />
+        <img :src="imgPath" class="shadow" />
       </div>
 
     </div>
@@ -40,9 +40,9 @@ defineProps<{
   imgPath: string
 }>()
 
-const handleLinkButton = (path: string) => {
-  alert(path)
-}
+// const handleLinkButton = (path: string) => {
+//   alert(path)
+// }
 
 </script>
 
@@ -53,7 +53,6 @@ const handleLinkButton = (path: string) => {
 
 .section {
   display: flex;
-  /* padding: 0 180px; */
   justify-content: center;
 }
 
@@ -64,13 +63,24 @@ const handleLinkButton = (path: string) => {
 
 .image-section {
   margin-left: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .image-section>img {
   /* width: 890px;
   height: 400px;
   background-size: cover; */
-  width: 100%;
+  width: 80%;
+}
+
+.shadow {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  box-shadow: 10px 10px 0 orange;
+  border-radius: 10px; 
 }
 
 .text-section > div:first-child, .text-section > div:nth-child(2), .text-section > div:last-child {

@@ -2,9 +2,10 @@
   <div class="container">
     <Header />
 
-    <Banner style="margin-top: 6rem;" :title="title" :content="content" :imgPath="backgroundImage" path="test" />
+    <Banner :title="title" :content="content" :imgPath="backgroundImage" path="test" class="banner"
+      style="margin-top: 3.75rem;" />
 
-    <div class="benefit-container">
+    <div class="benefit-container" style="margin-top: 3.75rem;">
 
       <div>
         <el-text class="header">Why Join the IIS?</el-text>
@@ -12,53 +13,9 @@
 
 
       <div class="box-section">
-        <div class="box">
 
-          <div class="box-image">
-            <img src="@/assets/icon_facebook.svg" />
-          </div>
-
-          <div>
-            <el-text class="title">Benefit 1</el-text>
-          </div>
-
-          <div>
-            <el-text class="content">Content</el-text>
-          </div>
-
-        </div>
-
-        <div class="box">
-
-          <div class="box-image">
-            <img src="@/assets/icon_facebook.svg" />
-          </div>
-
-          <div>
-            <el-text class="title">Benefit 1</el-text>
-          </div>
-
-          <div>
-            <el-text class="content">Content</el-text>
-          </div>
-
-        </div>
-
-
-        <div class="box">
-
-          <div class="box-image">
-            <img src="@/assets/icon_facebook.svg" />
-          </div>
-
-          <div>
-            <el-text class="title">Benefit 1</el-text>
-          </div>
-
-          <div>
-            <el-text class="content">Content</el-text>
-          </div>
-
+        <div v-for="item in boxes" :key="item.id" class="box">
+          <Box :title="item.title" :content="item.content" :imgPath="item.imgPath" />
         </div>
 
       </div>
@@ -72,19 +29,20 @@
       </div>
 
       <div class="instruction-section mt-3">
-        
+
         <div class="instruction-box">
           <div class="instruction-box-image">
-            
+            <img src="@/assets/fill_out_form_icon.svg" class="instruction-container-icon">
           </div>
 
           <div class="instruction-box-content">
             <div>
-              <el-text class="title">Step 1: Fill out this Form</el-text>
+              <el-text class="title">Fill out this Form</el-text>
             </div>
 
             <div>
-              <el-text class="explanation-content">Explanation is here</el-text>
+              <el-text class="explanation-content">Start your journey by filling out the Internship Application Form.
+                Provide your basic information, academic background, and preferred internship details.</el-text>
             </div>
 
             <div class="mt-2">
@@ -96,7 +54,7 @@
             </div>
 
             <div class="mt-1">
-              <el-button type="primary">More Information</el-button>
+              <el-button class="button">Apply Now</el-button>
             </div>
 
           </div>
@@ -106,10 +64,10 @@
       </div>
 
       <div class="instruction-section mt-3">
-        
+
         <div class="instruction-box">
           <div class="instruction-box-image">
-            
+            <img src="@/assets/interview_with_IRM_icon.svg" class="instruction-container-icon">
           </div>
 
           <div class="instruction-box-content">
@@ -118,25 +76,27 @@
             </div>
 
             <div>
-              <el-text class="explanation-content">Explanation is here</el-text>
+              <el-text class="explanation-content">After submitting your form, the industry relationship manager will
+                review your application and schedule an interview to discuss your internship preferences and career
+                goals.</el-text>
             </div>
 
             <div class="mt-2">
               <div class="info-section">
 
                 <div class="info-image">
-                  
+                  <img src="@/assets/exclamation_mark_icon.svg">
                 </div>
 
                 <div class="info-content">
-                  <el-text>Students have to submit their forms at first before booking.</el-text>
+                  <el-text>Students must submit their forms before interview.</el-text>
                 </div>
 
               </div>
             </div>
 
             <div class="mt-1">
-              <el-button type="primary">Book Interview</el-button>
+              <el-button class="button">Learn More Information</el-button>
             </div>
 
           </div>
@@ -148,10 +108,10 @@
 
 
       <div class="instruction-section mt-3">
-        
+
         <div class="instruction-box">
           <div class="instruction-box-image">
-            
+            <img src="@/assets/interview_with_client_icon.svg" class="instruction-container-icon">
           </div>
 
           <div class="instruction-box-content">
@@ -160,41 +120,69 @@
             </div>
 
             <div>
-              <el-text class="explanation-content">Explanation is here</el-text>
+              <el-text class="explanation-content">Successful candidates will be forwarded to potential employers for an
+                interview. The client will review your application and assess your fit for their internship
+                opportunities.</el-text>
             </div>
 
             <div class="mt-2">
 
-              <div class="client-info-section">
-                <div class="client-title">Sub-title</div>
-                <div class="client-link">
-                  <a href="https://www.google.com">Learn More</a>
+              <div class="info-section">
+
+                <div class="info-image">
+                  <img src="@/assets/exclamation_mark_icon.svg">
                 </div>
+
+                <div class="info-content">
+                  <el-text>Ensure you have prepared all required documents.</el-text>
+                </div>
+
               </div>
 
-              <div class="client-info-section mt-1">
-                <div class="client-title">Sub-title</div>
-                <div class="client-link">
-                  <a href="https://www.google.com">Learn More</a>
-                </div>
+              <div class="mt-1">
+                <el-button class="button">Learn More Information</el-button>
               </div>
-
-              <div class="client-info-section mt-1">
-                <div class="client-title">Sub-title</div>
-                <div class="client-link">
-                  <a href="https://www.google.com">Learn More</a>
-                </div>
-              </div>
-
-
             </div>
+          </div>
+        </div>
+      </div>
 
+      <div class="instruction-section mt-3">
 
+        <div class="instruction-box">
+          <div class="instruction-box-image">
+            <img src="@/assets/offer_received_icon.svg" class="instruction-container-icon">
           </div>
 
+          <div class="instruction-box-content">
+            <div>
+              <el-text class="title">Internship Offer Received</el-text>
+            </div>
+
+            <div>
+              <el-text class="explanation-content">Upon successful completion of the interviews, you will receive an internship offer from the client. Confirm your placement and get ready to start your internship journey.</el-text>
+            </div>
+
+            <div class="mt-2">
+
+              <div class="info-section">
+
+                <div class="info-image">
+                  <img src="@/assets/success_icon.svg">
+                </div>
+
+                <div class="info-content">
+                  <el-text>Congratulations! You're closer to your future career.</el-text>
+                </div>
+
+              </div>
+
+              <div class="mt-1">
+                <el-button class="button">Learn More Information</el-button>
+              </div>
+            </div>
+          </div>
         </div>
-
-
       </div>
 
     </div>
@@ -206,19 +194,28 @@
 
 <script lang="ts" setup>
 import Header from '@/components/SiteHeaderComponent.vue'
-import Footer from '@/components/FooterComponent.vue'
+import Footer from '@/components/SiteFooterComponent.vue'
 import Banner from '@/components/BannerComponent.vue'
+import Box from '@/components/SiteBoxComponent.vue'
 import backgroundImage from '@/assets/Background Image.jpg'
-import { ref } from 'vue'
+import experienceIcon from '@/assets/experience_icon.svg'
+import networkIcon from '@/assets/networks_icon.svg'
+import prospectsIcon from '@/assets/prospects_icon.svg'
+import { ref, reactive } from 'vue'
 
 
 const title = ref('Helping Students Acheive Their Future')
-const content = ref('The Industry Internship System helps students through providing working experience and expertise.')
+const content = ref('The Industry Internship System connects students with real-world industry opportunities, enabling them to gain practical experience, develop professional skills, and build a strong foundation for their future careers.')
+
+const boxes = reactive([
+  { id: 1, title: 'Gain Real-World Experience', content: 'Engage in internships that provide you with hands-on experience, helping you to apply what you\'ve learned in class to real-life scenarios.', imgPath: experienceIcon },
+  { id: 2, title: 'Build Professional Networks', content: 'Connect with industry professionals, build valuable relationships, and expand your network within your field of study.', imgPath: networkIcon },
+  { id: 3, title: 'Enhance Your Career Prospects', content: 'Leverage the Industry Internship System to strengthen your resume, gain recommendations, and increase your employability after graduation.', imgPath: prospectsIcon },
+])
 
 </script>
 
 <style scoped>
-
 .mt-3 {
   margin-top: 3rem;
 }
@@ -232,15 +229,20 @@ const content = ref('The Industry Internship System helps students through provi
 }
 
 .mt-6 {
-  margin-top: 60px;
+  margin-top: 3.75rem;
 }
 
 .container {
+  /* width: 100%; */
   width: 100%;
 }
 
+.banner {
+  width: 1333px;
+  margin: 0 auto;
+}
+
 .benefit-container {
-  /* padding: 0 180px */
   width: 1333px;
   margin: 0 auto;
 }
@@ -262,11 +264,19 @@ const content = ref('The Industry Internship System helps students through provi
 
 .instruction-box-image {
   flex: 1;
-  background-color: #FB9333;
+  background-color: #FE6601;
   border-radius: 27px 0 0 27px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.instruction-box-content  {
+.instruction-container-icon {
+  width: 150px;
+  height: 150px;
+}
+
+.instruction-box-content {
   flex: 2;
   padding: 30px 60px;
 }
@@ -280,7 +290,15 @@ const content = ref('The Industry Internship System helps students through provi
 .info-image {
   width: 10%;
   border-radius: 7px 0 0 7px;
-  background-color: #FB9333;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.info-image>img {
+  height: 20px;
+  width: 20px;
 }
 
 .info-content {
@@ -290,9 +308,8 @@ const content = ref('The Industry Internship System helps students through provi
   padding: 5px 18px;
 }
 
-.info-content > .el-text {
+.info-content>.el-text {
   font-weight: bold;
-  color: #FE7235;
   font-size: 16px;
 }
 
@@ -304,9 +321,9 @@ const content = ref('The Industry Internship System helps students through provi
   width: 90%;
 }
 
-.instruction-section {
+/* .instruction-section {
 
-}
+} */
 
 .client-info-section {
   display: flex;
@@ -315,7 +332,8 @@ const content = ref('The Industry Internship System helps students through provi
   border-radius: 7px;
 }
 
-.client-title, .client-link {
+.client-title,
+.client-link {
   text-align: center;
   padding: 10px;
 }
@@ -326,6 +344,10 @@ a {
   font-weight: bold;
 }
 
+.button {
+  background-color: #FE6601;
+  color: white;
+}
 
 .header {
   color: #FE7235;
@@ -340,7 +362,18 @@ a {
   gap: 20px;
 }
 
-.box {
+.title {
+  color: #FE7235;
+  font-weight: bold;
+  font-size: 50px;
+}
+
+.explanation-content {
+  color: #9C9C9C;
+  font-size: 15px;
+}
+
+/* .box {
   height: 400px;
   width: 400px;
   border-radius: 27px;
@@ -372,12 +405,5 @@ a {
 .content {
   color: #6B6B6B;
   font-size: 30px;
-}
-
-.explanation-content {
-  color: #9C9C9C;
-  font-size: 15px;
-}
-
-
+} */
 </style>

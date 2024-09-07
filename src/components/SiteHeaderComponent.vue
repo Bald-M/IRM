@@ -1,7 +1,7 @@
 <template>
   <header>
     <div>
-      <img src="@/assets/IIS & Wintec Logo.svg" class="logo" />
+      <img src="@/assets/IIS and Wintec logo_blue.svg" class="logo" />
     </div>
 
     <nav>
@@ -46,8 +46,8 @@ header {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  background-color: #333333;
   padding: 20px 30px;
+  border-top: #1E5192 15px solid;
 }
 
 nav {
@@ -56,7 +56,7 @@ nav {
 }
 
 a {
-  color: white;
+  color: #1E5192;
   margin: 0 20px;
   font-size: 20px;
   text-decoration: none;
