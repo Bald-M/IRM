@@ -10,10 +10,12 @@
   }
   
   /* background: linear-gradient(to top, #FEA734, #FFFFFF); */
+  /* background: linear-gradient(to top, #FFEDD7, #FFFFFF); */
   body {
     width: 100%;
     height: 100vh;
-    background: linear-gradient(to top, #FFEDD7, #FFFFFF);
+    min-height: 100vh;
+    background: linear-gradient(to bottom, white 0%, #FFEDD7);
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -31,7 +33,8 @@
   body {
     width: 100%;
     height: 100vh;
-    background: linear-gradient(to top, #FEA734, #FFFFFF);
+    min-height: 100vh;
+    background: linear-gradient(to bottom, white 0%, #FFEDD7);
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -49,7 +52,8 @@
   body {
     width: 100%;
     height: 100vh;
-    background: linear-gradient(to top, #FEA734, #FFFFFF);
+    min-height: 100vh;
+    background: linear-gradient(to bottom, white 0%, #FFEDD7);
     margin: 0;
     padding: 0;
     box-sizing: border-box;

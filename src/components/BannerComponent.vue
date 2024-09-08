@@ -11,12 +11,11 @@
         </div>
 
         <div>
-          <!-- <el-text>The Industry Internship System helps students through providing working experience and expertise.</el-text> -->
           <el-text line-clamp="5">{{ content }}</el-text>
         </div>
 
         <div>
-          <el-button type="primary">Get Involved</el-button>
+          <el-button type="primary">{{ button }}</el-button>
         </div>
 
       </div>
@@ -36,7 +35,8 @@
 defineProps<{
   title: string,
   content: string,
-  path: string,
+  button: string,
+  redirect: string,
   imgPath: string
 }>()
 

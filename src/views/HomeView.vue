@@ -2,10 +2,9 @@
   <div class="container">
     <Header />
 
-    <Banner :title="title" :content="content" :imgPath="backgroundImage" path="test" class="banner"
-      style="margin-top: 3.75rem;" />
+    <Banner :title="banner.title" :content="banner.content" :imgPath="banner.imgPath" :button="banner.button" :redirect="banner.redirect" class="banner mt-6"/>
 
-    <div class="benefit-container" style="margin-top: 3.75rem;">
+    <div class="box-container mt-6">
 
       <div>
         <el-text class="header">Why Join the IIS?</el-text>
@@ -22,7 +21,7 @@
 
     </div>
 
-    <div class="instruction-container" style="margin-top: 5rem;">
+    <div class="instruction-container mt-6">
 
       <div>
         <el-text class="header">How does the IIS works?</el-text>
@@ -188,7 +187,7 @@
     </div>
 
 
-    <Footer style="margin-top: 5rem;" />
+    <Footer class="mt-6" />
   </div>
 </template>
 
@@ -201,11 +200,15 @@ import backgroundImage from '@/assets/Background Image.jpg'
 import experienceIcon from '@/assets/experience_icon.svg'
 import networkIcon from '@/assets/networks_icon.svg'
 import prospectsIcon from '@/assets/prospects_icon.svg'
-import { ref, reactive } from 'vue'
+import { reactive } from 'vue'
 
-
-const title = ref('Helping Students Acheive Their Future')
-const content = ref('The Industry Internship System connects students with real-world industry opportunities, enabling them to gain practical experience, develop professional skills, and build a strong foundation for their future careers.')
+const banner = reactive({
+  title: 'Helping Students Acheive Their Future',
+  content: 'The Industry Internship System connects students with real-world industry opportunities, enabling them to gain practical experience, develop professional skills, and build a strong foundation for their future careers.',
+  button: 'Get Involved',
+  redirect: 'test',
+  imgPath: backgroundImage
+})
 
 const boxes = reactive([
   { id: 1, title: 'Gain Real-World Experience', content: 'Engage in internships that provide you with hands-on experience, helping you to apply what you\'ve learned in class to real-life scenarios.', imgPath: experienceIcon },
@@ -217,23 +220,22 @@ const boxes = reactive([
 
 <style scoped>
 .mt-3 {
-  margin-top: 3rem;
+  margin-top: 3rem !important;
 }
 
 .mt-1 {
-  margin-top: 1rem;
+  margin-top: 1rem !important;
 }
 
 .mt-2 {
-  margin-top: 2rem;
+  margin-top: 2rem !important;
 }
 
 .mt-6 {
-  margin-top: 3.75rem;
+  margin-top: 6rem !important;
 }
 
 .container {
-  /* width: 100%; */
   width: 100%;
 }
 
@@ -242,7 +244,7 @@ const boxes = reactive([
   margin: 0 auto;
 }
 
-.benefit-container {
+.box-container {
   width: 1333px;
   margin: 0 auto;
 }
@@ -373,37 +375,4 @@ a {
   font-size: 15px;
 }
 
-/* .box {
-  height: 400px;
-  width: 400px;
-  border-radius: 27px;
-  background-color: white;
-  padding: 50px 30px;
-}
-
-.box-image {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 60px;
-  height: 60px;
-  background-color: #FE7235;
-  border-radius: 180px;
-}
-
-.box-image>img {
-  width: 40px;
-  height: 40px;
-}
-
-.title {
-  color: #FE7235;
-  font-weight: bold;
-  font-size: 50px;
-}
-
-.content {
-  color: #6B6B6B;
-  font-size: 30px;
-} */
 </style>

@@ -233,7 +233,6 @@ button {
   justify-content: center;
 }
 
-/* background: linear-gradient(to top, #FEA734, #FE3434); */
 .container {
   height: 100%;
   display: flex;
