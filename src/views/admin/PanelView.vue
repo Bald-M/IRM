@@ -7,7 +7,7 @@
       <Header title="INDUSTRY INTERNSHIP SYSTEM ADMINISTRATION" />
     </header>
     <main class="main">
-      <RouterView class="mt-3" />
+      <RouterView />
     </main>
   </div>
 </template>
@@ -19,19 +19,18 @@ import Header from '@/components/PanelHeaderComponent.vue'
 </script>
 
 <style scoped>
-
-.mt-3 {
-  margin-top: 3rem;
+.mt-2 {
+  margin-top: 2rem;
 }
 
 .grid-container {
   display: grid;
-  grid-template-areas: 
+  grid-template-areas:
     "nav header"
     "nav main";
   grid-template-columns: auto 1fr;
   grid-template-rows: auto 1fr;
-  height: 100vh; /* Full viewport height */
+  height: 100vh;
 }
 
 .nav {
@@ -52,5 +51,4 @@ import Header from '@/components/PanelHeaderComponent.vue'
   background-color: white;
   padding: 30px 25px;
 }
-
 </style>

@@ -60,6 +60,16 @@ const router = createRouter({
           path: '/admin/panel/studentsList',
           name: 'studentsList',
           component: () => import('@/views/admin/StudentsListView.vue')
+        },
+        // Dynamic Router
+        // If Bob id is 123, when admin click on Bob, the router redirect to /admin/panel/studentsList/123
+        // StudentsDetailView.vue accept id as props
+        {
+          path: '/admin/panel/studentsList/:id',
+          name: 'studentDetails',
+          component: () => import('@/views/admin/StudentsDetailsView.vue'),
+          // Allow Router Parameter
+          props: true
         }
       ]
     },

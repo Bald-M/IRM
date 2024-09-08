@@ -47,8 +47,8 @@
 
     </div>
 
-    <div>
-
+    <div class="logo-section">
+      <img src="@/assets/Logo/Industry Internship System Logo_White.svg">
     </div>
 
   </div>
@@ -117,6 +117,10 @@ const handleRouter = (event: any) => {
   margin-top: 3rem;
 }
 
+.mt-8 {
+  margin-top: 8rem;
+}
+
 .container {
   height: 100%;
   width: 100%;
@@ -183,4 +187,25 @@ a {
   width: 18px;
   height: 18px;
 }
+
+.logo-section {
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+}
+
+.logo-section > img {
+  width: 220px;
+}
+
+/* .logo-section {
+  display: flex;
+  justify-content: center;
+}
+
+.logo-section > img {
+  width: 200px;
+} */
+
 </style>
