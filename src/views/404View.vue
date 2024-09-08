@@ -14,7 +14,7 @@
       </div>
 
       <div>
-        <img src="@/assets/Industry Internship System Logo_White.svg">
+        <img src="@/assets/Logo/Industry Internship System Logo_White.svg">
       </div>
     </div>
   </div>
