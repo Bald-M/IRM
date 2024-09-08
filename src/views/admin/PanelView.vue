@@ -1,25 +1,14 @@
 <template>
-  <div class="container">
-
-    <el-container>
-
-      <el-aside>
-        <Nav />
-      </el-aside>
-
-      <el-container>
-        <el-header>
-          <Header title="INDUSTRY INTERNSHIP SYSTEM ADMINISTRATION" />
-        </el-header>
-
-        <el-main>
-          <RouterView />
-        </el-main>
-
-      </el-container>
-
-    </el-container>
-
+  <div class="grid-container">
+    <aside class="nav">
+      <Nav />
+    </aside>
+    <header class="header">
+      <Header title="INDUSTRY INTERNSHIP SYSTEM ADMINISTRATION" />
+    </header>
+    <main class="main">
+      <RouterView class="mt-3" />
+    </main>
   </div>
 </template>
 
@@ -31,18 +20,37 @@ import Header from '@/components/PanelHeaderComponent.vue'
 
 <style scoped>
 
-.el-aside {
-  width: 240px
+.mt-3 {
+  margin-top: 3rem;
 }
 
-.el-header, .el-main {
-  padding: 0;
+.grid-container {
+  display: grid;
+  grid-template-areas: 
+    "nav header"
+    "nav main";
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
+  height: 100vh; /* Full viewport height */
 }
 
-.el-header {
+.nav {
+  grid-area: nav;
+  background-color: #FE6601;
+  width: 240px;
+}
+
+.header {
+  grid-area: header;
+  background-color: #FFF;
   height: 100px;
 }
 
-
+.main {
+  grid-area: main;
+  overflow-y: auto;
+  background-color: white;
+  padding: 30px 25px;
+}
 
 </style>

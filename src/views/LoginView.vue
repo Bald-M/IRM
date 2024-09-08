@@ -70,24 +70,24 @@ interface RuleForm {
 
 const form = reactive<RuleForm>({
   email: '',
-  password: '123456',
+  password: '',
   role: 'Student'
 })
 
-const validateEmailOrUsername = (rule: any, value: any, callback: any) => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const usernameRegex = /^[a-zA-Z0-9_]+$/;
+// const validateEmailOrUsername = (rule: any, value: any, callback: any) => {
+//   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+//   const usernameRegex = /^[a-zA-Z0-9_]+$/;
 
-  if (!value) {
-    return callback(new Error('Please enter email or username'));
-  } else if (emailRegex.test(value)) {
-    return callback(); // Valid email
-  } else if (usernameRegex.test(value)) {
-    return callback(); // Valid username
-  } else {
-    return callback(new Error('Invalid email or username'));
-  }
-}
+//   if (!value) {
+//     return callback(new Error('Please enter email or username'));
+//   } else if (emailRegex.test(value)) {
+//     return callback(); // Valid email
+//   } else if (usernameRegex.test(value)) {
+//     return callback(); // Valid username
+//   } else {
+//     return callback(new Error('Invalid email or username'));
+//   }
+// }
 
 const rules = reactive<FormRules<RuleForm>>({
   email: [

@@ -117,92 +117,110 @@ const specialisations = [
 // Once the value has been changed, sorting algorithum should be executed
 const internshipStatus = [
   {
-    value: 'Available',
-    label: 'Available'
+    value: 'For Review',
+    label: 'For Review'
   },
   {
-    value: 'Ready for IRM Interview',
-    label: 'Ready for IRM Interview'
+    value: 'Avilable',
+    label: 'Avilable'
   },
   {
-    value: 'IRM Interview Scheduled',
-    label: 'IRM Interview Scheduled'
+    value: 'Placed',
+    label: 'Placed'
   }
 ]
 
 // GET Method
 const tableData = [
   {
-    name: 'Sue Pearson',
+    name: 'Zihan Zhang',
     id: '18470661',
     specialization: 'Networking Engineering',
     programme: 'Postgraduate',
     email: 'zihzha36@student.wintec.ac.nz',
     number: '02902045309',
-    status: 'Ready for IRM Interview',
-  },
-  {
-    name: 'Tom',
-    id: '111111',
-    specialization: 'Software Engineering',
-    programme: 'Bachelor',
-    email: 'tom@student.wintec.ac.nz',
-    number: '123456',
     status: 'Avilable',
   },
   {
-    name: 'David',
-    id: '111111',
-    specialization: 'Software Engineering',
-    programme: 'Bachelor',
-    email: 'david@student.wintec.ac.nz',
-    number: '123456',
-    status: 'Avilable',
+    "name": "Jane Smith",
+    "id": "18470663",
+    "specialization": "Cybersecurity",
+    "programme": "Postgraduate",
+    "email": "jansmi33@student.wintec.ac.nz",
+    "number": "02902045311",
+    "status": "Avilable"
   },
   {
-    name: 'David',
-    id: '111111',
-    specialization: 'Software Engineering',
-    programme: 'Bachelor',
-    email: 'david@student.wintec.ac.nz',
-    number: '123456',
-    status: 'Avilable',
+    "name": "Michael Johnson",
+    "id": "18470664",
+    "specialization": "Networking Engineering",
+    "programme": "Diploma",
+    "email": "micjoh36@student.wintec.ac.nz",
+    "number": "02902045312",
+    "status": "Avilable"
   },
   {
-    name: 'David',
-    id: '111111',
-    specialization: 'Software Engineering',
-    programme: 'Bachelor',
-    email: 'david@student.wintec.ac.nz',
-    number: '123456',
-    status: 'Avilable',
+    "name": "Emily Davis",
+    "id": "18470665",
+    "specialization": "Information Systems",
+    "programme": "Undergraduate",
+    "email": "emidav38@student.wintec.ac.nz",
+    "number": "02902045313",
+    "status": "Avilable"
   },
   {
-    name: 'David',
-    id: '111111',
-    specialization: 'Software Engineering',
-    programme: 'Bachelor',
-    email: 'david@student.wintec.ac.nz',
-    number: '123456',
-    status: 'Avilable',
+    "name": "David Brown",
+    "id": "18470666",
+    "specialization": "Software Engineering",
+    "programme": "Postgraduate",
+    "email": "davbro41@student.wintec.ac.nz",
+    "number": "02902045314",
+    "status": "Avilable"
   },
   {
-    name: 'David',
-    id: '111111',
-    specialization: 'Software Engineering',
-    programme: 'Bachelor',
-    email: 'david@student.wintec.ac.nz',
-    number: '123456',
-    status: 'Avilable',
+    "name": "Sarah Wilson",
+    "id": "18470667",
+    "specialization": "Networking Engineering",
+    "programme": "Certificate",
+    "email": "sarwil52@student.wintec.ac.nz",
+    "number": "02902045315",
+    "status": "Avilable"
   },
   {
-    name: 'David',
-    id: '111111',
-    specialization: 'Software Engineering',
-    programme: 'Bachelor',
-    email: 'david@student.wintec.ac.nz',
-    number: '123456',
-    status: 'Avilable',
+    "name": "Chris Martin",
+    "id": "18470668",
+    "specialization": "Cybersecurity",
+    "programme": "Diploma",
+    "email": "chrmar45@student.wintec.ac.nz",
+    "number": "02902045316",
+    "status": "Avilable"
+  },
+  {
+    "name": "Jessica Lee",
+    "id": "18470669",
+    "specialization": "Information Systems",
+    "programme": "Undergraduate",
+    "email": "jeslee49@student.wintec.ac.nz",
+    "number": "02902045317",
+    "status": "For Review"
+  },
+  {
+    "name": "Matthew Taylor",
+    "id": "18470670",
+    "specialization": "Networking Engineering",
+    "programme": "Postgraduate",
+    "email": "mattay50@student.wintec.ac.nz",
+    "number": "02902045318",
+    "status": "Placed"
+  },
+  {
+    "name": "Laura Clark",
+    "id": "18470671",
+    "specialization": "Software Engineering",
+    "programme": "Certificate",
+    "email": "laucla53@student.wintec.ac.nz",
+    "number": "02902045319",
+    "status": "For Review"
   }
 ]
 
@@ -210,6 +228,14 @@ const tableData = [
 </script>
 
 <style scoped>
+
+.container {
+  background-color: white;
+  height: 100%;
+  /* padding: 30px 25px;
+  margin-top: 40px; */
+}
+
 .select-section {
   display: flex;
   justify-content: space-between;
@@ -222,12 +248,6 @@ const tableData = [
 .pagination-section {
   display: flex;
   justify-content: center;
-}
-
-.container {
-  background-color: white;
-  height: 100%;
-  padding: 30px 25px;
 }
 
 .select {

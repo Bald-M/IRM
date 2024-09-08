@@ -3,13 +3,12 @@
 
     <div class="first-layer-container">
 
-      <div><img src="@/assets/Te Pukenga_Logo_Blue.svg" class="tepukenga-logo"></div>
+      <div><img src="@/assets/Logo/Te Pukenga_Logo_Blue.svg" class="tepukenga-logo"></div>
 
       <div class="divider"></div>
 
       <div class="first-layer-text-section">
         <el-text>Wintec is part of Te Pūkenga - New Zealand Institute of Skills and Technology &nbsp;</el-text>
-        <!-- <el-text>Learn More</el-text> -->
       </div>
     </div>
 
@@ -18,7 +17,7 @@
       <div class="second-layer-iis-section">
 
         <div>
-          <img src="@/assets/IIS logo_without_name.svg" class="iis-logo">
+          <img src="@/assets/Logo/IIS logo_without_name.svg" class="iis-logo">
         </div>
 
         <div class="second-layer-iis-text-section">

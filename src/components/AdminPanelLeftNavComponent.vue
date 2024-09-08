@@ -3,7 +3,7 @@
 
     <!-- Dynamic -->
     <div class="avater-container">
-      <img src="@/assets/logo.svg" />
+      <img src="@/assets/sue.jfif" />
     </div>
 
     <!-- Dynamic -->
@@ -22,28 +22,32 @@
 
       <nav>
 
-        <div class="nav-item" :class="{ active : selected === 1 }" :index="1" @click="handleRouter">
-          <img src="@/assets/icon_facebook.svg" class="icon" />
+        <div class="nav-item" :class="{ active: selected === 1 }" :index="1" @click="handleRouter">
+          <img src="@/assets/LeftNavIcon/students.png" class="icon" />
           <a>Students</a>
         </div>
 
-        <div class="nav-item" :class="{ active : selected === 2 }" :index="2" @click="handleRouter">
-          <img src="@/assets/icon_facebook.svg" class="icon" />
+        <div class="nav-item" :class="{ active: selected === 2 }" :index="2" @click="handleRouter">
+          <img src="@/assets/LeftNavIcon/candidates.png" class="icon" />
           <a>Candidates</a>
         </div>
 
         <!-- Setting /Change Password /Log Out -->
-        <div class="nav-item" :class="{ active : selected === 3 }" :index="3" @click="handleRouter">
-          <img src="@/assets/icon_facebook.svg" class="icon" />
+        <div class="nav-item" :class="{ active: selected === 3 }" :index="3" @click="handleRouter">
+          <img src="@/assets/LeftNavIcon/lock.png" class="icon" />
           <a>Change Password</a>
         </div>
 
-        <div class="nav-item" :class="{ active : selected === 4 }" :index="4" @click="handleRouter">
-          <img src="@/assets/icon_facebook.svg" class="icon" />
+        <div class="nav-item" :class="{ active: selected === 4 }" :index="4" @click="handleRouter">
+          <img src="@/assets/LeftNavIcon/logout.png" class="icon" />
           <a>Log Out</a>
         </div>
 
       </nav>
+
+    </div>
+
+    <div>
 
     </div>
 
@@ -109,15 +113,14 @@ const handleRouter = (event: any) => {
 
 
 <style scoped>
-
 .mt-3 {
   margin-top: 3rem;
 }
 
 .container {
-  height: 100vh;
+  height: 100%;
   width: 100%;
-  background-color: #FB9333;
+  background-color: #FE6601;
 }
 
 .avater-container {
@@ -126,21 +129,24 @@ const handleRouter = (event: any) => {
   padding: 40px 0;
 }
 
-.avater-container > img {
-  width: 80px;
+.avater-container>img {
+  width: 100px;
 }
 
-.greeting-container, .dashboard-text {
+.greeting-container,
+.dashboard-text {
   padding: 0 14px;
 }
 
-.name, a {
+.name,
+a {
   color: white
 }
 
-.greeting, .dashboard-text > .el-text {
+.greeting,
+.dashboard-text>.el-text {
   font-size: 20px;
-  color: rgb(253,190,133);
+  color: rgb(253, 190, 133);
 }
 
 .name {
@@ -161,8 +167,9 @@ nav {
   padding-left: 10px;
 }
 
-.nav-item:hover, .active {
-  background-color: rgb(238,140,48);
+.nav-item:hover,
+.active {
+  background-color: rgb(241, 97, 1);
   border-radius: 8px;
 }
 
@@ -176,7 +183,4 @@ a {
   width: 18px;
   height: 18px;
 }
-
-
-
 </style>
