@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts" setup>
-import StudentBox from '@/components/StudentComponent.vue'
+import StudentBox from '@/components/StudentDetailComponent.vue'
 
 defineProps<{
   id: string
@@ -28,7 +28,7 @@ defineProps<{
 }
 
 .container {
-  
+
 }
 
 .button-section {

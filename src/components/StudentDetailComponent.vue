@@ -187,7 +187,6 @@
 .container {
   height: 900px;
   width: 100%;
-  /* background-color: red; */
   border: #e3e3e3 2px solid;
   padding: 15px 30px;
 }

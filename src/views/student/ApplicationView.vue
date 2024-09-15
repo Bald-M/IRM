@@ -59,30 +59,199 @@
             <el-form class="form" :model="form" :rules="rules" ref="ruleFormRef" label-width="auto"
               :label-position="top" status-icon>
 
-              <el-form-item label="Full Name" prop="name">
-                <el-input v-model="form.name" clearable />
-              </el-form-item>
+              <!-- First Page -->
+              <template v-if="currentPage === 1">
 
-              <el-form-item label="Student ID" prop="id">
-                <el-input v-model="form.id" clearable  />
-              </el-form-item>
+                <el-form-item label="Full Name" prop="name">
+                  <el-input v-model="form.name" clearable />
+                </el-form-item>
 
-              <el-form-item label="Student Email" prop="personalEmail">
-                <el-input v-model="form.studentEmail" clearable  />
-              </el-form-item>
+                <el-form-item label="Student ID" prop="id">
+                  <el-input v-model="form.id" clearable />
+                </el-form-item>
 
-              <el-form-item label="Personal Email" prop="studentEmail">
-                <el-input v-model="form.personalEmail" clearable  />
-              </el-form-item>
+                <el-form-item label="Student Email" prop="personalEmail">
+                  <el-input v-model="form.studentEmail" clearable />
+                </el-form-item>
 
-              <el-form-item label="Phone Number" prop="phoneNum">
-                <el-input v-model="form.phoneNum" clearable  />
-              </el-form-item>
+                <el-form-item label="Personal Email" prop="studentEmail">
+                  <el-input v-model="form.personalEmail" clearable />
+                </el-form-item>
 
-              <el-form-item>
-                <!-- @click="handleSubmit(ruleFormRef)" -->
-                <el-button type="primary" style="width: 200px; margin: 20px auto;">Submit</el-button>
-              </el-form-item>
+                <el-form-item label="Phone Number" prop="phoneNum">
+                  <el-input v-model="form.phoneNum" clearable />
+                </el-form-item>
+
+              </template>
+
+              <!-- Second Page -->
+              <template v-if="currentPage === 2">
+                <el-form-item label="Personal Statement">
+                  <el-text class="description" size="small">A short personal statement that can be published to our
+                    website for
+                    prospective employers to view. This states what you are interested in the IT sector. Industry see
+                    this next to your name and link to your CV etc.</el-text>
+                  <el-input type="textarea"></el-input>
+                </el-form-item>
+
+                <el-row :gutter="20">
+                  <el-col :span="12">
+                    <el-form-item label="CV/Resume">
+                      <el-text class="description" size="small">Add the link to your online resume</el-text>
+                      <el-input></el-input>
+                    </el-form-item>
+                  </el-col>
+
+                  <el-col :span="12">
+                    <el-form-item label="Linkedin">
+                      <el-text class="description" size="small">Add the link to your LinkedIn profile</el-text>
+                      <el-input></el-input>
+                    </el-form-item>
+                  </el-col>
+
+                </el-row>
+
+                <el-row :gutter="20">
+                  <el-col :span="12">
+                    <el-form-item label="Portfolio">
+                      <el-text class="description" size="small">Add the link to your online of work</el-text>
+                      <el-input></el-input>
+                    </el-form-item>
+                  </el-col>
+
+                  <el-col :span="12">
+                    <el-form-item label="GitHub Profile">
+                      <el-text class="description" size="small">Add the link to your Github profile</el-text>
+                      <el-input></el-input>
+                    </el-form-item>
+                  </el-col>
+
+                </el-row>
+
+                <el-row :gutter="20">
+                  <el-col :span="8">
+                    <el-form-item label="What is your average grade?">
+                      <el-radio-group v-model="radioTest1" class="second-page-radio-group">
+                        <el-radio value="A" size="small" border>A grade</el-radio>
+                        <el-radio value="B" size="small" border>B grade</el-radio>
+                        <el-radio value="C" size="small" border>C grade</el-radio>
+                      </el-radio-group>
+
+                    </el-form-item>
+                  </el-col>
+
+                  <el-col :span="8">
+                    <el-form-item label="What is your programme?">
+                      <el-radio-group v-model="radioTest1" class="second-page-radio-group">
+                        <el-radio value="A" size="small" border>Bachelor of Applied IT</el-radio>
+                        <el-radio value="B" size="small" border>Postgraduate Diploma in IT</el-radio>
+                        <el-radio value="C" size="small" border>Master of Applied IT</el-radio>
+                      </el-radio-group>
+                    </el-form-item>
+
+                  </el-col>
+
+                  <el-col :span="8">
+                    <el-form-item label="What is your area of study?">
+                      <el-radio-group v-model="radioTest1" class="second-page-radio-group">
+                        <el-radio value="A" size="small" border>Network Engineering</el-radio>
+                        <el-radio value="B" size="small" border>Software Engineering</el-radio>
+                        <el-radio value="C" size="small" border>Database or Data Analytics</el-radio>
+                        <!-- <el-radio value="D" size="small" border>Project Management</el-radio> -->
+                      </el-radio-group>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+
+
+              </template>
+
+              <!-- Last page -->
+              <template v-if="currentPage === 3">
+
+                <el-row :gutter="20">
+                  <el-col :span="12">
+                    <el-form-item label="What are your internship options?">
+                      <el-text class="description" size="small">Please select the type of internship you would
+                        like</el-text>
+                      <el-checkbox v-model="checkboxTest1" label="API Development" size="large" border />
+                      <el-checkbox v-model="checkboxTest1" label="Business Analysis" size="large" border />
+                      <el-checkbox v-model="checkboxTest1" label="Data Analysis" size="large" border />
+                      <el-checkbox v-model="checkboxTest1" label="Database" border size="large" />
+                      <el-checkbox v-model="checkboxTest1" label="Game Development" size="large" border />
+                      <el-checkbox v-model="checkboxTest1" label="Mobile App Development" size="large" border />
+                      <el-checkbox v-model="checkboxTest1" label="Networking" size="large" border />
+                      <el-checkbox v-model="checkboxTest1" label="Project Management" size="large" border />
+                      <el-checkbox v-model="checkboxTest1" label="Security" size="large" border />
+                      <el-checkbox v-model="checkboxTest1" label="Software Testing" size="large" border />
+                      <el-checkbox v-model="checkboxTest1" label="System support - help desk" size="large" border />
+                      <el-checkbox v-model="checkboxTest1" label="UX/UI design" size="large" border />
+                      <el-checkbox v-model="checkboxTest1" label="Web Development" size="large" border />
+                      <!-- If choose other, a new input field should be appeared -->
+                      <el-checkbox v-model="checkboxTest1" label="Other" size="large" border />
+                    </el-form-item>
+                  </el-col>
+
+                  <el-col :span="12">
+
+                      <el-form-item label="What are your internship options?">
+                        <el-text class="description" size="small">Please select the type of internship you would
+                          like</el-text>
+                        <el-checkbox v-model="checkboxTest1" label="Blackout Games" size="large" border />
+                        <el-checkbox v-model="checkboxTest1" label="CTEK" size="large" border />
+                        <el-checkbox v-model="checkboxTest1" label="Datacom" size="large" border />
+                        <el-checkbox v-model="checkboxTest1" label="Englighten Design" border size="large" />
+                        <el-checkbox v-model="checkboxTest1" label="Game Development" size="large" border />
+                        <el-checkbox v-model="checkboxTest1" label="Mobile App Development" size="large" border />
+                        <el-checkbox v-model="checkboxTest1" label="Networking" size="large" border />
+                        <el-checkbox v-model="checkboxTest1" label="Project Management" size="large" border />
+                        <el-checkbox v-model="checkboxTest1" label="Security" size="large" border />
+                        <el-checkbox v-model="checkboxTest1" label="Software Testing" size="large" border />
+                        <el-checkbox v-model="checkboxTest1" label="System support - help desk" size="large" border />
+                        <el-checkbox v-model="checkboxTest1" label="UX/UI design" size="large" border />
+                        <el-checkbox v-model="checkboxTest1" label="Web Development" size="large" border />
+                        <!-- If choose other, a new input field should be appeared -->
+                        <el-checkbox v-model="checkboxTest1" label="Other" size="large" border />
+                      </el-form-item>
+                  </el-col>
+
+                  <el-col :span="12">
+                    <el-form-item label="Please indicate your first preference for a placement?">
+                      <el-radio-group v-model="radioTest1" class="third-page-radio-group">
+                        <el-radio value="A" size="large" border>Internship</el-radio>
+                        <el-radio value="B" size="large" border>Industry Project</el-radio>
+                        <el-radio value="C" size="large" border>Internal Client Internship/Project</el-radio>
+                        <el-radio value="C" size="large" border>Internal Client Internship/Project</el-radio>
+                        <el-radio value="C" size="large" border>Classroom Project</el-radio>
+                        <el-radio value="C" size="large" border>Design Factory</el-radio>
+                        <el-radio value="C" size="large" border>GIG - Internal Client Based Projects</el-radio>
+                      </el-radio-group>
+                    </el-form-item>
+                  </el-col>
+
+                  <el-col :span="12">
+                    <el-form-item label="Please indicate your second preference for a placement?">
+                      <el-radio-group v-model="radioTest1" class="third-page-radio-group">
+                        <el-radio value="A" size="large" border>Internship</el-radio>
+                        <el-radio value="B" size="large" border>Industry Project</el-radio>
+                        <el-radio value="C" size="large" border>Internal Client Internship/Project</el-radio>
+                        <el-radio value="C" size="large" border>Internal Client Internship/Project</el-radio>
+                        <el-radio value="C" size="large" border>Classroom Project</el-radio>
+                        <el-radio value="C" size="large" border>Design Factory</el-radio>
+                        <el-radio value="C" size="large" border>GIG - Internal Client Based Projects</el-radio>
+                      </el-radio-group>
+                    </el-form-item>
+                  </el-col>
+
+
+                </el-row>
+
+                <el-form-item>
+                  <!-- @click="handleSubmit(ruleFormRef)" -->
+                  <el-button type="primary" style="width: 200px; margin: 20px auto;">Submit</el-button>
+                </el-form-item>
+
+              </template>
 
               <el-form-item>
                 <el-pagination v-model:current-page="currentPage" v-model:page-size="pageSize"
@@ -122,6 +291,9 @@ import gatherInformation from '@/assets/gather_information_icon.svg'
 import submitAndWait from '@/assets/submit_and_wait_icon.svg'
 import type { FormProps, FormRules, FormInstance } from 'element-plus'
 import { ref, reactive } from 'vue'
+
+const radioTest1 = ref()
+const checkboxTest1 = ref()
 
 const banner = reactive({
   title: 'Internship Application',
@@ -193,7 +365,10 @@ const currentPage = ref(1)
 const pageSize = ref(5)
 const total = ref(15)
 
-const handleCurrentChange = () => { }
+// As the page updating, step also update
+const handleCurrentChange = () => {
+  currentStep.value = currentPage.value - 1
+}
 
 
 </script>
@@ -252,7 +427,7 @@ const handleCurrentChange = () => { }
 
 .form-section {
   background-color: white;
-  height: 900px;
+  height: 1500px;
   border-radius: 32px;
 }
 
@@ -325,9 +500,29 @@ const handleCurrentChange = () => { }
   margin-top: 3rem;
 }
 
-
 .form {
   width: 50%;
   margin: 0 auto;
+}
+
+.description {
+  color: #FE6601;
+}
+
+.second-page-radio-group > .el-radio {
+  width: 200px;
+}
+
+.third-page-radio-group > .el-radio {
+  width: 300px;
+}
+
+.el-checkbox {
+  width: 300px;
+}
+
+.el-radio,
+.el-checkbox {
+  margin: 5px 0;
 }
 </style>

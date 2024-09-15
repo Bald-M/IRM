@@ -165,35 +165,24 @@ const handleRegistration = async (formEl: FormInstance | undefined) => {
     if (valid) {
       loading.value = true
       axios({
-        url: '/register',
+        url: '/api/registration',
         method: 'post',
         data: {
           email: form.email,
           password: form.password,
-          role: form.role,
+          type: form.role,
         },
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
       }).then(res => {
         console.log(res)
-        if (res.data.code === 409) {
-          // Password is in plain text, must be encrypt
-          ElMessage.error(res.data.msg)
-          loading.value = false
-        }
-        else if (res.data.code === 200) {
-          ElMessage.success(res.data.msg)
-          loading.value = false
-          router.push('/login')
-        }
-        else {
-          ElMessage.error(res.data.msg)
-          loading.value = false
-        }
+        ElMessage.success(res.data.description)
+        loading.value = false
+        router.push('/login')
       }).catch(error => {
-        console.log("Error:")
         console.log(error)
+        ElMessage.error(error.response.data.error)
         loading.value = false
       })
     }
@@ -207,8 +196,6 @@ const handleRegistration = async (formEl: FormInstance | undefined) => {
   })
 
 }
-
-
 
 </script>
 

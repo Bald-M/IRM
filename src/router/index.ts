@@ -75,7 +75,15 @@ const router = createRouter({
     },
     {
       path: '/client/panel',
-      component: () => import('@/views/client/PanelView.vue')
+      redirect: '/client/panel/candidatesList',
+      component: () => import('@/views/client/PanelView.vue'),
+      children: [
+        {
+          path: '/client/panel/candidatesList',
+          name: 'candidateList',
+          component: () => import('@/views/client/CandidatesListView.vue')
+        }
+      ]
     },
     {
       path: '/:pathMatch(.*)*',

@@ -232,8 +232,6 @@ const tableData = [
 .container {
   background-color: white;
   height: 100%;
-  /* padding: 30px 25px;
-  margin-top: 40px; */
 }
 
 .select-section {

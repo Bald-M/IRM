@@ -1,0 +1,110 @@
+<template>
+  <div class="container">
+
+    <div class="header-section">
+
+      <div class="header-text">
+        <div><el-text class="name">Allie Esber</el-text></div>
+        <div>
+          <el-text class="status">Avilable</el-text>
+          <div class="available"></div>
+        </div>
+      </div>
+
+      <div class="header-logo">
+        <img src="@/assets/SocialIcon/cv_icon_orange.svg" />
+        <img src="@/assets/SocialIcon/linkedin_icon_orange.svg" />
+        <img src="@/assets/SocialIcon/github_icon_orange.svg" />
+        <img src="@/assets/SocialIcon/portfolio_icon_orange.svg" />
+      </div>
+
+    </div>
+
+    <div class="info-section">
+
+      <div class="mt-2">
+        <el-text class="statement">
+          My passion lies at the intersection of software programming, web design, and business analysis. With a commitment to innovation and a hunger for continuous leaning, I'm excited to leverage my skills to make impact in the ever-evolving landscape of technology and business.
+        </el-text>
+      </div>
+
+      <div class="mt-2">
+        <el-text class="option-key">Internship Options: </el-text>
+        <el-text class="option-value">Web development, Business Analysis, UX/UI design</el-text>
+      </div>
+    </div>
+
+    <div class="footer-section">
+      <img src="@/assets/SocialIcon/web_development_icon.svg">
+      <img src="@/assets/SocialIcon/business_analysis_icon.svg">
+      <img src="@/assets/SocialIcon/design_icon.svg">
+    </div>
+
+  </div>
+
+</template>
+
+<style scoped>
+
+.mt-2 {
+  margin-top: 2rem !important;
+}
+
+.container {
+  height: 800px;
+  width: 400px;
+  border: #e3e3e3 2px solid;
+  padding: 15px 30px;
+}
+
+.header-section {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-logo>img {
+  width: 40px;
+  height: 40px;
+  margin-left: 5px;
+}
+
+.footer-section>img {
+  margin: 20px 8px 0 0;
+  width: 40px;
+  height: 40px;
+}
+
+.statement, .option-value {
+  color: #3A3541;
+  font-weight: 500;
+}
+
+.available, .unavailable {
+  width: 10px;
+  height: 10px;
+  content: '';
+  border-radius: 180px;
+  display: inline-block;
+  margin: 0 10px;
+}
+
+.available {
+  background-color: #09FF5C;
+}
+
+.unavailable {
+  background-color: #FF0808;
+}
+
+.name, .option-key {
+  font-weight: bold;
+  color: #0D99FF;
+}
+
+.name {
+  font-size: 24px;
+  text-decoration: underline;
+}
+
+
+</style>
