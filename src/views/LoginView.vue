@@ -1,6 +1,6 @@
 <template>
 
-  <div class="container">
+  <div class="container" v-loading="loading">
     <el-form :model="form" :rules="rules" ref="ruleFormRef" label-width="auto" class="form" :label-position="top"
       status-icon>
 
@@ -9,17 +9,21 @@
         <img src="@/assets/Industry Internship System Logo.svg" class="industry-internship-system-logo" />
       </div>
 
-      <el-form-item label="Role" class="mt-2" prop="role">
+      <!-- <el-form-item label="Role" class="mt-2" prop="role">
         <el-radio-group v-model="form.role" @change="handleChange">
           <el-radio value="Student" size="large" class="radio">Student</el-radio>
           <el-radio value="Industry" size="large" class="radio">Industry</el-radio>
         </el-radio-group>
-      </el-form-item>
+      </el-form-item> -->
 
-      <el-form-item label="Email" class="mt-2" prop="email">
+      <!-- <el-form-item label="Email" class="mt-2" prop="email">
         <el-input v-model="form.email" clearable placeholder="id@student.wintec.ac.nz" v-if="autoComplete === true"
           @blur="handleBlur" />
         <el-input v-model="form.email" clearable placeholder="mail@example.com" v-else />
+      </el-form-item> -->
+
+      <el-form-item label="Email" class="mt-2" prop="email">
+        <el-input v-model="form.email" clearable placeholder="mail@example.com" />
       </el-form-item>
 
       <el-form-item label="Password" prop="password">
@@ -33,7 +37,7 @@
       </div>
 
       <el-form-item class="mt-1">
-        <el-button type="primary" @click="login(ruleFormRef)">Log In</el-button>
+        <el-button type="primary" @click="handleLogin(ruleFormRef)">Log In</el-button>
       </el-form-item>
 
       <div style="text-align: center;">
@@ -49,18 +53,20 @@
 
 
 <script lang="ts" setup>
-import { reactive, ref, onMounted } from 'vue'
+import { reactive, ref, inject } from 'vue'
 import { useRouter } from 'vue-router'
-
-import type { FormProps, FormRules, FormInstance } from 'element-plus'
+import { useAuthStore } from '@/stores/auth'
+import { type FormProps, type FormRules, type FormInstance, ElMessage } from 'element-plus'
 import type { Router } from 'vue-router'
+import type { AxiosInstance } from 'axios'
 
-
+const authStore = useAuthStore()
 const router: Router = useRouter() as Router
-
+const axios: AxiosInstance = inject('$axios') as AxiosInstance
 const ruleFormRef = ref<FormInstance>()
 
 const autoComplete = ref(true)
+const loading = ref(false)
 
 interface RuleForm {
   email: string,
@@ -73,21 +79,6 @@ const form = reactive<RuleForm>({
   password: '',
   role: 'Student'
 })
-
-// const validateEmailOrUsername = (rule: any, value: any, callback: any) => {
-//   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-//   const usernameRegex = /^[a-zA-Z0-9_]+$/;
-
-//   if (!value) {
-//     return callback(new Error('Please enter email or username'));
-//   } else if (emailRegex.test(value)) {
-//     return callback(); // Valid email
-//   } else if (usernameRegex.test(value)) {
-//     return callback(); // Valid username
-//   } else {
-//     return callback(new Error('Invalid email or username'));
-//   }
-// }
 
 const rules = reactive<FormRules<RuleForm>>({
   email: [
@@ -105,27 +96,49 @@ const top = ref<FormProps['labelPosition']>('top')
 // student -> /student/home
 // industry -> /client/panel
 // admin -> /admin/panel
-const login = async (formEl: FormInstance | undefined) => {
-  console.log(formEl)
+const handleLogin = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
   await formEl.validate((valid, fields) => {
     if (valid) {
-      console.log('submit')
-
-      if (form.email.toLowerCase() === 'sue') {
-        localStorage.setItem('authToken', 'TESTJSONWEBTOKENADMIN')
-        //router.push('/admin/panel')
-      }
-      else if (form.email.includes('student.wintec.ac.nz')) {
-        localStorage.setItem('authToken', 'TESTJSONWEBTOKENSTUDENT')
-        //router.push('/student/home')
-      }
-      else {
-        alert('Username: sue or your wintec student email, leave the password field, then press log in')
-      }
+      loading.value = true
+      axios({
+        url: '/api/login',
+        method: 'post',
+        data: {
+          email: form.email,
+          password: form.password
+        },
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }).then(res => {
+        authStore.setAuthData(res.data.auth_key, res.data.profile_data.name, res.data.profile_data.email, res.data.profile_data.app_uid, res.data.profile_data.user_type)
+        console.log(res)
+        ElMessage.success("Successfully Login")
+        switch (res.data.profile_data.user_type) {
+          case 'Student':
+            router.push('/student/application')
+            break
+          case 'Industry':
+            router.push('/client/panel')
+            break
+          default:
+            router.push('/')
+            break
+        }
+        loading.value = false
+      }).catch(error => {
+        console.log(error)
+        ElMessage.error(error.response.data.error)
+        loading.value = false
+      })
     }
     else {
-      console.log('error submit', fields)
+      // When fail form validation
+      console.log("ERROR:")
+      console.log(fields)
+      loading.value = false
+      ElMessage.error("Submit Failure. Please check the error message down input fields")
     }
   })
 }
@@ -197,7 +210,7 @@ button {
 @media screen and (max-width: 768px) {
   .form {
     width: 280px;
-    height: 460px;
+    height: 360px;
     border-radius: 24px;
     padding: 1rem;
     background-color: rgba(250, 250, 250, 0.8);
@@ -219,7 +232,7 @@ button {
 @media screen and (max-width: 992px) and (min-width: 768px) {
   .form {
     width: 480px;
-    height: 600px;
+    height: 500px;
     border-radius: 24px;
     padding: 2rem;
     background-color: rgba(250, 250, 250, 0.8);
@@ -241,7 +254,8 @@ button {
 @media screen and (min-width: 992px) {
   .form {
     width: 480px;
-    height: 600px;
+    /* 600 */
+    height: 500px;
     border-radius: 24px;
     padding: 2rem;
     background-color: rgba(250, 250, 250, 0.8);

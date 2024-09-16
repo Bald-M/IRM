@@ -11,7 +11,8 @@ const router = createRouter({
     {
       path: '/student/application',
       name: 'studentApplication',
-      component: () => import('@/views/student/ApplicationView.vue')
+      component: () => import('@/views/student/ApplicationView.vue'),
+      meta: { requireAuth: true, role: 'Student' }
     },
     {
       path: '/login',
@@ -54,7 +55,9 @@ const router = createRouter({
     {
       path: '/admin/panel',
       redirect: '/admin/panel/studentsList',
+      name: 'adminHome',
       component: () => import('@/views/admin/PanelView.vue'),
+      meta: { requireAuth: true, role: 'Admin' },
       children: [
         {
           path: '/admin/panel/studentsList',
@@ -77,6 +80,7 @@ const router = createRouter({
       path: '/client/panel',
       redirect: '/client/panel/candidatesList',
       component: () => import('@/views/client/PanelView.vue'),
+      meta: { requireAuth: true, role: 'Industry' },
       children: [
         {
           path: '/client/panel/candidatesList',
@@ -84,6 +88,11 @@ const router = createRouter({
           component: () => import('@/views/client/CandidatesListView.vue')
         }
       ]
+    },
+    {
+      path: '/emailVerification',
+      name: 'emailVerification',
+      component: () => import('@/views/EmailVerificationView.vue')
     },
     {
       path: '/:pathMatch(.*)*',

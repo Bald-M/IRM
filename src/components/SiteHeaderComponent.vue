@@ -8,24 +8,51 @@
 
       <div class="nav-links">
 
-        <div class="link-item">
-          <img src="@/assets/HeaderIcon/application_icon_blue.svg" class="icon" />
-          <span>Application</span>
+        <!-- Dynamic -->
+        <!-- If Logg in -->
+        <div class="link-item" v-if="isLoggedIn" @click="handleRouter('/student/application')">
+          <div class="link active">
+            <img src="@/assets/HeaderIcon/application_icon_blue.svg" class="icon" />
+            <span>Application</span>
+          </div>
+        </div>
+
+        <div class="link-item" v-else>
+          <div class="link">
+            <img src="@/assets/HeaderIcon/application_icon_blue.svg" class="icon" />
+            <span>Application</span>
+          </div>
         </div>
 
         <div class="link-item">
-          <img src="@/assets/HeaderIcon/contact_us_icon_blue.svg" class="icon" />
-          <span>Contact Us</span>
+          <div class="link">
+            <img src="@/assets/HeaderIcon/contact_us_icon_blue.svg" class="icon" />
+            <span>Contact Us</span>
+          </div>
         </div>
 
-      <!-- Dynamic -->
-      <!-- Display username if login -->
-      <!-- Display sign in if not login -->
-      <!-- Navigate to login view if not login -->
-      <!-- If item is selected, active it and img should change to white -->
-        <div class="link-item active" @click="handleRouter('/login')">
-          <img src="@/assets/HeaderIcon/sign_in_icon_white.svg" class="icon" />
-          <span>Sign In</span>
+        <!-- Dynamic -->
+        <!-- Display username if login -->
+        <!-- Display sign in if not login -->
+        <!-- Navigate to login view if not login -->
+        <!-- If item is selected, active it and img should change to white -->
+        <div class="link-item" v-if="isLoggedIn" @mouseover="showMenu" @mouseout="hideMenu" >
+          <div class="link">
+            <img src="@/assets/HeaderIcon/sign_in_icon_blue.svg" class="icon" />
+            <span>{{ username }}</span>
+          </div>
+          <div class="sub-menu" v-show="showSubMenu">
+            <div @click="logOut">
+              <el-text>Log Out</el-text>
+            </div>
+          </div>
+        </div>
+
+        <div class="link-item active" @click="handleRouter('/login')" v-else>
+          <div class="link">
+            <img src="@/assets/HeaderIcon/sign_in_icon_white.svg" class="icon" />
+            <span>Sign In</span>
+          </div>
         </div>
       </div>
 
@@ -37,11 +64,27 @@
 
 <script lang="ts" setup>
 import { useRouter } from 'vue-router'
+import { ref, computed } from 'vue'
+import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
+const authStore = useAuthStore()
+
+const isLoggedIn = computed(() => authStore.authKey)
+const username = computed(() => authStore.name)
+const logOut = authStore.clearAuthData
+const showSubMenu = ref(false)
 
 const handleRouter = (path: string) => {
   router.push(path)
+}
+
+const hideMenu = () => {
+  showSubMenu.value = false
+}
+
+const showMenu = () => {
+  showSubMenu.value = true
 }
 
 </script>
@@ -59,9 +102,9 @@ header {
   display: flex;
 }
 
-.el-text {
+/* .el-text {
   margin-left: 15px;
-}
+} */
 
 .logo {
   height: 80px;
@@ -74,8 +117,7 @@ header {
 }
 
 .link-item {
-  display: flex;
-  align-items: center;
+  position: relative;
   color: #0052A5;
   font-size: 16px;
   font-weight: bold;
@@ -84,7 +126,7 @@ header {
 }
 
 .link-item .icon {
-  margin-right: 8px; 
+  margin-right: 8px;
   width: 24px;
   height: 24px;
 }
@@ -93,14 +135,19 @@ header {
   cursor: pointer;
 }
 
-.link-item > span:hover {
+.link-item>span:hover {
   color: #7092bd;
+}
+
+.link {
+  display: flex;
+  align-items: center;
 }
 
 .active {
   display: flex;
   align-items: center;
-  background-color: #ff6600; 
+  background-color: #ff6600;
   color: white;
   padding: 10px 20px;
   border-radius: 20px;
@@ -115,7 +162,28 @@ header {
   height: 24px;
 }
 
+.sub-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  width: 100px;
+  border: rgba(0, 0, 0, 0.12) 1px solid;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  box-sizing: border-box;
+}
 
+.sub-menu>div {
+  padding-left: 15px;
+}
+
+.sub-menu>div:hover {
+  color: rgb(79, 166, 255);
+  background-color: rgb(236, 245, 253);
+}
 
 
 /* Phone */

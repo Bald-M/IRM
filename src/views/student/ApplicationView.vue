@@ -427,7 +427,7 @@ const handleCurrentChange = () => {
 
 .form-section {
   background-color: white;
-  height: 1500px;
+  height: 900px;
   border-radius: 32px;
 }
 

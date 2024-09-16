@@ -4,7 +4,7 @@ import type { AxiosInstance, InternalAxiosRequestConfig, AxiosError } from 'axio
 // create an axios instance
 const service: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_APP_API_URL,
-  timeout: 5000
+  timeout: 20000
 })
 
 // Request Interceptors

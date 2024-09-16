@@ -49,14 +49,14 @@
 <script lang="ts" setup>
 import { ref, reactive, inject } from 'vue'
 import { useRouter } from 'vue-router'
-import { ElMessage, ElLoading } from 'element-plus'
+import { ElMessage } from 'element-plus'
+import { useAuthStore } from '@/stores/auth'
 import type { FormProps, FormRules, FormInstance } from 'element-plus'
 import type { AxiosInstance } from 'axios'
-import { Message } from '@element-plus/icons-vue'
-
 
 const axios: AxiosInstance = inject('$axios') as AxiosInstance
 const router = useRouter()
+const authStore = useAuthStore()
 
 interface RuleForm {
   email: string,
@@ -177,9 +177,10 @@ const handleRegistration = async (formEl: FormInstance | undefined) => {
         }
       }).then(res => {
         console.log(res)
+        authStore.setServerRef(res.data.server_ref, form.email)
         ElMessage.success(res.data.description)
         loading.value = false
-        router.push('/login')
+        router.push('/emailVerification')
       }).catch(error => {
         console.log(error)
         ElMessage.error(error.response.data.error)
