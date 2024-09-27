@@ -6,7 +6,7 @@
       <div class="header-text">
         <div><el-text class="name">Allie Esber</el-text></div>
         <div>
-          <el-text class="status">Avilable</el-text>
+          <el-text>Avilable</el-text>
           <div class="available"></div>
         </div>
       </div>
@@ -79,7 +79,7 @@
   font-weight: 500;
 }
 
-.available, .unavailable {
+.available, .unavailable, .review {
   width: 10px;
   height: 10px;
   content: '';
@@ -94,6 +94,10 @@
 
 .unavailable {
   background-color: #FF0808;
+}
+
+.review {
+  background-color: #FE6601;
 }
 
 .name, .option-key {

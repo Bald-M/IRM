@@ -15,6 +15,12 @@ const router = createRouter({
       meta: { requireAuth: true, role: 'Student' }
     },
     {
+      path: '/student/profile',
+      name: 'studentProfile',
+      component: () => import('@/views/student/ProfileView.vue'),
+      meta: { requireAuth: true, role: 'Student' }
+    },
+    {
       path: '/login',
       name: 'login',
       // route level code-splitting
@@ -31,11 +37,6 @@ const router = createRouter({
       path: '/reset-password/request',
       name: 'requestResetPassword',
       component: () => import('@/views/RequestResetPasswordView.vue')
-    },
-    {
-      path: '/reset-password/confirmation',
-      name: 'ConfirmResetEmail',
-      component: () => import('@/views/ConfirmResetEmailView.vue')
     },
     {
       path: '/reset-password/reset',
@@ -95,8 +96,18 @@ const router = createRouter({
       component: () => import('@/views/EmailVerificationView.vue')
     },
     {
+      path: '/resetPassVerification',
+      name: 'resetPassVerification',
+      component: () => import('@/views/ResetPassVerificationView.vue')
+    },
+    {
+      path: '/unauthorized',
+      name: 'unauthorized',
+      component: () => import('@/views/401View.vue')
+    },
+    {
       path: '/:pathMatch(.*)*',
-      name: 'not-found',
+      name: 'notFound',
       component: () => import('@/views/404View.vue')
     }
   ]

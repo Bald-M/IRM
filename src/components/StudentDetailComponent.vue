@@ -6,6 +6,10 @@
       <div class="header-text">
         <el-text>Alice Smith</el-text>
         <el-text>ID: 23456611</el-text>
+        <div>
+          <el-text>Avilable</el-text>
+          <div class="available"></div>
+        </div>
       </div>
 
       <div class="header-logo">
@@ -185,7 +189,7 @@
 }
 
 .container {
-  height: 900px;
+  height: 100%;
   width: 100%;
   border: #e3e3e3 2px solid;
   padding: 15px 30px;
@@ -201,7 +205,7 @@
   font-weight: bold;
 }
 
-.header-text>.el-text:last-child {
+.header-text>.el-text:nth-child(2) {
   font-size: 16px;
   margin-left: 4rem;
   color: #3A3541;
@@ -230,5 +234,26 @@
 
 .el-col {
   margin-top: 2rem;
+}
+
+.available, .unavailable, .review {
+  width: 10px;
+  height: 10px;
+  content: '';
+  border-radius: 180px;
+  display: inline-block;
+  margin: 0 10px;
+}
+
+.available {
+  background-color: #09FF5C;
+}
+
+.unavailable {
+  background-color: #FF0808;
+}
+
+.review {
+  background-color: #FE6601;
 }
 </style>

@@ -2,8 +2,8 @@
   <div class="container">
     <div class="section">
       <div style="text-align: center;">
-        <h1>404</h1>
-        <h2>Page Not Found!</h2>
+        <h1>401</h1>
+        <h2>Unauthorized Response!</h2>
       </div>
 
       <div style="text-align: center;" class="mt-6">

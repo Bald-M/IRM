@@ -1,10 +1,11 @@
 <template>
 
   <!-- This view should use token for security -->
-  <div class="container">
+  <div class="container" v-loading="loading">
 
-    <el-form :model="form" :rules="rules" class="form" label-width="auto" :label-position="top" status-icon>
-      
+    <el-form :model="form" :rules="rules" ref="ruleFormRef" class="form" label-width="auto" :label-position="top"
+      status-icon>
+
       <!-- Wintec Logo -->
       <div style="display: flex; justify-content: center;">
         <img src="@/assets/Industry Internship System Logo.svg" class="industry-internship-system-logo" />
@@ -23,7 +24,7 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="resetPassword">Reset Password</el-button>
+        <el-button type="primary" @click="resetPassword(ruleFormRef)">Reset Password</el-button>
       </el-form-item>
 
       <el-form-item>
@@ -38,12 +39,19 @@
 
 <script lang="ts" setup>
 import { ref, reactive, inject } from 'vue'
-import type { FormProps, FormRules } from 'element-plus'
+import { ElMessage, type FormProps, type FormInstance, type FormRules } from 'element-plus'
 import type { Router } from 'vue-router'
+import type { AxiosInstance } from 'axios'
+import { useAuthStore } from '@/stores/auth'
 
 const router: Router = inject('$router') as Router
-
+const axios: AxiosInstance = inject('$axios') as AxiosInstance
+const authStore = useAuthStore()
 const top = ref<FormProps['labelPosition']>('top')
+const ruleFormRef = ref<FormInstance>()
+const loading = ref(false)
+const email = authStore.email
+const server_ref = authStore.server_ref
 
 interface RuleForm {
   password: string,
@@ -56,27 +64,82 @@ const form = reactive<RuleForm>({
 })
 
 // Validate if two passwords inputed are correct
-const passwordValidation = (rule: any, value: any, callback: any) => {
+const passwordValidation = (rule: any, value: string, callback: any) => {
+  if (!value) {
+    return callback(new Error('This field is required'))
+  }
+
+  // Regular expressions for different character types
+  const hasUpperCase = /[A-Z]/.test(value);
+  const hasLowerCase = /[a-z]/.test(value);
+  const hasNumber = /\d/.test(value);
+
+  if (value.length < 8) {
+    callback(new Error('Password must be at least 8 characters long.'))
+  } else if (!hasUpperCase || !hasLowerCase || !hasNumber) {
+    callback(new Error('Password must include uppercase, lowercase letters, and numbers.'))
+  } else {
+    callback()
+  }
+}
+
+const confirmPasswordValidation = (rule: any, value: string, callback: any) => {
   if (value !== form.password) {
-    callback(new Error('Passwords do not match'))
+    callback(new Error('Passwords do not match.'))
+  } else {
+    callback()
   }
 }
 
 const rules = reactive<FormRules<RuleForm>>({
   password: [
-    { required: true, message: 'This field is requried', trigger: 'blur'},
-    { min: 8, message: 'Password must be at least 8 characters long and contain a mix of uppercase, lowercase, and special characters', trigger: 'blur'}
+    { required: true, message: 'This field is requried', trigger: 'blur' },
+    { validator: passwordValidation, trigger: 'blur' }
   ],
   confirmedPassword: [
-    { required: true, message: 'This field is required', trigger: 'blur'},
-    { validator: passwordValidation, trigger: 'blur' }
+    { required: true, message: 'This field is required', trigger: 'blur' },
+    { validator: confirmPasswordValidation, trigger: 'blur' }
   ]
 })
 
-const resetPassword = () => {
-  // POST to reset password API
-  // Navigate to success view
-  router.push('/reset-password/success')
+const resetPassword = async (formEl: FormInstance | undefined) => {
+  console.log(formEl)
+  if (!formEl) return
+  await formEl.validate((valid, fields) => {
+    if (valid) {
+      loading.value = true
+      axios({
+        url: '/api/forgotPassChange',
+        method: 'post',
+        data: {
+          email,
+          server_ref,
+          otp: localStorage.getItem('otp'),
+          password: form.password
+        },
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }).then(res => {
+        console.log(res)
+        ElMessage.success(res.data.description)
+        router.push('/login')
+        loading.value = false
+      }).catch(error => {
+        console.log(error)
+        if (error.response && error.response.data) {
+          ElMessage.error(error.response.data.error)
+        } else {
+          ElMessage.error('Network error or server not responding. Please try again later.')
+        }
+        loading.value = false
+      })
+    } else {
+      console.log(fields)
+      loading.value = false
+    }
+  })
+
 }
 
 const backToLogin = () => {
@@ -86,7 +149,6 @@ const backToLogin = () => {
 </script>
 
 <style scoped>
-
 .container {
   height: 100%;
   display: flex;
@@ -119,5 +181,4 @@ const backToLogin = () => {
     background-color: white;
   }
 }
-
 </style>

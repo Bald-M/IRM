@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
+  <div class="container" v-loading="loading">
 
-    <el-form :model="form" :rules="rules" label-width="auto" class="form" :label-position="top" status-icon>
+    <el-form :model="form" :rules="rules" ref="ruleFormRef" label-width="auto" class="form" :label-position="top" status-icon>
 
       <!-- Wintec Logo -->
       <div style="display: flex; justify-content: center;">
@@ -9,7 +9,8 @@
       </div>
 
       <el-form-item class="mt-1">
-        <el-text style="color: #6C6B6B; font-weight: bold;">Enter the email you used to create your account so we can send you instructions on how to reset your password.</el-text>
+        <el-text style="color: #6C6B6B; font-weight: bold;">Enter the email you used to create your account so we can
+          send you instructions on how to reset your password.</el-text>
       </el-form-item>
 
       <el-form-item label="Email" prop="email">
@@ -17,7 +18,7 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="handleSendButton">Send</el-button>
+        <el-button type="primary" @click="handleSendButton(ruleFormRef)">Send</el-button>
       </el-form-item>
 
       <el-form-item>
@@ -33,12 +34,19 @@
 
 <script lang="ts" setup>
 import { ref, reactive, inject } from 'vue'
-import type { FormProps, FormRules } from 'element-plus'
+import { ElMessage, type FormProps, type FormInstance, type FormRules } from 'element-plus'
+import { useAuthStore } from '@/stores/auth'
 import { Message } from '@element-plus/icons-vue'
 import type { Router } from 'vue-router'
+import { useRouter } from 'vue-router'
+import type { AxiosInstance } from 'axios'
 
 
-const router: Router = inject('$router') as Router
+const axios: AxiosInstance = inject('$axios') as AxiosInstance
+const router: Router = useRouter()
+const authStore = useAuthStore()
+const loading = ref(false)
+const ruleFormRef = ref<FormInstance>()
 
 interface RuleForm {
   email: string,
@@ -51,23 +59,59 @@ const form = reactive<RuleForm>({
 
 const rules = reactive<FormRules<RuleForm>>({
   email: [
-    { required: true, message: 'This field is required', trigger: 'blur'},
-    { type: 'email', message: 'Invalid email address', trigger: 'blur'}
+    { required: true, message: 'This field is required', trigger: 'blur' },
+    { type: 'email', message: 'Invalid email address', trigger: 'blur' }
   ]
 })
 
 const top = ref<FormProps['labelPosition']>('top')
 
 
-const handleSendButton = () => {
-  // Send Email to user's email address
-  router.push('/reset-password/confirmation')
+const handleSendButton = async (formEl: FormInstance | undefined) => {
+  console.log(formEl)
+  if (!formEl) return
+  await formEl.validate((valid, fields) => {
+    if (valid) {
+      loading.value = true
+      // Send Email to user's email address
+      axios({
+        url: '/api/forgotPassRequest',
+        method: 'post',
+        data: {
+          email: form.email,
+        },
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }).then(res => {
+        authStore.setServerRef(res.data.server_ref, form.email)
+        console.log(res)
+        ElMessage.success(res.data.description)
+        // router.push('/reset-password/confirmation')
+        router.push('/resetPassVerification')
+        loading.value = false
+      }).catch(error => {
+        console.log(error)
+        // 先检查 error.response 是否存在，防止未定义错误
+        if (error.response && error.response.data) {
+          // 提示用户错误信息
+          ElMessage.error(error.response.data.error)
+        } else {
+          // 如果 error.response 不存在，提示网络问题或服务器未响应
+          ElMessage.error('Network error or server not responding. Please try again later.')
+        }
+        loading.value = false
+      })
+    } else {
+      console.log(fields)
+      loading.value = false
+    }
+  })
 }
 
 const handleNavButton = () => {
   router.push('/login')
 }
-
 
 
 </script>

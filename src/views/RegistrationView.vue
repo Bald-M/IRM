@@ -177,13 +177,20 @@ const handleRegistration = async (formEl: FormInstance | undefined) => {
         }
       }).then(res => {
         console.log(res)
-        authStore.setServerRef(res.data.server_ref, form.email)
         ElMessage.success(res.data.description)
         loading.value = false
+        authStore.setServerRef(res.data.server_ref, form.email)
         router.push('/emailVerification')
       }).catch(error => {
         console.log(error)
-        ElMessage.error(error.response.data.error)
+        // 先检查 error.response 是否存在，防止未定义错误
+        if (error.response && error.response.data) {
+          // 提示用户错误信息
+          ElMessage.error(error.response.data.error)
+        } else {
+          // 如果 error.response 不存在，提示网络问题或服务器未响应
+          ElMessage.error('Network error or server not responding. Please try again later.')
+        }
         loading.value = false
       })
     }

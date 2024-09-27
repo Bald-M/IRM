@@ -43,6 +43,15 @@
           </div>
           <div class="sub-menu" v-show="showSubMenu">
             <div @click="logOut">
+              <el-text>Application</el-text>
+            </div>
+            <div @click="logOut">
+              <el-text>Profile</el-text>
+            </div>
+            <div @click="logOut">
+              <el-text>Contact Us</el-text>
+            </div>
+            <div @click="logOut">
               <el-text>Log Out</el-text>
             </div>
           </div>

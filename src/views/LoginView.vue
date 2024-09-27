@@ -92,10 +92,6 @@ const rules = reactive<FormRules<RuleForm>>({
 
 const top = ref<FormProps['labelPosition']>('top')
 
-// It depends
-// student -> /student/home
-// industry -> /client/panel
-// admin -> /admin/panel
 const handleLogin = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
   await formEl.validate((valid, fields) => {
@@ -129,16 +125,28 @@ const handleLogin = async (formEl: FormInstance | undefined) => {
         loading.value = false
       }).catch(error => {
         console.log(error)
-        ElMessage.error(error.response.data.error)
+        // 先检查 error.response 是否存在，防止未定义错误
+        if (error.response && error.response.data) {
+          // 提示用户错误信息
+          ElMessage.error(error.response.data.error)
+
+          // 如果错误消息是 OTP 已发送，跳转到 emailVerification 页面
+          if (error.response.data.error === 'OTP sent, Email verification required') {
+            authStore.setServerRef(error.response.data.server_ref, form.email)
+            router.push('/emailVerification')
+          }
+        } else {
+          // 如果 error.response 不存在，提示网络问题或服务器未响应
+          ElMessage.error('Network error or server not responding. Please try again later.')
+        }
         loading.value = false
       })
     }
     else {
       // When fail form validation
-      console.log("ERROR:")
       console.log(fields)
       loading.value = false
-      ElMessage.error("Submit Failure. Please check the error message down input fields")
+      // ElMessage.error("Submit Failure. Please check the error message down input fields")
     }
   })
 }

@@ -1,7 +1,7 @@
 import router from '../router'
 import { useAuthStore } from '../stores/auth'
 
-router.beforeEach(async (to) => {
+router.beforeEach(async (to, from) => {
   const authStore = useAuthStore()
   // Restore the auth data from localStorage if page is reloaded
   authStore.restoreAuthData()
@@ -12,6 +12,9 @@ router.beforeEach(async (to) => {
   if (!isLogin) {
     // 允许访问登录、注册或主页
     if (to.path === '/login' || to.path === '/registration' || to.path === '/home' || to.path === '/reset-password/request' || to.path === '/emailVerification') {
+      if (to.path === '/emailVerification' && (from.path !== '/login' && from.path !== '/registration') ) {
+        return { name: 'login' }
+      }
       return true
     }
     // Redirect to login
@@ -19,16 +22,9 @@ router.beforeEach(async (to) => {
   }
   // Go to emailVerification need server ref
 
-  // If the user is logged in and try to access login page
-  // Student Home Page = studentApplication
-  // if (isLogin && to.path === '/login') {
-  //   // 根据用户角色重定向到相应的首页
-  //   return userType === 'Admin' ? { name: 'adminHome' } : { name: 'studentApplication' }
-  // }
-
   if (isLogin && to.meta.requireAuth && to.meta.role !== userType) {
     // 重定向到对应角色的首页
-    return { name: 'not-found' }
+    return { name: 'unauthorized' }
   }
 
   // In other cases, continue navigation

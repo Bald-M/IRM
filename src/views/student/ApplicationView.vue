@@ -262,16 +262,12 @@
 
           </div>
 
-
-
         </div>
 
       </div>
 
     </div>
 
-    <!-- <div class="mt-6">xx</div>
-    <div class="mt-6">xx</div> -->
 
 
     <Footer class="mt-6" />
