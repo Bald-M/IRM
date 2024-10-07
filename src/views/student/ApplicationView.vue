@@ -52,7 +52,14 @@
         <div>
           <!-- Form Logo -->
           <div class="form-logo-section">
-            <img src="@/assets/personal_information_questions_icon.svg" class="form-logo" />
+            <img src="@/assets/ApplicationFormIcon/Personal Information Icon.svg" class="form-logo"
+              v-if="currentPage === 1" />
+            <img src="@/assets/ApplicationFormIcon/Academic & Career Information.svg" class="form-logo"
+              v-if="currentPage === 2" />
+            <img src="@/assets/ApplicationFormIcon/Internship Preferences Icon.svg" class="form-logo"
+              v-if="currentPage === 3" />
+            <img src="@/assets/ApplicationFormIcon/Internship References Icon.svg" class="form-logo"
+              v-if="currentPage === 4" />
           </div>
 
           <div>
@@ -60,198 +67,176 @@
               :label-position="top" status-icon>
 
               <!-- First Page -->
-              <template v-if="currentPage === 1">
+              <div v-show="currentPage === 1">
 
                 <el-form-item label="Full Name" prop="name">
-                  <el-input v-model="form.name" clearable />
+                  <el-input v-model="form.name" clearable></el-input>
                 </el-form-item>
 
                 <el-form-item label="Student ID" prop="id">
-                  <el-input v-model="form.id" clearable />
+                  <el-input v-model="form.id" clearable></el-input>
                 </el-form-item>
 
-                <el-form-item label="Student Email" prop="personalEmail">
-                  <el-input v-model="form.studentEmail" clearable />
+                <el-form-item label="Student Email" prop="studentEmail">
+                  <el-input v-model="form.studentEmail" clearable></el-input>
                 </el-form-item>
 
-                <el-form-item label="Personal Email" prop="studentEmail">
-                  <el-input v-model="form.personalEmail" clearable />
+                <el-form-item label="Personal Email" prop="personalEmail">
+                  <el-input v-model="form.personalEmail" clearable></el-input>
                 </el-form-item>
 
                 <el-form-item label="Phone Number" prop="phoneNum">
-                  <el-input v-model="form.phoneNum" clearable />
+                  <el-input v-model="form.phoneNum" clearable></el-input>
                 </el-form-item>
 
-              </template>
+              </div>
 
               <!-- Second Page -->
-              <template v-if="currentPage === 2">
-                <el-form-item label="Personal Statement">
-                  <el-text class="description" size="small">A short personal statement that can be published to our
-                    website for
-                    prospective employers to view. This states what you are interested in the IT sector. Industry see
-                    this next to your name and link to your CV etc.</el-text>
-                  <el-input type="textarea"></el-input>
-                </el-form-item>
+              <div v-show="currentPage === 2">
 
-                <el-row :gutter="20">
-                  <el-col :span="12">
-                    <el-form-item label="CV/Resume">
-                      <el-text class="description" size="small">Add the link to your online resume</el-text>
-                      <el-input></el-input>
-                    </el-form-item>
-                  </el-col>
+                <el-scrollbar height="400px" always>
+                  <el-form-item label="Personal Statement" prop="personalStatement">
+                    <el-text class="description" size="small">A short personal statement that can be published to our
+                      website for
+                      prospective employers to view. This states what you are interested in the IT sector. Industry see
+                      this next to your name and link to your CV etc.</el-text>
+                    <el-input type="textarea" v-model="form.personalStatement"></el-input>
+                  </el-form-item>
 
-                  <el-col :span="12">
-                    <el-form-item label="Linkedin">
-                      <el-text class="description" size="small">Add the link to your LinkedIn profile</el-text>
-                      <el-input></el-input>
-                    </el-form-item>
-                  </el-col>
+                  <el-form-item label="CV/Resume" prop="cv">
+                    <el-text class="description" size="small">Add the link to your online resume</el-text>
+                    <el-input placeholder="Add the link to your online resume" v-model="form.cv"></el-input>
+                  </el-form-item>
 
-                </el-row>
+                  <el-form-item label="Linkedin" prop="linkedin">
+                    <el-text class="description" size="small">Add the link to your LinkedIn profile</el-text>
+                    <el-input placeholder="Add the link to your LinkedIn profile" v-model="form.linkedin"></el-input>
+                  </el-form-item>
 
-                <el-row :gutter="20">
-                  <el-col :span="12">
-                    <el-form-item label="Portfolio">
-                      <el-text class="description" size="small">Add the link to your online of work</el-text>
-                      <el-input></el-input>
-                    </el-form-item>
-                  </el-col>
+                  <el-form-item label="Portfolio" prop="portfolio">
+                    <el-text class="description" size="small">Add the link to your online portfolio of
+                      work</el-text>
+                    <el-input placeholder="Add the link to your online portfolio of work"
+                      v-model="form.portfolio"></el-input>
+                  </el-form-item>
 
-                  <el-col :span="12">
-                    <el-form-item label="GitHub Profile">
-                      <el-text class="description" size="small">Add the link to your Github profile</el-text>
-                      <el-input></el-input>
-                    </el-form-item>
-                  </el-col>
+                  <el-form-item label="GitHub Profile" prop="github">
+                    <el-text class="description" size="small">Add the link to your Github profile</el-text>
+                    <el-input placeholder="Add the link to your Github profile" v-model="form.github"></el-input>
+                  </el-form-item>
 
-                </el-row>
+                  <el-form-item label="What is your average grade?" prop="grade">
+                    <el-radio-group v-model="form.grade">
+                      <el-radio v-for="item in grades" :key="item.id" :value="item.value" size="large" border>{{
+                        item.label }}</el-radio>
+                    </el-radio-group>
 
-                <el-row :gutter="20">
-                  <el-col :span="8">
-                    <el-form-item label="What is your average grade?">
-                      <el-radio-group v-model="radioTest1" class="second-page-radio-group">
-                        <el-radio value="A" size="small" border>A grade</el-radio>
-                        <el-radio value="B" size="small" border>B grade</el-radio>
-                        <el-radio value="C" size="small" border>C grade</el-radio>
-                      </el-radio-group>
+                  </el-form-item>
 
-                    </el-form-item>
-                  </el-col>
+                  <!-- Degree - SE - Software Engineering
+                  Degree - NE - Networking Engineering
+                  Postgraduate Diploma - SE - Software Engineering
+                  Postgraduate Diploma - NE - Network Engineering
+                  Masters - SE - Software Engineering
+                  Masters - NE - Network Engineering
+                  Masters - Database or Data Analytics
+                  Masters - BA or Project Management -->
+                  <el-form-item label="What is your programme?" prop="programme">
+                    <el-radio-group v-model="form.programme">
+                      <el-radio v-for="item in programmes" :key="item.id" :value="item.value" size="large" border>{{
+                        item.label }}</el-radio>
+                    </el-radio-group>
+                  </el-form-item>
 
-                  <el-col :span="8">
-                    <el-form-item label="What is your programme?">
-                      <el-radio-group v-model="radioTest1" class="second-page-radio-group">
-                        <el-radio value="A" size="small" border>Bachelor of Applied IT</el-radio>
-                        <el-radio value="B" size="small" border>Postgraduate Diploma in IT</el-radio>
-                        <el-radio value="C" size="small" border>Master of Applied IT</el-radio>
-                      </el-radio-group>
-                    </el-form-item>
+                  <el-form-item label="What is your area of study?" prop="areaOfStudy">
+                    <el-radio-group v-model="form.areaOfStudy">
+                      <el-radio v-for="item in studies" :key="item.id" :value="item.value" size="large" border>{{
+                        item.label }}</el-radio>
+                    </el-radio-group>
+                  </el-form-item>
 
-                  </el-col>
+                </el-scrollbar>
 
-                  <el-col :span="8">
-                    <el-form-item label="What is your area of study?">
-                      <el-radio-group v-model="radioTest1" class="second-page-radio-group">
-                        <el-radio value="A" size="small" border>Network Engineering</el-radio>
-                        <el-radio value="B" size="small" border>Software Engineering</el-radio>
-                        <el-radio value="C" size="small" border>Database or Data Analytics</el-radio>
-                        <!-- <el-radio value="D" size="small" border>Project Management</el-radio> -->
-                      </el-radio-group>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
+              </div>
 
+              <!-- Third page -->
+              <div v-show="currentPage === 3">
 
-              </template>
+                <el-scrollbar height="400px" always>
+
+                  <el-form-item label="What are your internship options?" prop="internshipOptions">
+                    <el-checkbox-group v-model="form.internshipOptions">
+                      <el-checkbox v-for="item in internshipOptions" :key="item.id" :value="item.value"
+                        :label="item.label" size="large" border />
+                    </el-checkbox-group>
+                  </el-form-item>
+
+                  <el-form-item label="Do you have company preferences?" prop="preferences">
+                    <el-checkbox-group v-model="form.preferences">
+                      <el-checkbox v-for="item in companies" :key="item.id" :value="item.value" :label="item.label"
+                        size="large" border />
+                    </el-checkbox-group>
+                  </el-form-item>
+
+                  <el-form-item label="Please indicate your first preference for a placement?" prop="firstPreference">
+                    <el-radio-group v-model="form.firstPreference">
+                      <el-radio v-for="item in preferences" :key="item.id" :value="item.value" size="large" border>{{
+                        item.label }}</el-radio>
+                    </el-radio-group>
+                  </el-form-item>
+
+                  <el-form-item label="Please indicate your second preference for a placement?" prop="secondPreference">
+                    <el-radio-group v-model="form.secondPreference">
+                      <el-radio v-for="item in preferences" :key="item.id" :value="item.value" size="large" border>{{
+                        item.label }}</el-radio>
+                    </el-radio-group>
+                  </el-form-item>
+
+                </el-scrollbar>
+
+              </div>
 
               <!-- Last page -->
-              <template v-if="currentPage === 3">
+              <div v-show="currentPage === 4">
+                <el-scrollbar height="400px" always>
 
-                <el-row :gutter="20">
-                  <el-col :span="12">
-                    <el-form-item label="What are your internship options?">
-                      <el-text class="description" size="small">Please select the type of internship you would
-                        like</el-text>
-                      <el-checkbox v-model="checkboxTest1" label="API Development" size="large" border />
-                      <el-checkbox v-model="checkboxTest1" label="Business Analysis" size="large" border />
-                      <el-checkbox v-model="checkboxTest1" label="Data Analysis" size="large" border />
-                      <el-checkbox v-model="checkboxTest1" label="Database" border size="large" />
-                      <el-checkbox v-model="checkboxTest1" label="Game Development" size="large" border />
-                      <el-checkbox v-model="checkboxTest1" label="Mobile App Development" size="large" border />
-                      <el-checkbox v-model="checkboxTest1" label="Networking" size="large" border />
-                      <el-checkbox v-model="checkboxTest1" label="Project Management" size="large" border />
-                      <el-checkbox v-model="checkboxTest1" label="Security" size="large" border />
-                      <el-checkbox v-model="checkboxTest1" label="Software Testing" size="large" border />
-                      <el-checkbox v-model="checkboxTest1" label="System support - help desk" size="large" border />
-                      <el-checkbox v-model="checkboxTest1" label="UX/UI design" size="large" border />
-                      <el-checkbox v-model="checkboxTest1" label="Web Development" size="large" border />
-                      <!-- If choose other, a new input field should be appeared -->
-                      <el-checkbox v-model="checkboxTest1" label="Other" size="large" border />
-                    </el-form-item>
-                  </el-col>
+                  <el-form-item label="What are your skills and experience?" prop="experience">
+                    <!-- <el-text class="description" size="small">e.g. skills, computer languages, work experience in IT or
+                      leadership & communication</el-text> -->
+                    <el-input auto-size v-model="form.experience" type="textarea"></el-input>
+                  </el-form-item>
 
-                  <el-col :span="12">
+                  <el-form-item label="What are your favourite courses from your studies?" prop="courses">
+                    <el-input auto-size v-model="form.courses" type="textarea"></el-input>
+                  </el-form-item>
 
-                      <el-form-item label="What are your internship options?">
-                        <el-text class="description" size="small">Please select the type of internship you would
-                          like</el-text>
-                        <el-checkbox v-model="checkboxTest1" label="Blackout Games" size="large" border />
-                        <el-checkbox v-model="checkboxTest1" label="CTEK" size="large" border />
-                        <el-checkbox v-model="checkboxTest1" label="Datacom" size="large" border />
-                        <el-checkbox v-model="checkboxTest1" label="Englighten Design" border size="large" />
-                        <el-checkbox v-model="checkboxTest1" label="Game Development" size="large" border />
-                        <el-checkbox v-model="checkboxTest1" label="Mobile App Development" size="large" border />
-                        <el-checkbox v-model="checkboxTest1" label="Networking" size="large" border />
-                        <el-checkbox v-model="checkboxTest1" label="Project Management" size="large" border />
-                        <el-checkbox v-model="checkboxTest1" label="Security" size="large" border />
-                        <el-checkbox v-model="checkboxTest1" label="Software Testing" size="large" border />
-                        <el-checkbox v-model="checkboxTest1" label="System support - help desk" size="large" border />
-                        <el-checkbox v-model="checkboxTest1" label="UX/UI design" size="large" border />
-                        <el-checkbox v-model="checkboxTest1" label="Web Development" size="large" border />
-                        <!-- If choose other, a new input field should be appeared -->
-                        <el-checkbox v-model="checkboxTest1" label="Other" size="large" border />
-                      </el-form-item>
-                  </el-col>
+                  <el-form-item label="Provide TWO tutors that I can get a reference from you?" prop="tutors">
+                    <el-input auto-size v-model="form.tutors" type="textarea"></el-input>
+                  </el-form-item>
 
-                  <el-col :span="12">
-                    <el-form-item label="Please indicate your first preference for a placement?">
-                      <el-radio-group v-model="radioTest1" class="third-page-radio-group">
-                        <el-radio value="A" size="large" border>Internship</el-radio>
-                        <el-radio value="B" size="large" border>Industry Project</el-radio>
-                        <el-radio value="C" size="large" border>Internal Client Internship/Project</el-radio>
-                        <el-radio value="C" size="large" border>Internal Client Internship/Project</el-radio>
-                        <el-radio value="C" size="large" border>Classroom Project</el-radio>
-                        <el-radio value="C" size="large" border>Design Factory</el-radio>
-                        <el-radio value="C" size="large" border>GIG - Internal Client Based Projects</el-radio>
-                      </el-radio-group>
-                    </el-form-item>
-                  </el-col>
+                  <el-form-item label="Application agreement">
+                    <el-row :gutter="0">
+                      <el-col :span="2">
+                        <el-checkbox v-model="term" />
+                      </el-col>
+                      <el-col :span="22" style="padding-top: 5px;">
+                        <el-text>I understand and agree that Wintec partner internships and industry
+                          projects are unpaid
+                          voluntary work for a minimum of 300 hours made up of 2 days a week over the 16 weeks of
+                          semester</el-text>
+                      </el-col>
+                    </el-row>
+                  </el-form-item>
 
-                  <el-col :span="12">
-                    <el-form-item label="Please indicate your second preference for a placement?">
-                      <el-radio-group v-model="radioTest1" class="third-page-radio-group">
-                        <el-radio value="A" size="large" border>Internship</el-radio>
-                        <el-radio value="B" size="large" border>Industry Project</el-radio>
-                        <el-radio value="C" size="large" border>Internal Client Internship/Project</el-radio>
-                        <el-radio value="C" size="large" border>Internal Client Internship/Project</el-radio>
-                        <el-radio value="C" size="large" border>Classroom Project</el-radio>
-                        <el-radio value="C" size="large" border>Design Factory</el-radio>
-                        <el-radio value="C" size="large" border>GIG - Internal Client Based Projects</el-radio>
-                      </el-radio-group>
-                    </el-form-item>
-                  </el-col>
+                  <el-form-item v-if="currentPage === 4">
+                    <el-button v-if="term === true" type="primary" style="width: 200px; margin: 20px auto;"
+                      @click="handleSubmit(ruleFormRef)">Submit</el-button>
+                    <el-button v-else disabled type="primary"
+                      style="width: 200px; margin: 20px auto;">Submit</el-button>
+                  </el-form-item>
+                </el-scrollbar>
 
-
-                </el-row>
-
-                <el-form-item>
-                  <!-- @click="handleSubmit(ruleFormRef)" -->
-                  <el-button type="primary" style="width: 200px; margin: 20px auto;">Submit</el-button>
-                </el-form-item>
-
-              </template>
+              </div>
 
               <el-form-item>
                 <el-pagination v-model:current-page="currentPage" v-model:page-size="pageSize"
@@ -268,8 +253,6 @@
 
     </div>
 
-
-
     <Footer class="mt-6" />
 
   </div>
@@ -285,11 +268,14 @@ import backgroundImg from '@/assets/Background Image2.jpg'
 import fillOutApplication from '@/assets/fill_out_application_icon.svg'
 import gatherInformation from '@/assets/gather_information_icon.svg'
 import submitAndWait from '@/assets/submit_and_wait_icon.svg'
-import type { FormProps, FormRules, FormInstance } from 'element-plus'
-import { ref, reactive } from 'vue'
+import type { FormProps, FormRules, FormInstance, CheckboxValueType } from 'element-plus'
+import { ElMessage } from 'element-plus'
+import { ref, reactive, inject, computed } from 'vue'
+import type { AxiosInstance } from 'axios'
 
-const radioTest1 = ref()
-const checkboxTest1 = ref()
+// https://element-plus.org/zh-CN/component/select.html 自定义下拉菜单底部 add an option
+
+const axios: AxiosInstance = inject('$axios') as AxiosInstance
 
 const banner = reactive({
   title: 'Internship Application',
@@ -311,7 +297,8 @@ const currentStep = ref(0)
 const steps = reactive([
   { id: 1, label: 'Personal Information' },
   { id: 2, label: 'Academic & Career Information' },
-  { id: 3, label: 'Internship Preferences & References' },
+  { id: 3, label: 'Internship Preferences' },
+  { id: 4, label: 'Internship References' },
 ])
 
 // Form
@@ -324,7 +311,22 @@ interface RuleForm {
   id: string,
   personalEmail: string,
   studentEmail: string,
-  phoneNum: string
+  phoneNum: string,
+  personalStatement: string,
+  cv: string,
+  linkedin: string,
+  github: string,
+  portfolio: string,
+  grade: string,
+  programme: string,
+  areaOfStudy: string,
+  experience: string,
+  courses: string,
+  tutors: string,
+  internshipOptions: CheckboxValueType[],
+  preferences: CheckboxValueType[],
+  firstPreference: string,
+  secondPreference: string
 }
 
 const form = reactive<RuleForm>({
@@ -332,9 +334,23 @@ const form = reactive<RuleForm>({
   id: '',
   personalEmail: '',
   studentEmail: '',
-  phoneNum: ''
+  phoneNum: '',
+  personalStatement: '',
+  cv: '',
+  linkedin: '',
+  portfolio: '',
+  github: '',
+  grade: '',
+  programme: '',
+  areaOfStudy: '',
+  experience: '',
+  courses: '',
+  tutors: '',
+  internshipOptions: [],
+  preferences: [],
+  firstPreference: '',
+  secondPreference: ''
 })
-
 
 const rules = reactive<FormRules<RuleForm>>({
   name: [
@@ -354,16 +370,385 @@ const rules = reactive<FormRules<RuleForm>>({
   phoneNum: [
     { required: true, message: 'This field is requried', trigger: 'blur' }
   ],
+  personalStatement: [
+    { required: true, message: 'This field is requried', trigger: 'blur' },
+  ],
+  cv: [
+    { required: true, message: 'This field is requried', trigger: 'blur' }
+  ],
+  portfolio: [
+    { required: true, message: 'This field is requried', trigger: 'blur' }
+  ],
+  github: [
+    { required: true, message: 'This field is requried', trigger: 'blur' }
+  ],
+  linkedin: [
+    { required: true, message: 'This field is requried', trigger: 'blur' }
+  ],
+  programme: [
+    { required: true, message: 'This field is requried', trigger: 'change' }
+  ],
+  areaOfStudy: [
+    { required: true, message: 'This field is requried', trigger: 'change' }
+  ],
+  grade: [
+    { required: true, message: 'This field is requried', trigger: 'change' }
+  ],
+  experience: [
+    { required: true, message: 'This field is requried', trigger: 'blur' }
+  ],
+  courses: [
+    { required: true, message: 'This field is requried', trigger: 'blur' }
+  ],
+  tutors: [
+    { required: true, message: 'This field is requried', trigger: 'blur' }
+  ],
+  internshipOptions: [
+    { required: true, type: 'array', message: 'This field is requried', trigger: 'change' }
+  ],
+  preferences: [
+    { required: true, type: 'array', message: 'This field is requried', trigger: 'change' }
+  ],
+  firstPreference: [
+    { required: true, message: 'This field is requried', trigger: 'change' }
+  ],
+  secondPreference: [
+    { required: true, message: 'This field is requried', trigger: 'change' }
+  ]
 })
+
+const formPostedFmt = computed(() => ({
+  name: form.name,
+  wintec_id: form.id,
+  personal_email: form.personalEmail,
+  student_email: form.studentEmail,
+  phone_number: form.phoneNum,
+  personal_statement: form.personalStatement,
+  cv_link: form.cv,
+  linkedin_link: form.linkedin,
+  portfolio_link: form.portfolio,
+  github_link: form.github,
+  average_grade: form.grade,
+  programme_of_study: form.programme,
+  area_of_study: form.areaOfStudy,
+  internship_options: form.internshipOptions,
+  preferred_companies: form.preferences,
+  first_preference: form.firstPreference,
+  second_preference: form.secondPreference,
+  skills: form.experience,
+  favourite_courses: form.courses,
+  references: form.tutors
+}))
+
+// Select Options
+
+const internshipOptions = ref([
+  {
+    id: 1,
+    value: 'API Development',
+    label: 'API Development'
+  },
+  {
+    id: 2,
+    value: 'Business Analysis',
+    label: 'Business Analysis'
+  },
+  {
+    id: 3,
+    value: 'Data Analysis',
+    label: 'Data Analysis'
+  },
+  {
+    id: 4,
+    value: 'Database',
+    label: 'Database'
+  },
+  {
+    id: 5,
+    value: 'Game Development',
+    label: 'Game Development'
+  },
+  {
+    id: 6,
+    value: 'Mobile App Development',
+    label: 'Mobile App Development'
+  },
+  {
+    id: 7,
+    value: 'Networking',
+    label: 'Networking'
+  },
+  {
+    id: 8,
+    value: 'Project Management',
+    label: 'Project Management'
+  },
+  {
+    id: 9,
+    value: 'Security',
+    label: 'Security'
+  },
+  {
+    id: 10,
+    value: 'Software Testing',
+    label: 'Software Testing'
+  },
+  {
+    id: 11,
+    value: 'System support - help desk',
+    label: 'System support - help desk'
+  },
+  {
+    id: 12,
+    value: 'UX/UI design',
+    label: 'UX/UI design'
+  },
+  {
+    id: 13,
+    value: 'Web Development',
+    label: 'Web Development'
+  },
+  {
+    id: 14,
+    value: 'Other',
+    label: 'Other'
+  },
+])
+
+const companies = ref([
+  {
+    id: 1,
+    value: 'Blackout Games',
+    label: 'Blackout Games'
+  },
+  {
+    id: 2,
+    value: 'CTEK',
+    label: 'CTEK'
+  },
+  {
+    id: 3,
+    value: 'Datacom',
+    label: 'Datacom'
+  },
+  {
+    id: 4,
+    value: 'Enlighten Design',
+    label: 'Enlighten Design'
+  },
+  {
+    id: 5,
+    value: 'Game Development',
+    label: 'Game Development'
+  },
+  {
+    id: 6,
+    value: 'Mobile App Development',
+    label: 'Mobile App Development'
+  },
+  {
+    id: 7,
+    value: 'Networking',
+    label: 'Networking'
+  },
+  {
+    id: 8,
+    value: 'Project Management',
+    label: 'Project Management'
+  },
+  {
+    id: 9,
+    value: 'Security',
+    label: 'Security'
+  },
+  {
+    id: 10,
+    value: 'Software Testing',
+    label: 'Software Testing'
+  },
+  {
+    id: 11,
+    value: 'System support - help desk',
+    label: 'System support - help desk'
+  },
+  {
+    id: 12,
+    value: 'UX/UI design',
+    label: 'UX/UI design'
+  },
+  {
+    id: 13,
+    value: 'Web Development',
+    label: 'Web Development'
+  },
+  {
+    id: 14,
+    value: 'Other',
+    label: 'Other'
+  },
+])
+
+const preferences = ref([
+  {
+    id: 1,
+    value: 'Internship',
+    label: 'Internship'
+  },
+  {
+    id: 2,
+    value: 'Industry',
+    label: 'Industry'
+  },
+  {
+    id: 3,
+    value: 'Internal client internship/project',
+    label: 'Internal client internship/project'
+  },
+  {
+    id: 4,
+    value: 'Classroom project',
+    label: 'Classroom project'
+  },
+  {
+    id: 5,
+    value: 'Design Factory',
+    label: 'Design Factory'
+  },
+  {
+    id: 6,
+    value: 'GIG - Intenal client based projects',
+    label: 'GIG - Intenal client based projects'
+  },
+])
+
+const grades = ref([
+  {
+    id: 1,
+    value: 'A grade',
+    label: 'A grade'
+  },
+  {
+    id: 2,
+    value: 'B grade',
+    label: 'B grade'
+  },
+  {
+    id: 3,
+    value: 'C grade',
+    label: 'C grade'
+  }
+])
+
+const programmes = ref([
+  {
+    id: 1,
+    value: 'Bachelor of Applied IT',
+    label: 'Bachelor of Applied IT'
+  },
+  {
+    id: 2,
+    value: 'Postgraduate Diploma in IT',
+    label: 'Postgraduate Diploma in IT'
+  },
+  {
+    id: 3,
+    value: 'Master of Applied IT',
+    label: 'Master of Applied IT'
+  }
+])
+
+const studies = ref([
+  {
+    id: 1,
+    value: 'Networking Engineering',
+    label: 'Networking Engineering'
+  },
+  {
+    id: 2,
+    value: 'Software Engineering',
+    label: 'Software Engineering'
+  },
+  {
+    id: 3,
+    value: 'Database or Data Analytics',
+    label: 'Database or Data Analytics'
+  },
+  {
+    id: 4,
+    value: 'Business Analytics',
+    label: 'Business Analytics'
+  },
+  {
+    id: 5,
+    value: 'Project Management',
+    label: 'Project Management'
+  },
+])
+
+const term = ref(false)
 
 // Pagination
 const currentPage = ref(1)
 const pageSize = ref(5)
-const total = ref(15)
+const total = ref(20)
 
 // As the page updating, step also update
 const handleCurrentChange = () => {
   currentStep.value = currentPage.value - 1
+}
+
+// Submit Form
+interface PageFields {
+  [key: string]: string[];
+}
+
+const pageFields: PageFields = {
+  1: ['name', 'id', 'studentEmail', 'personalEmail', 'phoneNum'],
+  2: ['personalStatement', 'cv', 'linkedin', 'portfolio', 'github', 'grade', 'programme', 'areaOfStudy'],
+  3: ['internshipOptions', 'preferences', 'firstPreference', 'secondPreference'],
+  4: ['experience', 'courses', 'tutors'],
+}
+
+const handleSubmit = async (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+  await formEl.validate((valid, fields) => {
+    if (valid) {
+      axios({
+        url: '/api/completeApplication',
+        method: 'post',
+        data: formPostedFmt.value,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': 'Bearer ' + localStorage.getItem('authKey'),
+        }
+      }).then(res => {
+        // console.log(res)
+        ElMessage.success('Application saved')
+      }).catch(error => {
+        console.log(error)
+        // 先检查 error.response 是否存在，防止未定义错误
+        if (error.response && error.response.data) {
+          // 提示用户错误信息
+          ElMessage.error(error.response.data.error)
+        } else {
+          // 如果 error.response 不存在，提示网络问题或服务器未响应
+          ElMessage.error('Network error or server not responding. Please try again later.')
+        }
+      })
+    } else {
+      console.log(fields)
+      if (fields) {
+        for (let page in pageFields) {
+          const fieldList = pageFields[page]
+          const hasError = fieldList.some(field => fields[field])
+          if (hasError) {
+            currentPage.value = parseInt(page)
+            break
+          }
+        }
+      }
+    }
+  })
 }
 
 
@@ -505,20 +890,17 @@ const handleCurrentChange = () => {
   color: #FE6601;
 }
 
-.second-page-radio-group > .el-radio {
-  width: 200px;
-}
-
-.third-page-radio-group > .el-radio {
-  width: 300px;
-}
-
-.el-checkbox {
-  width: 300px;
+.el-checkbox,
+.el-radio {
+  width: 250px;
 }
 
 .el-radio,
 .el-checkbox {
-  margin: 5px 0;
+  margin: 5px 10px;
+}
+
+.el-form-item {
+  width: 630px;
 }
 </style>

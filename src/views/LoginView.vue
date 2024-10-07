@@ -9,19 +9,6 @@
         <img src="@/assets/Industry Internship System Logo.svg" class="industry-internship-system-logo" />
       </div>
 
-      <!-- <el-form-item label="Role" class="mt-2" prop="role">
-        <el-radio-group v-model="form.role" @change="handleChange">
-          <el-radio value="Student" size="large" class="radio">Student</el-radio>
-          <el-radio value="Industry" size="large" class="radio">Industry</el-radio>
-        </el-radio-group>
-      </el-form-item> -->
-
-      <!-- <el-form-item label="Email" class="mt-2" prop="email">
-        <el-input v-model="form.email" clearable placeholder="id@student.wintec.ac.nz" v-if="autoComplete === true"
-          @blur="handleBlur" />
-        <el-input v-model="form.email" clearable placeholder="mail@example.com" v-else />
-      </el-form-item> -->
-
       <el-form-item label="Email" class="mt-2" prop="email">
         <el-input v-model="form.email" clearable placeholder="mail@example.com" />
       </el-form-item>
@@ -65,7 +52,6 @@ const router: Router = useRouter() as Router
 const axios: AxiosInstance = inject('$axios') as AxiosInstance
 const ruleFormRef = ref<FormInstance>()
 
-const autoComplete = ref(true)
 const loading = ref(false)
 
 interface RuleForm {
@@ -89,6 +75,7 @@ const rules = reactive<FormRules<RuleForm>>({
     { required: true, message: 'This field is requried', trigger: 'blur' }
   ]
 })
+
 
 const top = ref<FormProps['labelPosition']>('top')
 
@@ -149,28 +136,6 @@ const handleLogin = async (formEl: FormInstance | undefined) => {
       // ElMessage.error("Submit Failure. Please check the error message down input fields")
     }
   })
-}
-
-const handleChange = () => {
-  switch (form.role) {
-    case "Student":
-      autoComplete.value = true
-      break
-    case "Industry":
-      autoComplete.value = false
-      break
-  }
-}
-
-const handleBlur = () => {
-  const correctDomain = '@student.wintec.ac.nz'
-  if (!form.email.endsWith(correctDomain)) {
-    if (form.email.includes('@')) {
-      form.email = form.email.split('@')[0] + correctDomain;
-    } else {
-      form.email += correctDomain;
-    }
-  }
 }
 
 </script>
