@@ -10,7 +10,7 @@
 
         <div class="profile-bar">
           <el-text class="profile-bar-text">To edit your profile, go to&nbsp;</el-text>
-          <el-text class="profile-bar-text" style="text-decoration: underline; cursor: pointer;">Application&nbsp;</el-text>
+          <el-text class="profile-bar-text" style="text-decoration: underline; cursor: pointer;" @click="handleNavigation('/student/application')">Application&nbsp;</el-text>
           <el-text class="profile-bar-text">and edit your application form.</el-text>
         </div>
       </div>
@@ -27,6 +27,12 @@
 import Header from '@/components/SiteHeaderComponent.vue'
 import Footer from '@/components/SiteFooterComponent.vue'
 import Profile from '@/components/StudentDetailComponent.vue'
+import { useRouter } from 'vue-router'
+const router = useRouter()
+
+const handleNavigation = (url: string) => {
+  router.push(url)
+}
 </script>
 
 <style scoped>

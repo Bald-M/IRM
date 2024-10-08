@@ -8,32 +8,18 @@
 
       <div class="nav-links">
 
-        <div class="link-item" @click="handleRouter('/home')">
-          <div class="link" :class="{ active: currentPath === '/home' }">
-            <img src="@/assets/HeaderIcon/home_icon_blue.svg" class="icon" />
-            <span>Home</span>
-          </div>
-        </div>
-
-        <!-- Dynamic -->
-        <!-- If Logg in -->
-        <div class="link-item" v-if="isLoggedIn" @click="handleRouter('/student/application')">
-          <div class="link" :class="{ active: currentPath === '/student/application' }">
-            <img src="@/assets/HeaderIcon/application_icon_blue.svg" class="icon" />
+        <div class="link-item" @click="handleRouter('/student/application')" @mouseover="hover = 'application'" @mouseleave="hover = ''">
+          <div class="link" :class="{ active: hover === 'application' || currentPath === '/student/application'}">
+            <img src="@/assets/HeaderIcon/application_icon_white.svg" class="icon" v-show="hover === 'application' || currentPath === '/student/application'" />
+            <img src="@/assets/HeaderIcon/application_icon_blue.svg" class="icon" v-show="currentPath !== '/student/application' && hover !== 'application'" />
             <span>Application</span>
           </div>
         </div>
 
-        <div class="link-item" v-else @click="handleRouter('/login')">
-          <div class="link">
-            <img src="@/assets/HeaderIcon/application_icon_blue.svg" class="icon" />
-            <span>Application</span>
-          </div>
-        </div>
-
-        <div class="link-item">
-          <div class="link">
-            <img src="@/assets/HeaderIcon/contact_us_icon_blue.svg" class="icon" />
+        <div class="link-item" @mouseover="hover = 'contact-us'" @mouseleave="hover = ''">
+          <div class="link" :class="{ active: hover === 'contact-us' || currentPath === '/contact-us' }">
+            <img src="@/assets/HeaderIcon/contact_us_icon_white.svg" class="icon" v-show="hover === 'contact-us'" />
+            <img src="@/assets/HeaderIcon/contact_us_icon_blue.svg" class="icon" v-show="hover !== 'contact-us'" />
             <span>Contact Us</span>
           </div>
         </div>
@@ -55,7 +41,7 @@
             <div @click="handleRouter('/student/application')">
               <el-text size="small">Application</el-text>
             </div>
-            <div>
+            <div @click="handleRouter('/student/profile')">
               <el-text size="small">Profile</el-text>
             </div>
             <div>
@@ -67,7 +53,7 @@
           </div>
         </div>
 
-        <div class="link-item active" @click="handleRouter('/login')" v-else>
+        <div class="link-item active" v-else @click="handleRouter('/login')">
           <div class="link">
             <img src="@/assets/HeaderIcon/sign_in_icon_white.svg" class="icon" />
             <span>Sign In</span>
@@ -89,12 +75,12 @@ import { useAuthStore } from '@/stores/auth'
 const router = useRouter()
 const route = useRoute()
 const authStore = useAuthStore()
-
 const isLoggedIn = computed(() => authStore.authKey)
 const username = computed(() => authStore.name)
 const logOut = authStore.clearAuthData
 const showSubMenu = ref(false)
 const currentPath = route.path
+const hover = ref('')
 
 const handleRouter = (path: string) => {
   router.push(path)
@@ -157,6 +143,14 @@ header {
 
 .link-item:hover {
   cursor: pointer;
+  /* display: flex;
+  align-items: center;
+  background-color: #ff6600;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: bold; */
 }
 
 .link-item>span:hover {

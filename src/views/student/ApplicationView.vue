@@ -272,10 +272,12 @@ import type { FormProps, FormRules, FormInstance, CheckboxValueType } from 'elem
 import { ElMessage } from 'element-plus'
 import { ref, reactive, inject, computed } from 'vue'
 import type { AxiosInstance } from 'axios'
+import { useRouter } from 'vue-router'
 
 // https://element-plus.org/zh-CN/component/select.html 自定义下拉菜单底部 add an option
 
 const axios: AxiosInstance = inject('$axios') as AxiosInstance
+const router = useRouter()
 
 const banner = reactive({
   title: 'Internship Application',
@@ -724,6 +726,7 @@ const handleSubmit = async (formEl: FormInstance | undefined) => {
       }).then(res => {
         // console.log(res)
         ElMessage.success('Application saved')
+        router.push('/student/profile')
       }).catch(error => {
         console.log(error)
         // 先检查 error.response 是否存在，防止未定义错误
