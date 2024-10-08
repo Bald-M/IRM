@@ -8,10 +8,17 @@
 
       <div class="nav-links">
 
+        <div class="link-item" @click="handleRouter('/home')">
+          <div class="link" :class="{ active: currentPath === '/home' }">
+            <img src="@/assets/HeaderIcon/home_icon_blue.svg" class="icon" />
+            <span>Home</span>
+          </div>
+        </div>
+
         <!-- Dynamic -->
         <!-- If Logg in -->
         <div class="link-item" v-if="isLoggedIn" @click="handleRouter('/student/application')">
-          <div class="link active">
+          <div class="link" :class="{ active: currentPath === '/student/application' }">
             <img src="@/assets/HeaderIcon/application_icon_blue.svg" class="icon" />
             <span>Application</span>
           </div>
@@ -42,17 +49,20 @@
             <span>{{ username }}</span>
           </div>
           <div class="sub-menu" v-show="showSubMenu">
-            <div @click="logOut">
-              <el-text>Application</el-text>
+            <div @click="handleRouter('/home')">
+              <el-text size="small">Home</el-text>
+            </div>
+            <div @click="handleRouter('/student/application')">
+              <el-text size="small">Application</el-text>
+            </div>
+            <div>
+              <el-text size="small">Profile</el-text>
+            </div>
+            <div>
+              <el-text size="small">Contact Us</el-text>
             </div>
             <div @click="logOut">
-              <el-text>Profile</el-text>
-            </div>
-            <div @click="logOut">
-              <el-text>Contact Us</el-text>
-            </div>
-            <div @click="logOut">
-              <el-text>Log Out</el-text>
+              <el-text size="small">Log Out</el-text>
             </div>
           </div>
         </div>
@@ -72,17 +82,19 @@
 </template>
 
 <script lang="ts" setup>
-import { useRouter } from 'vue-router'
-import { ref, computed } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import { ref, computed, watch } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
+const route = useRoute()
 const authStore = useAuthStore()
 
 const isLoggedIn = computed(() => authStore.authKey)
 const username = computed(() => authStore.name)
 const logOut = authStore.clearAuthData
 const showSubMenu = ref(false)
+const currentPath = route.path
 
 const handleRouter = (path: string) => {
   router.push(path)
@@ -94,7 +106,10 @@ const hideMenu = () => {
 
 const showMenu = () => {
   showSubMenu.value = true
+  console.log(currentPath)
 }
+
+// watch()
 
 </script>
 
@@ -174,9 +189,9 @@ header {
 .sub-menu {
   position: absolute;
   top: 100%;
-  left: 0;
+  left: -90px;
   z-index: 1000;
-  width: 100px;
+  width: 200px;
   border: rgba(0, 0, 0, 0.12) 1px solid;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
