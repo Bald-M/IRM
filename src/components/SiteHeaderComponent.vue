@@ -24,7 +24,7 @@
           </div>
         </div>
 
-        <div class="link-item" v-else>
+        <div class="link-item" v-else @click="handleRouter('/login')">
           <div class="link">
             <img src="@/assets/HeaderIcon/application_icon_blue.svg" class="icon" />
             <span>Application</span>
@@ -83,7 +83,7 @@
 
 <script lang="ts" setup>
 import { useRouter, useRoute } from 'vue-router'
-import { ref, computed, watch } from 'vue'
+import { ref, computed } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
