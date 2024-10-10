@@ -51,7 +51,7 @@ const handleNavigation = (url: string) => {
 
 .profile-container {
   width: 1200px;
-  height: 1100px;
+  height: 1000px;
   margin: 0 auto;
 }
 

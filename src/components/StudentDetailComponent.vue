@@ -4,8 +4,8 @@
     <div class="header-section">
 
       <div class="header-text">
-        <el-text>Alice Smith</el-text>
-        <el-text>ID: 23456611</el-text>
+        <el-text>{{ student.name }}</el-text>
+        <el-text>ID: {{ student.wintec_id }}</el-text>
         <div>
           <el-text>Avilable</el-text>
           <div class="available"></div>
@@ -33,7 +33,7 @@
             </div>
 
             <div>
-              <el-text class="value" size="large">alismx23@student.wintec.ac.nz</el-text>
+              <el-text class="value" size="large">{{ student.student_email }}</el-text>
             </div>
 
           </div>
@@ -46,7 +46,7 @@
           </div>
 
           <div>
-            <el-text class="value" size="large">Bachelor of Applied IT</el-text>
+            <el-text class="value" size="large">{{ student.programme_of_study }}</el-text>
           </div>
         </el-col>
 
@@ -66,7 +66,7 @@
           </div>
 
           <div>
-            <el-text class="value" size="large">alicesmith@gmail.com</el-text>
+            <el-text class="value" size="large">{{ student.personal_email }}</el-text>
           </div>
         </el-col>
 
@@ -76,7 +76,7 @@
           </div>
 
           <div>
-            <el-text class="value" size="large">Software Engineering</el-text>
+            <el-text class="value" size="large">{{ student.area_of_study }}</el-text>
           </div>
         </el-col>
 
@@ -86,7 +86,7 @@
           </div>
 
           <div>
-            <el-text class="value" size="large">02102894366</el-text>
+            <el-text class="value" size="large">{{ student.phone_number }}</el-text>
           </div>
         </el-col>
 
@@ -106,7 +106,7 @@
           </div>
 
           <div>
-            <el-text class="value" size="large">A grade</el-text>
+            <el-text class="value" size="large">{{ student.average_grade }}</el-text>
           </div>
         </el-col>
 
@@ -116,7 +116,7 @@
           </div>
 
           <div>
-            <el-text class="value" size="large">My passion lies at the intersection of software programming, web design, and business analysis. With a commitment to innovation and a hunger for continuous leaning, I'm excited to leverage my skills to make impact in the ever-evolving landscape of technology and business.</el-text>
+            <el-text class="value" size="large">{{ student.personal_statement }}</el-text>
           </div>
         </el-col>
 
@@ -126,7 +126,7 @@
           </div>
 
           <div>
-            <el-text class="value" size="large">Cursus quisque venenatis placerat eget orci urna. Placerat dictum commodo quisque maecenas hac accumsan leo quis? Molestie felis ex ex, fermentum sapien turpis accumsan cras. Ante dui pretium felis etiam, amet varius tristique.</el-text>
+            <el-text class="value" size="large">{{ student.skills }}</el-text>
           </div>
         </el-col>
 
@@ -136,7 +136,7 @@
           </div>
 
           <div>
-            <el-text class="value" size="large">Cursus quisque venenatis placerat eget orci urna. Placerat dictum commodo quisque maecenas hac accumsan leo quis? Molestie felis ex ex, fermentum sapien turpis accumsan cras. Ante dui pretium felis etiam, amet varius tristique.</el-text>
+            <el-text class="value" size="large">{{ student.favourite_courses }}.</el-text>
           </div>
         </el-col>
 
@@ -146,7 +146,7 @@
           </div>
 
           <div>
-            <el-text class="value" size="large">Cursus quisque venenatis placerat eget orci urna. Placerat dictum commodo quisque maecenas hac accumsan leo quis? Molestie felis ex ex, fermentum sapien turpis accumsan cras. Ante dui pretium felis etiam, amet varius tristique.</el-text>
+            <el-text class="value" size="large">{{ student.reference }}</el-text>
           </div>
         </el-col>
 
@@ -156,7 +156,7 @@
           </div>
 
           <div>
-            <el-text class="value" size="large">Gallagher, Datacom, IT Partners, Blackout Games</el-text>
+            <el-text class="value" size="large">{{ student.preferred_companies.replace(/[\[\]"" ]/g, ' ') }}</el-text>
           </div>
         </el-col>
 
@@ -166,7 +166,7 @@
           </div>
 
           <div>
-            <el-text class="value" size="large">Web development, Business Analysis, UX/UI design</el-text>
+            <el-text class="value" size="large">{{ student.internship_options.replace(/[\[\]"" ]/g, ' ') }}</el-text>
           </div>
         </el-col>
 
@@ -182,6 +182,68 @@
 
   </div>
 </template>
+
+<script lang="ts" setup>
+import { reactive, inject, onMounted } from 'vue'
+import type { AxiosInstance } from 'axios'
+
+const axios: AxiosInstance = inject('$axios') as AxiosInstance
+
+const student = reactive({
+  name: '',
+  wintec_id: '',
+  personal_email: '',
+  student_email: '',
+  phone_number: '',
+  personal_statement: '',
+  cv_link: '',
+  linkedin_link: '',
+  portfolio_link: '',
+  github_link: '',
+  average_grade: '',
+  programme_of_study: '',
+  area_of_study: '',
+  internship_options: '',
+  preferred_companies: '',
+  first_preference: '',
+  second_preference: '',
+  skills: '',
+  favourite_courses: '',
+  reference: ''
+})
+
+
+onMounted(() => {
+  axios({
+    url: '/api/userProfileData',
+    method: 'post',
+    data: {
+      user_id: localStorage.getItem('app_uid')
+    },
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Bearer ' + localStorage.getItem('authKey')
+    }
+  }).then(res => {
+    if (res.data && res.data.student) {
+      console.log(res.data)
+      Object.assign(student, res.data.student)
+    } else {
+      console.log('Response Error')
+    }
+  }).catch(err => {
+    if (err.response) {
+      console.error('Server Error:', err.response.status, err.response.data);
+    } else if (err.request) {
+
+      console.error('Network Error:', err.request);
+    } else {
+      console.error('Request Error:', err.message);
+    }
+  })
+})
+
+</script>
 
 <style scoped>
 .mt-3 {
@@ -236,7 +298,9 @@
   margin-top: 2rem;
 }
 
-.available, .unavailable, .review {
+.available,
+.unavailable,
+.review {
   width: 10px;
   height: 10px;
   content: '';

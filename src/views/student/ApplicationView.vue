@@ -270,7 +270,7 @@ import gatherInformation from '@/assets/gather_information_icon.svg'
 import submitAndWait from '@/assets/submit_and_wait_icon.svg'
 import type { FormProps, FormRules, FormInstance, CheckboxValueType } from 'element-plus'
 import { ElMessage } from 'element-plus'
-import { ref, reactive, inject, computed } from 'vue'
+import { ref, reactive, inject, computed, onMounted } from 'vue'
 import type { AxiosInstance } from 'axios'
 import { useRouter } from 'vue-router'
 
@@ -754,6 +754,54 @@ const handleSubmit = async (formEl: FormInstance | undefined) => {
   })
 }
 
+onMounted(() => {
+  axios({
+    url: '/api/userProfileData',
+    method: 'post',
+    data: {
+      user_id: localStorage.getItem('app_uid')
+    },
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Bearer ' + localStorage.getItem('authKey')
+    }
+  }).then(res => {
+    if (res.data && res.data.student) {
+      console.log(res.data)
+      const student = res.data.student
+      form.name = student.name
+      form.id = student.wintec_id
+      form.personalEmail = student.personal_email
+      form.studentEmail = student.student_email
+      form.phoneNum = student.phone_number
+      form.personalStatement = student.personal_statement
+      form.cv = student.cv_link
+      form.linkedin = student.linkedin_link
+      form.portfolio = student.portfolio_link
+      form.github = student.github_link
+      form.programme = student.programme_of_study
+      form.areaOfStudy = student.area_of_study
+      form.experience = student.skills
+      form.tutors = student.reference
+      form.grade = student.average_grade
+      form.courses = student.favourite_courses
+      form.firstPreference = student.first_preference
+      form.secondPreference = student.second_preference
+      form.internshipOptions = JSON.parse(student.internship_options)
+      form.preferences = JSON.parse(student.preferred_companies)
+    } else {
+      console.log('Response Error')
+    }
+  }).catch(err => {
+    if (err.response) {
+      console.error('Server Error:', err.response.status, err.response.data);
+    } else if (err.request) {
+      console.error('Network Error:', err.request);
+    } else {
+      console.error('Request Error:', err.message);
+    }
+  })
+})
 
 </script>
 
