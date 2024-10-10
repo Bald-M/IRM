@@ -13,10 +13,10 @@
       </div>
 
       <div class="header-logo">
-        <img src="@/assets/SocialIcon/cv_icon_orange.svg" />
-        <img src="@/assets/SocialIcon/linkedin_icon_orange.svg" />
-        <img src="@/assets/SocialIcon/github_icon_orange.svg" />
-        <img src="@/assets/SocialIcon/portfolio_icon_orange.svg" />
+        <img src="@/assets/SocialIcon/cv_icon_orange.svg" @click="navigate(student.cv_link)" />
+        <img src="@/assets/SocialIcon/linkedin_icon_orange.svg" @click="navigate(student.linkedin_link)" />
+        <img src="@/assets/SocialIcon/github_icon_orange.svg" @click="navigate(student.github_link)" />
+        <img src="@/assets/SocialIcon/portfolio_icon_orange.svg" @click="navigate(student.portfolio_link)" />
       </div>
 
     </div>
@@ -212,6 +212,10 @@ const student = reactive({
   reference: ''
 })
 
+const navigate = (url: string) => {
+  window.open(url, '_blank')
+}
+
 
 onMounted(() => {
   axios({
@@ -277,6 +281,7 @@ onMounted(() => {
   margin: 0 15px;
   width: 40px;
   height: 40px;
+  cursor: pointer;
 }
 
 .footer-section>img {
