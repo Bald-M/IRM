@@ -46,7 +46,6 @@ export const useAuthStore = defineStore('user', () => {
     localStorage.removeItem('app_uid')
     localStorage.removeItem('user_type')
     localStorage.removeItem('server_ref')
-    window.location.reload()
   }
 
   // Restor token

@@ -115,6 +115,8 @@ const handleVerify = () => {
     ElMessage.success(res.data.description)
     loading.value = false
     router.push('/login')
+    authStore.clearAuthData()
+    localStorage.removeItem('otp')
   }).catch(error => {
     codes.value = ['', '', '', '', '', '']
     console.log(error)

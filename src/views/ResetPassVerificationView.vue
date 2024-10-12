@@ -1,7 +1,7 @@
 <template>
 
   <div class="container" v-loading="loading">
-    <el-form ref="ruleFormRef" label-width="auto" class="form" status-icon>
+    <el-form ref="ruleFormRef" class="form" status-icon>
 
       <!-- Wintec Logo -->
       <div style="display: flex; justify-content: center;">
@@ -56,7 +56,7 @@ const authStore = useAuthStore()
 const axios: AxiosInstance = inject('$axios') as AxiosInstance
 const router: Router = useRouter()
 
-const email = computed(() => authStore.email)
+const email = authStore.email
 const serverRef = authStore.server_ref
 const handleInput = (index: number, event: any) => {
   const value = event.target.value
@@ -109,7 +109,7 @@ const handleVerify = () => {
     method: 'post',
     data: {
       server_ref: serverRef,
-      email: email,
+      email,
       otp: code
     },
     headers: {

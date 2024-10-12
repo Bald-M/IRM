@@ -125,6 +125,7 @@ const resetPassword = async (formEl: FormInstance | undefined) => {
         ElMessage.success(res.data.description)
         router.push('/login')
         loading.value = false
+        authStore.clearAuthData()
       }).catch(error => {
         console.log(error)
         if (error.response && error.response.data) {

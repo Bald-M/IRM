@@ -85,9 +85,7 @@ const handleSendButton = async (formEl: FormInstance | undefined) => {
         }
       }).then(res => {
         authStore.setServerRef(res.data.server_ref, form.email)
-        console.log(res)
         ElMessage.success(res.data.description)
-        // router.push('/reset-password/confirmation')
         router.push('/resetPassVerification')
         loading.value = false
       }).catch(error => {
