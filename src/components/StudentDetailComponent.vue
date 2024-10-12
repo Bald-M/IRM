@@ -239,7 +239,6 @@ onMounted(() => {
     if (err.response) {
       console.error('Server Error:', err.response.status, err.response.data);
     } else if (err.request) {
-
       console.error('Network Error:', err.request);
     } else {
       console.error('Request Error:', err.message);
