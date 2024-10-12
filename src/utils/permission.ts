@@ -1,5 +1,4 @@
 import router from '../router'
-import { jwtDecode } from 'jwt-decode'
 import { useAuthStore } from '../stores/auth'
 
 router.beforeEach(async (to, from) => {
@@ -14,9 +13,8 @@ router.beforeEach(async (to, from) => {
   if (whiteList.includes(to.path)) {
     return true
   } else {
-    // return { name: 'registration' }
     // 只有从/registration且post成功后才能访问
-    if (to.path === '/emailVerification' && from.path === '/registration' && authStore.server_ref !== '') {
+    if (to.path === '/emailVerification' && (from.path === '/registration' || from.path === '/login') && authStore.server_ref !== '') {
       return true
     }
 
@@ -24,40 +22,32 @@ router.beforeEach(async (to, from) => {
       // 只能从 /reset-password/request 访问
       return true
     }
+
+    if (to.path === '/reset-password/reset' && from.path === '/resetPassVerification') {
+      // 只能从 /resetPassVerification 访问
+      return true
+    }
+
+    // Student
+    if (isLogin) {
+
+      const roleBasedRoutes: Record<string, string> = {
+        '/student': 'Student',
+        '/client': 'Client',
+        '/admin': 'Admin'
+      }
+
+      for (const prefix in roleBasedRoutes) {
+        if (to.path.startsWith(prefix) && userType !== roleBasedRoutes[prefix]) {
+          return { name: 'unauthorized' };
+        }
+      }
+
+
+      return true
+    }
+
     return { name: 'login' }
   }
 
-  // // 如果用户未登录
-  // if (!isLogin) {
-  //   // 允许访问登录、注册或主页
-  //   if (whiteList.includes(to.path)) {
-  //     // if (to.path === '/emailVerification' && (from.path !== '/login' && from.path !== '/registration')) {
-  //     //   return { name: 'login' }
-  //     // }
-  //     return true
-  //   }
-  //   // Redirect to login
-  //   return { name: 'login' }
-  // } else {
-  //   const decodedToken = jwtDecode(authStore.authKey)
-  //   const currentTime = Date.now() / 1000
-  //   if (!decodedToken.exp) {
-  //     authStore.clearAuthData()
-  //     return { name: 'login' }
-  //   }
-  //   // If token has expired
-  //   if (decodedToken.exp < currentTime) {
-  //     authStore.clearAuthData()
-  //     return { name: 'login' }
-  //   }
-  // }
-
-
-  // // 如果用户已登录，但其角色不匹配访问的路由权限，重定向到 unauthorized 页面
-  // if (isLogin && to.meta.requireAuth && to.meta.role !== userType) {
-  //   return { name: 'unauthorized' }
-  // }
-
-  // // In other cases, continue navigation
-  // return true
 })

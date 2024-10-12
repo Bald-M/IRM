@@ -126,6 +126,7 @@ const resetPassword = async (formEl: FormInstance | undefined) => {
         router.push('/login')
         loading.value = false
         authStore.clearAuthData()
+        localStorage.removeItem('otp')
       }).catch(error => {
         console.log(error)
         if (error.response && error.response.data) {
