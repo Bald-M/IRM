@@ -44,11 +44,6 @@ const router = createRouter({
       component: () => import("@/views/ResetPasswordView.vue")
     },
     {
-      path: '/reset-password/success',
-      name: 'ResetSuccess',
-      component: () => import('@/views/ResetSuccessView.vue')
-    },
-    {
       path: '/home',
       name: 'home',
       component: () => import('@/views/HomeView.vue')

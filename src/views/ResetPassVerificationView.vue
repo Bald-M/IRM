@@ -113,7 +113,7 @@ const handleVerify = () => {
       otp: code
     },
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/json'
     }
   }).then(res => {
     console.log(res)

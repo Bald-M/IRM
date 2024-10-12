@@ -118,7 +118,7 @@ const resetPassword = async (formEl: FormInstance | undefined) => {
           password: form.password
         },
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
+          'Content-Type': 'application/json'
         }
       }).then(res => {
         console.log(res)

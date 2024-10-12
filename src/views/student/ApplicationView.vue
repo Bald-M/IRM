@@ -762,7 +762,7 @@ onMounted(() => {
       user_id: localStorage.getItem('app_uid')
     },
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + localStorage.getItem('authKey')
     }
   }).then(res => {

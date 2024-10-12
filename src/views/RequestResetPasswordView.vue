@@ -81,7 +81,7 @@ const handleSendButton = async (formEl: FormInstance | undefined) => {
           email: form.email,
         },
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
+          'Content-Type': 'application/json'
         }
       }).then(res => {
         authStore.setServerRef(res.data.server_ref, form.email)

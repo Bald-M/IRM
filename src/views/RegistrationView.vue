@@ -173,7 +173,7 @@ const handleRegistration = async (formEl: FormInstance | undefined) => {
           type: form.role,
         },
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
+          'Content-Type': 'application/json'
         }
       }).then(res => {
         console.log(res)

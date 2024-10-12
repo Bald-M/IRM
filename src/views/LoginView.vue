@@ -92,7 +92,7 @@ const handleLogin = async (formEl: FormInstance | undefined) => {
           password: form.password
         },
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
+          'Content-Type': 'application/json'
         }
       }).then(res => {
         authStore.setAuthData(res.data.auth_key, res.data.profile_data.name, res.data.profile_data.email, res.data.profile_data.app_uid, res.data.profile_data.user_type)
