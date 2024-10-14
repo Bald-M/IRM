@@ -540,51 +540,46 @@ const companies = ref([
   },
   {
     id: 5,
-    value: 'Game Development',
-    label: 'Game Development'
+    value: 'Fonterra',
+    label: 'Fonterra'
   },
   {
     id: 6,
-    value: 'Mobile App Development',
-    label: 'Mobile App Development'
+    value: 'Gallagher',
+    label: 'Gallagher'
   },
   {
     id: 7,
-    value: 'Networking',
-    label: 'Networking'
+    value: 'HCC - Hamilton City Council',
+    label: 'HCC - Hamilton City Council'
   },
   {
     id: 8,
-    value: 'Project Management',
-    label: 'Project Management'
+    value: 'Hospital',
+    label: 'Hospital'
   },
   {
     id: 9,
-    value: 'Security',
-    label: 'Security'
+    value: 'IT Partners',
+    label: 'IT Partners'
   },
   {
     id: 10,
-    value: 'Software Testing',
-    label: 'Software Testing'
+    value: 'LIC',
+    label: 'LIC'
   },
   {
     id: 11,
-    value: 'System support - help desk',
-    label: 'System support - help desk'
+    value: 'Tuatahi First Fibre',
+    label: 'Tuatahi First Fibre'
   },
   {
     id: 12,
-    value: 'UX/UI design',
-    label: 'UX/UI design'
+    value: 'Waikato Regional Council',
+    label: 'Waikato Regional Council'
   },
   {
     id: 13,
-    value: 'Web Development',
-    label: 'Web Development'
-  },
-  {
-    id: 14,
     value: 'Other',
     label: 'Other'
   },
