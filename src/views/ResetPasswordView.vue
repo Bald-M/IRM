@@ -8,7 +8,7 @@
 
       <!-- Wintec Logo -->
       <div style="display: flex; justify-content: center;">
-        <img src="@/assets/Industry Internship System Logo.svg" class="industry-internship-system-logo" />
+        <img src="@/assets/Logo/Industry Internship System Logo_Orange and Blue.svg" class="industry-internship-system-logo" />
       </div>
 
       <el-form-item>

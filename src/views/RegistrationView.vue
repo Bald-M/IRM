@@ -6,7 +6,7 @@
 
       <!-- Wintec Logo -->
       <div style="display: flex; justify-content: center;">
-        <img src="@/assets/Industry Internship System Logo.svg" class="industry-internship-system-logo" />
+        <img src="@/assets/Logo/Industry Internship System Logo_Orange and Blue.svg" class="industry-internship-system-logo" />
       </div>
 
       <el-form-item label="Role" prop="role" class="mt-2" @change="handleChange">
@@ -26,7 +26,7 @@
         <el-input v-model="form.password" type="password" clearable placeholder="******" show-password />
       </el-form-item>
 
-      <el-form-item label="Confim Password" prop="confirmedPassword">
+      <el-form-item label="Confirm Password" prop="confirmedPassword">
         <el-input v-model="form.confirmedPassword" type="password" clearable placeholder="******" show-password />
       </el-form-item>
 

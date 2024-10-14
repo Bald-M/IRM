@@ -77,13 +77,17 @@ const route = useRoute()
 const authStore = useAuthStore()
 const isLoggedIn = computed(() => authStore.authKey)
 const username = computed(() => authStore.name)
-const logOut = authStore.clearAuthData
 const showSubMenu = ref(false)
 const currentPath = route.path
 const hover = ref('')
 
 const handleRouter = (path: string) => {
   router.push(path)
+}
+
+const logOut = () => {
+  authStore.clearAuthData()
+  window.location.reload()
 }
 
 const hideMenu = () => {

@@ -33,7 +33,7 @@ router.beforeEach(async (to, from) => {
 
       const roleBasedRoutes: Record<string, string> = {
         '/student': 'Student',
-        '/client': 'Client',
+        '/client': 'Industry',
         '/admin': 'Admin'
       }
 
