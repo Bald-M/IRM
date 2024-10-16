@@ -52,19 +52,14 @@ const router = createRouter({
           path: '/resetPassword',
           name: 'resetPassword',
           component: () => import('@/views/login/ResetPasswordView.vue')
+        },
+        {
+          path: '/emailVerification',
+          name: 'emailVerification',
+          component: () => import('@/views/login/EmailVerificationView.vue')
         }
       ]
     },
-    // {
-    //   path: '/reset-password/request',
-    //   name: 'requestResetPassword',
-    //   component: () => import('@/views/RequestResetPasswordView.vue')
-    // },
-    // {
-    //   path: '/reset-password/reset',
-    //   name: 'ResetPassword',
-    //   component: () => import("@/views/login/ResetPasswordView.vue")
-    // },
     {
       path: '/home',
       name: 'home',
@@ -108,16 +103,6 @@ const router = createRouter({
       ]
     },
     {
-      path: '/emailVerification',
-      name: 'emailVerification',
-      component: () => import('@/views/EmailVerificationView.vue')
-    },
-    // {
-    //   path: '/resetPassVerification',
-    //   name: 'resetPassVerificat@/views/login/ResetPassVerificationView.vue',
-    //   component: () => import('@/views/ResetPassVerificationView.vue')
-    // },
-    {
       path: '/unauthorized',
       name: 'unauthorized',
       component: () => import('@/views/401View.vue')
@@ -129,32 +114,5 @@ const router = createRouter({
     }
   ]
 })
-
-// child
-
-// Navigation Guard
-// router.beforeEach(async (to) => {
-//   const isLogin = localStorage.getItem('authToken')
-//   // If the User is login
-//   if (!isLogin) {
-//     // 允许访问登录页面或注册页面
-//     if (to.name === 'login' || to.name === 'registration') {
-//       return true // 继续导航
-//     } 
-//     // 否则，重定向到登录页面
-//     else {
-//       return { name: 'login' }
-//     }
-//   } 
-  
-//   // 如果用户已经登录，且试图访问登录页面 （如果用户是学生）
-//   if (isLogin && to.name === 'login') {
-//     return { name: 'studentHome' }
-//   }
-  
-//   // 其他情况下继续导航
-//   return true
-
-// })
 
 export default router
