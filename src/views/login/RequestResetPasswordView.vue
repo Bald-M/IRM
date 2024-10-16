@@ -116,14 +116,14 @@ const handleNavButton = () => {
 
 
 <style scoped>
-.container {
+/* .container {
   display: flex;
   height: 100%;
   display: flex;
   background: linear-gradient(to bottom, #1E5192, #FFFFFF);
   align-items: center;
   justify-content: center;
-}
+} */
 
 .mt-1 {
   margin-top: 1rem;

@@ -151,13 +151,13 @@ const backToLogin = () => {
 </script>
 
 <style scoped>
-.container {
+/* .container {
   height: 100%;
   display: flex;
   background: linear-gradient(to bottom, #1E5192, #FFFFFF);
   align-items: center;
   justify-content: center;
-}
+} */
 
 .el-button {
   width: 100%;

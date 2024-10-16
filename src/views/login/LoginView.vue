@@ -19,7 +19,7 @@
 
       <div style="display: flex; flex-flow: row-reverse;">
         <el-text size="small">
-          <RouterLink to="/reset-password/request" style="color: #6B7280;">Forgot password?</RouterLink>
+          <RouterLink to="/requestResetPassword" style="color: #6B7280;">Forgot password?</RouterLink>
         </el-text>
       </div>
 
@@ -171,13 +171,12 @@ button {
   margin-top: 3rem;
 }
 
-.container {
+/* .container {
   height: 100%;
   display: flex;
-  background: linear-gradient(to bottom, #1E5192, #FFFFFF);
   align-items: center;
   justify-content: center;
-}
+} */
 
 /* Phone */
 @media screen and (max-width: 768px) {

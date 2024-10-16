@@ -21,28 +21,50 @@ const router = createRouter({
       meta: { requireAuth: true, role: 'Student' }
     },
     {
-      path: '/login',
-      name: 'login',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('@/views/LoginView.vue')
+      path: '/auth',
+      redirect: '/login',
+      component: () => import('@/views/login/AuthLayout.vue'),
+      children: [
+        {
+          path: '/login',
+          name: 'login',
+          // route level code-splitting
+          // this generates a separate chunk (About.[hash].js) for this route
+          // which is lazy-loaded when the route is visited.
+          component: () => import('@/views/login/LoginView.vue')
+        },
+        {
+          path: '/registration',
+          name: 'registration',
+          component: () => import('@/views/login/RegistrationView.vue')
+        },
+        {
+          path: '/requestResetPassword',
+          name: 'requestResetPassword',
+          component: () => import('@/views/login/RequestResetPasswordView.vue')
+        },
+        {
+          path: '/resetPassVerification',
+          name: 'resetPassVerification',
+          component: () => import('@/views/login/ResetPassVerificationView.vue')
+        },
+        {
+          path: '/resetPassword',
+          name: 'resetPassword',
+          component: () => import('@/views/login/ResetPasswordView.vue')
+        }
+      ]
     },
-    {
-      path: '/registration',
-      name: 'registration',
-      component: () => import('@/views/RegistrationView.vue')
-    },
-    {
-      path: '/reset-password/request',
-      name: 'requestResetPassword',
-      component: () => import('@/views/RequestResetPasswordView.vue')
-    },
-    {
-      path: '/reset-password/reset',
-      name: 'ResetPassword',
-      component: () => import("@/views/ResetPasswordView.vue")
-    },
+    // {
+    //   path: '/reset-password/request',
+    //   name: 'requestResetPassword',
+    //   component: () => import('@/views/RequestResetPasswordView.vue')
+    // },
+    // {
+    //   path: '/reset-password/reset',
+    //   name: 'ResetPassword',
+    //   component: () => import("@/views/login/ResetPasswordView.vue")
+    // },
     {
       path: '/home',
       name: 'home',
@@ -90,11 +112,11 @@ const router = createRouter({
       name: 'emailVerification',
       component: () => import('@/views/EmailVerificationView.vue')
     },
-    {
-      path: '/resetPassVerification',
-      name: 'resetPassVerification',
-      component: () => import('@/views/ResetPassVerificationView.vue')
-    },
+    // {
+    //   path: '/resetPassVerification',
+    //   name: 'resetPassVerificat@/views/login/ResetPassVerificationView.vue',
+    //   component: () => import('@/views/ResetPassVerificationView.vue')
+    // },
     {
       path: '/unauthorized',
       name: 'unauthorized',

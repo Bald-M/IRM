@@ -120,7 +120,7 @@ const handleVerify = () => {
     localStorage.setItem('otp', code)
     ElMessage.success(res.data.description)
     loading.value = false
-    router.push('/reset-password/reset')
+    router.push('/resetPassword')
   }).catch(error => {
     codes.value = ['', '', '', '', '', '']
     console.log(error)
@@ -199,13 +199,13 @@ button {
   margin-top: 3rem;
 }
 
-.container {
+/* .container {
   height: 100%;
   display: flex;
   background: linear-gradient(to bottom, #1E5192, #FFFFFF);
   align-items: center;
   justify-content: center;
-}
+} */
 
 .text-header {
   font-weight: bold;

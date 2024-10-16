@@ -228,13 +228,13 @@ button {
   justify-content: center;
 }
 
-.container {
+/* .container {
   height: 100%;
   display: flex;
   background: linear-gradient(to bottom, #1E5192, #FFFFFF);
   align-items: center;
   justify-content: center;
-}
+} */
 
 .mt-2 {
   margin-top: 2rem;
