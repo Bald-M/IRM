@@ -52,7 +52,7 @@
 
 
 <script lang="ts" setup>
-import { reactive, ref, inject, defineEmits } from 'vue'
+import { reactive, ref, inject } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { type FormProps, type FormRules, type FormInstance, ElMessage } from 'element-plus'

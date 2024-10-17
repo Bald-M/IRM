@@ -1,5 +1,5 @@
 <template>
-  <div class="container" v-loading="loading">
+  <div class="container">
 
     <el-form :model="form" :rules="rules" ref="ruleFormRef" label-width="auto" class="form" :label-position="top"
       status-icon>
@@ -9,6 +9,7 @@
         <img src="@/assets/Logo/Industry Internship System Logo_Orange and Blue.svg" class="industry-internship-system-logo" />
       </div>
 
+      <!-- Form item for selecting the user role -->
       <el-form-item label="Role" prop="role" class="mt-2" @change="handleChange">
         <el-radio-group v-model="form.role">
           <el-radio value="Student" size="large" class="radio">Student</el-radio>
@@ -16,25 +17,30 @@
         </el-radio-group>
       </el-form-item>
 
+      <!-- Form item for email input -->
       <el-form-item label="Email" class="mt-2" prop="email">
         <el-input v-model="form.email" clearable placeholder="id@student.wintec.ac.nz" v-if="autoComplete === true"
           @blur="handleBlur" />
         <el-input v-model="form.email" clearable placeholder="mail@example.com" v-else />
       </el-form-item>
 
+      <!-- Form item for password input -->
       <el-form-item label="Password" prop="password">
         <el-input v-model="form.password" type="password" clearable placeholder="******" show-password />
       </el-form-item>
 
+      <!-- Form item for confirming the password -->
       <el-form-item label="Confirm Password" prop="confirmedPassword">
         <el-input v-model="form.confirmedPassword" type="password" clearable placeholder="******" show-password />
       </el-form-item>
 
+      <!-- Button to create an account -->
       <el-form-item>
         <el-button type="primary" style="margin: 0 auto;" @click="handleRegistration(ruleFormRef)">Create
           Account</el-button>
       </el-form-item>
 
+      <!-- Link to log in if the user already has an account -->
       <div style="text-align: center;">
         <el-text size="small">Already have an account? <RouterLink to="/login">Log in</RouterLink> </el-text>
       </div>
@@ -54,10 +60,16 @@ import { useAuthStore } from '@/stores/auth'
 import type { FormProps, FormRules, FormInstance } from 'element-plus'
 import type { AxiosInstance } from 'axios'
 
+// Injecting the Axios instance for making API requests
 const axios: AxiosInstance = inject('$axios') as AxiosInstance
+// Using Vue Router for navigation
 const router = useRouter()
+// Accessing the authentication store
 const authStore = useAuthStore()
+// Emitting loading state for UI feedback
+const emit = defineEmits(['loading'])
 
+// Interface defining the structure of the form data
 interface RuleForm {
   email: string,
   password: string,
@@ -66,10 +78,15 @@ interface RuleForm {
   currentTime: Date
 }
 
+// Reference to the form instance for validation
 const ruleFormRef = ref<FormInstance>()
 
-const loading = ref(false)
+// Function to trigger loading state
+const triggerLoading = (value: boolean) => {
+  emit('loading', value)
+}
 
+// Reactive form data model
 const form = reactive<RuleForm>({
   email: '',
   password: '',
@@ -78,15 +95,7 @@ const form = reactive<RuleForm>({
   currentTime: new Date()
 })
 
-// Validate if two passwords inputed are correct
-// const passwordValidation = (rule: any, value: any, callback: any) => {
-//   if (value !== form.password) {
-//     callback(new Error('Passwords do not match'))
-//   } else {
-//     callback()
-//   }
-// }
-
+// Custom validation function for the password
 const passwordValidation = (rule: any, value: string, callback: any) => {
   if (!value) {
     return callback(new Error('This field is required'))
@@ -106,14 +115,18 @@ const passwordValidation = (rule: any, value: string, callback: any) => {
   }
 }
 
+// Custom validation function for confirming the password
 const confirmPasswordValidation = (rule: any, value: string, callback: any) => {
   if (value !== form.password) {
+    // Password mismatch validation
     callback(new Error('Passwords do not match.'))
   } else {
+    // Validation passed
     callback()
   }
 }
 
+// Reactive rules for form validation
 const rules = reactive<FormRules<RuleForm>>({
   email: [
     { required: true, message: 'This field is required', trigger: 'blur' },
@@ -134,11 +147,14 @@ const rules = reactive<FormRules<RuleForm>>({
 
 
 const top = ref<FormProps['labelPosition']>('top')
+// Flag to control email auto-completion based on role selection
 const autoComplete = ref(true)
 
+// Function to handle role change and set email auto-completion
 const handleChange = () => {
   switch (form.role) {
     case "Student":
+      // Enable auto-complete for students
       autoComplete.value = true
       break
     case "Industry":
@@ -146,7 +162,7 @@ const handleChange = () => {
       break
   }
 }
-
+// Function to handle email input blur event for domain correction
 const handleBlur = () => {
   const correctDomain = '@student.wintec.ac.nz'
   if (!form.email.endsWith(correctDomain)) {
@@ -158,12 +174,12 @@ const handleBlur = () => {
   }
 }
 
-
+// Function to handle registration logic
 const handleRegistration = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
   await formEl.validate((valid, fields) => {
     if (valid) {
-      loading.value = true
+      triggerLoading(true)
       axios({
         url: '/api/registration',
         method: 'post',
@@ -177,28 +193,30 @@ const handleRegistration = async (formEl: FormInstance | undefined) => {
         }
       }).then(res => {
         console.log(res)
+        // Display success message
         ElMessage.success(res.data.description)
-        loading.value = false
+        triggerLoading(false)
+        // Store server reference
         authStore.setServerRef(res.data.server_ref, form.email)
+        // Navigate to email verification page
         router.push('/emailVerification')
       }).catch(error => {
         console.log(error)
-        // 先检查 error.response 是否存在，防止未定义错误
+        // Check if error.response exists to prevent undefined errors
         if (error.response && error.response.data) {
-          // 提示用户错误信息
+          // Display error message from the server
           ElMessage.error(error.response.data.error)
         } else {
-          // 如果 error.response 不存在，提示网络问题或服务器未响应
+          // Display network error message if response is not available
           ElMessage.error('Network error or server not responding. Please try again later.')
         }
-        loading.value = false
+        triggerLoading(false)
       })
     }
     else {
-      // When fail form validation
-      console.log("ERROR:")
+      // Handle validation failure
       console.log(fields)
-      loading.value = false
+      triggerLoading(false)
       ElMessage.error("Submit Failure. Please check the error message down input fields")
     }
   })
