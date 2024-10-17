@@ -1,10 +1,23 @@
 <template>
-  <div class="container">
+  <div class="container" v-loading="isLoading">
     <!-- Render the child components inside RouterView -->
     <!-- Shared layout for registration, login, and forgot password views -->
-    <RouterView />
+    <RouterView @loading="setLoading" />
   </div>
 </template>
+
+<script lang="ts" setup>
+import { ref } from 'vue'
+
+// Create a ref to manage loading state
+const isLoading = ref(false)
+
+// Method to update the loading state
+const setLoading = (value: boolean) => {
+  isLoading.value = value
+}
+
+</script>
 
 <style scoped>
 /* Container that wraps the content and ensures it takes full height */

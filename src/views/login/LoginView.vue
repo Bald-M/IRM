@@ -1,32 +1,44 @@
 <template>
 
-  <div class="container" v-loading="loading">
+  <div class="container">
+    <!-- El Form component for user login -->
     <el-form :model="form" :rules="rules" ref="ruleFormRef" label-width="auto" class="form" :label-position="top"
       status-icon>
 
-      <!-- Wintec Logo -->
+      <!-- Wintec Logo displayed at the center -->
       <div style="display: flex; justify-content: center;">
         <img src="@/assets/Logo/Industry Internship System Logo_Orange and Blue.svg" class="industry-internship-system-logo" />
       </div>
 
+      <!-- Form item for email input -->
       <el-form-item label="Email" class="mt-2" prop="email">
+        <!-- Bind email input to form model -->
+        <!-- Allow clearing of the input field -->
         <el-input v-model="form.email" clearable placeholder="mail@example.com" />
       </el-form-item>
 
+      <!-- Form item for password input -->
       <el-form-item label="Password" prop="password">
+        <!-- Bind password input to form model -->
+        <!-- Mask the input as password -->
+        <!-- Allow clearing of the input field -->
+        <!-- Show password toggle option -->
         <el-input v-model="form.password" type="password" clearable placeholder="******" show-password />
       </el-form-item>
 
+      <!-- Link for forgotten password, aligned to the right -->
       <div style="display: flex; flex-flow: row-reverse;">
         <el-text size="small">
           <RouterLink to="/requestResetPassword" style="color: #6B7280;">Forgot password?</RouterLink>
         </el-text>
       </div>
 
+      <!-- Button for logging in -->
       <el-form-item class="mt-1">
         <el-button type="primary" @click="handleLogin(ruleFormRef)">Log In</el-button>
       </el-form-item>
 
+      <!-- Link to create a new account, centered -->
       <div style="text-align: center;">
         <el-text size="small">No account yet? <RouterLink to="/registration">Create account
           </RouterLink></el-text>
@@ -40,32 +52,39 @@
 
 
 <script lang="ts" setup>
-import { reactive, ref, inject } from 'vue'
+import { reactive, ref, inject, defineEmits } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { type FormProps, type FormRules, type FormInstance, ElMessage } from 'element-plus'
 import type { Router } from 'vue-router'
 import type { AxiosInstance } from 'axios'
 
+// Initialize the authentication store
 const authStore = useAuthStore()
+// Initialize the router for navigation
 const router: Router = useRouter() as Router
+// Inject the Axios instance for making HTTP requests
 const axios: AxiosInstance = inject('$axios') as AxiosInstance
+// Create a reference for the form instance
 const ruleFormRef = ref<FormInstance>()
+// Define emits for loading state
+const emit = defineEmits(['loading'])
 
-const loading = ref(false)
-
+// Define an interface for the form data structure
 interface RuleForm {
   email: string,
   password: string,
   role: string
 }
 
+// Create a reactive object for the form data
 const form = reactive<RuleForm>({
   email: '',
   password: '',
   role: 'Student'
 })
 
+// Define validation rules for the form fields
 const rules = reactive<FormRules<RuleForm>>({
   email: [
     { required: true, message: 'This field is required', trigger: 'blur' },
@@ -76,14 +95,20 @@ const rules = reactive<FormRules<RuleForm>>({
   ]
 })
 
-
+// Define the label position for the form
 const top = ref<FormProps['labelPosition']>('top')
 
+// Function to emit loading state changes
+const triggerLoading = (value: boolean) => {
+  emit('loading', value)
+}
+
+// Function to handle the login process
 const handleLogin = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
   await formEl.validate((valid, fields) => {
     if (valid) {
-      loading.value = true
+      triggerLoading(true)
       axios({
         url: '/api/login',
         method: 'post',
@@ -95,9 +120,12 @@ const handleLogin = async (formEl: FormInstance | undefined) => {
           'Content-Type': 'application/json'
         }
       }).then(res => {
+        // Set authentication data in the store upon successful login
         authStore.setAuthData(res.data.auth_key, res.data.profile_data.name, res.data.profile_data.email, res.data.profile_data.app_uid, res.data.profile_data.user_type)
-        console.log(res)
+        // console.log(res)
+        // Show success message
         ElMessage.success("Successfully Login")
+        // Redirect user based on their role
         switch (res.data.profile_data.user_type) {
           case 'Student':
             router.push('/student/application')
@@ -109,30 +137,30 @@ const handleLogin = async (formEl: FormInstance | undefined) => {
             router.push('/')
             break
         }
-        loading.value = false
+        triggerLoading(false)
       }).catch(error => {
         console.log(error)
-        // 先检查 error.response 是否存在，防止未定义错误
+        // Check if error.response exists to prevent undefined errors
         if (error.response && error.response.data) {
-          // 提示用户错误信息
+          // Display error message to the user
           ElMessage.error(error.response.data.error)
 
-          // 如果错误消息是 OTP 已发送，跳转到 emailVerification 页面
+          // Redirect to email verification if OTP was sent
           if (error.response.data.error === 'OTP sent, Email verification required') {
             authStore.setServerRef(error.response.data.server_ref, form.email)
             router.push('/emailVerification')
           }
         } else {
-          // 如果 error.response 不存在，提示网络问题或服务器未响应
+          // Display network error message if response is not available
           ElMessage.error('Network error or server not responding. Please try again later.')
         }
-        loading.value = false
+        triggerLoading(false)
       })
     }
     else {
-      // When fail form validation
+      // If form validation fails
       console.log(fields)
-      loading.value = false
+      triggerLoading(false)
       // ElMessage.error("Submit Failure. Please check the error message down input fields")
     }
   })
@@ -182,7 +210,7 @@ button {
 @media screen and (max-width: 768px) {
   .form {
     width: 280px;
-    height: 360px;
+    height: 460px;
     border-radius: 24px;
     padding: 1rem;
     background-color: rgba(250, 250, 250, 0.8);
@@ -226,7 +254,6 @@ button {
 @media screen and (min-width: 992px) {
   .form {
     width: 480px;
-    /* 600 */
     height: 500px;
     border-radius: 24px;
     padding: 2rem;
