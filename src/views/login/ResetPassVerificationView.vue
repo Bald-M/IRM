@@ -16,8 +16,7 @@
 
       <!-- Sub-header displaying the email address -->
       <div style="display: flex; justify-content: center;">
-        <el-text class="text-sub-header">We've sent a code to&nbsp;</el-text>
-        <el-text class="text-sub-header" style="color: black;">{{ email }}</el-text>
+        <el-text class="text-sub-header">We've sent a code to {{ email }}</el-text>
       </div>
 
       <!-- Input fields for the OTP code -->
@@ -152,6 +151,7 @@ const handleVerify = () => {
     // Clear OTP inputs on error
     codes.value = ['', '', '', '', '', '']
     console.log(error)
+    // Check if error.response exists to prevent undefined errors
     if (error.response && error.response.data) {
       // Show error message
       ElMessage.error(error.response.data.error)
@@ -249,7 +249,6 @@ button {
 .text-sub-header {
   font-weight: bold;
   color: #7B7A7B;
-  font-size: 12px;
 }
 
 .code-container {
@@ -300,6 +299,10 @@ button {
     font-size: 14px;
   }
 
+  .text-sub-header {
+    font-size: 10px;
+  }
+
   .code-input {
     height: 30px;
     width: 30px;
@@ -333,6 +336,10 @@ button {
     font-size: 28px;
   }
 
+  .text-sub-header {
+    font-size: 14px;
+  }
+
   .code-input {
     height: 40px;
     width: 40px;
@@ -363,6 +370,10 @@ button {
 
   .text-header {
     font-size: 28px;
+  }
+
+  .text-sub-header {
+    font-size: 14px;
   }
 
   .code-input {
