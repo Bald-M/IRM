@@ -5,7 +5,8 @@
 
       <!-- Wintec Logo -->
       <div style="display: flex; justify-content: center;">
-        <img src="@/assets/Logo/Industry Internship System Logo_Orange and Blue.svg" class="industry-internship-system-logo" />
+        <img src="@/assets/Logo/Industry Internship System Logo_Orange and Blue.svg"
+          class="industry-internship-system-logo" />
       </div>
 
       <div style="display: flex; justify-content: center;" class="mt-1">
@@ -18,7 +19,8 @@
       </div>
 
       <div class="code-container">
-        <input v-model="codes[index]" v-for="(code, index) in codes" :key="index" maxlength="1" class="code-input" @input="handleInput(index, $event)" @keydown="handleKeydown(index, $event)" ref="inputRef" />
+        <input v-model="codes[index]" v-for="(code, index) in codes" :key="index" maxlength="1" class="code-input"
+          @input="handleInput(index, $event)" @keydown="handleKeydown(index, $event)" ref="inputRef" />
       </div>
 
       <el-form-item class="mt-1">
@@ -42,7 +44,7 @@
 
 
 <script lang="ts" setup>
-import {  ref, nextTick, onMounted, computed, inject } from 'vue'
+import { ref, nextTick, onMounted, computed, inject } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { type FormProps, type FormRules, type FormInstance, ElMessage } from 'element-plus'
@@ -55,9 +57,15 @@ const inputRef = ref<(HTMLInputElement | null)[]>([])
 const authStore = useAuthStore()
 const axios: AxiosInstance = inject('$axios') as AxiosInstance
 const router: Router = useRouter()
+const emit = defineEmits(['loading'])
 
 const email = authStore.email
 const serverRef = authStore.server_ref
+
+const triggerLoading = (value: boolean) => {
+  emit('loading', value)
+}
+
 const handleInput = (index: number, event: any) => {
   const value = event.target.value
   codes.value[index] = value
@@ -99,9 +107,9 @@ const handleKeydown = (index: number, event: any) => {
 }
 
 const handleVerify = () => {
-  loading.value = true
+  triggerLoading(true)
   let code = ''
-  for(let i = 0; i < codes.value.length; i++) {
+  for (let i = 0; i < codes.value.length; i++) {
     code += codes.value[i]
   }
   axios({
@@ -119,7 +127,7 @@ const handleVerify = () => {
     console.log(res)
     localStorage.setItem('otp', code)
     ElMessage.success(res.data.description)
-    loading.value = false
+    triggerLoading(false)
     router.push('/resetPassword')
   }).catch(error => {
     codes.value = ['', '', '', '', '', '']
@@ -129,12 +137,12 @@ const handleVerify = () => {
     } else {
       ElMessage.error('Network error or server not responding. Please try again later.')
     }
-    loading.value = false
+    triggerLoading(false)
   })
 }
 
 const handleResend = () => {
-  loading.value = true
+  triggerLoading(true)
   axios({
     url: '/api/sendOTP',
     method: 'post',
@@ -148,11 +156,11 @@ const handleResend = () => {
     codes.value = ['', '', '', '', '', '']
     console.log(res)
     ElMessage.success(res.data.description)
-    loading.value = false
+    triggerLoading(false)
   }).catch(error => {
     console.log(error)
     // ElMessage.error(error.response.data.error)
-    loading.value = false
+    triggerLoading(false)
   })
 }
 
@@ -210,7 +218,6 @@ button {
 .text-header {
   font-weight: bold;
   color: black;
-  font-size: 28px;
 }
 
 .text-sub-header {
@@ -225,8 +232,6 @@ button {
 }
 
 .code-input {
-  height: 40px;
-  width: 40px;
   border: gray 2px solid;
   border-radius: 8px;
   margin: 20px 6px;
@@ -235,7 +240,6 @@ button {
   align-items: center;
   cursor: text;
   text-align: center;
-  line-height: 40px;
 }
 
 .code-input:focus {
@@ -249,7 +253,7 @@ button {
 @media screen and (max-width: 768px) {
   .form {
     width: 280px;
-    height: 360px;
+    height: 420px;
     border-radius: 24px;
     padding: 1rem;
     background-color: rgba(250, 250, 250, 0.8);
@@ -265,6 +269,17 @@ button {
     border-radius: 9px;
     background-color: white;
   }
+
+  .text-header {
+    font-size: 14px;
+  }
+
+  .code-input {
+    height: 30px;
+    width: 30px;
+    line-height: 30px;
+  }
+
 }
 
 /* Tablet */
@@ -287,13 +302,23 @@ button {
     border-radius: 9px;
     background-color: white;
   }
+
+  .text-header {
+    font-size: 28px;
+  }
+
+  .code-input {
+    height: 40px;
+    width: 40px;
+    line-height: 40px;
+  }
+
 }
 
 /* Computer */
 @media screen and (min-width: 992px) {
   .form {
     width: 480px;
-    /* 600 */
     height: 500px;
     border-radius: 24px;
     padding: 2rem;
@@ -309,5 +334,16 @@ button {
     border-radius: 9px;
     background-color: white;
   }
+
+  .text-header {
+    font-size: 28px;
+  }
+
+  .code-input {
+    height: 40px;
+    width: 40px;
+    line-height: 40px;
+  }
+
 }
 </style>
