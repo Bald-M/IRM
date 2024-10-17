@@ -5,7 +5,7 @@ import '@/assets/theme.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import ElementPlus from 'element-plus'
 import axios from './utils/http'
-// import './utils/permission'
+import './utils/permission'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 

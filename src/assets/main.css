@@ -4,8 +4,6 @@
 /* Desktop */
 @media screen and (min-width: 992px) {
   #app {
-    height: 100%;
-    margin: 0 auto;
     font-weight: normal;
   }
 
@@ -17,6 +15,7 @@
     padding: 0;
     box-sizing: border-box;
   } */
+  
 }
 
 /* Tablet */

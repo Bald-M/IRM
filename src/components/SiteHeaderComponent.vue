@@ -35,7 +35,7 @@
             <span>{{ username }}</span>
           </div>
           <div class="sub-menu" v-show="showSubMenu">
-            <div @click="handleRouter('/home')">
+            <div @click="handleRouter('/student/home')">
               <el-text size="small">Home</el-text>
             </div>
             <div @click="handleRouter('/student/application')">
@@ -69,7 +69,7 @@
 
 <script lang="ts" setup>
 import { useRouter, useRoute } from 'vue-router'
-import { ref, computed } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
@@ -78,7 +78,7 @@ const authStore = useAuthStore()
 const isLoggedIn = computed(() => authStore.authKey)
 const username = computed(() => authStore.name)
 const showSubMenu = ref(false)
-const currentPath = route.path
+const currentPath = ref('')
 const hover = ref('')
 
 const handleRouter = (path: string) => {
@@ -99,7 +99,13 @@ const showMenu = () => {
   console.log(currentPath)
 }
 
-// watch()
+watch(route, (newRoute) => {
+  currentPath.value = newRoute.path
+})
+
+onMounted(() => {
+  currentPath.value = route.path
+})
 
 </script>
 
@@ -187,9 +193,9 @@ header {
 .sub-menu {
   position: absolute;
   top: 100%;
-  left: -90px;
+  left: -50px;
   z-index: 1000;
-  width: 200px;
+  width: 160px;
   border: rgba(0, 0, 0, 0.12) 1px solid;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;

@@ -62,20 +62,26 @@ const router = createRouter({
     },
     {
       path: '/studentLayout',
+      redirect: '/student/home',
       component: () => import('@/views/student/LayoutView.vue'),
       children: [
         {
           path: '/student/home',
           name: 'studentHome',
           component: () => import('@/views/student/HomeView.vue')
+        },
+        {
+          path: '/student/application',
+          name: 'studentApplication',
+          component: () => import('@/views/student/ApplicationView.vue')
         }
       ]
     },
-    {
-      path: '/home',
-      name: 'home',
-      component: () => import('@/views/HomeView.vue')
-    },
+    // {
+    //   path: '/home',
+    //   name: 'home',
+    //   component: () => import('@/views/HomeView.vue')
+    // },
     {
       path: '/admin/panel',
       redirect: '/admin/panel/studentsList',

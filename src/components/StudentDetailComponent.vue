@@ -6,10 +6,23 @@
       <div class="header-text">
         <el-text>{{ student.name }}</el-text>
         <el-text>ID: {{ student.wintec_id }}</el-text>
-        <div>
+
+        <div v-if="student.intern_status === 1">
           <el-text>Avilable</el-text>
           <div class="available"></div>
         </div>
+
+        <div v-else-if="student.intern_status === 2">
+          <el-text>For Review</el-text>
+          <div class="review"></div>
+        </div>
+
+        <div v-else-if="student.intern_status === 0">
+          <el-text>Placed</el-text>
+          <div class="unavilable"></div>
+        </div>
+
+
       </div>
 
       <div class="header-logo">
@@ -174,7 +187,7 @@
 
     </div>
 
-    <div class="footer-section">
+    <div class="footer-section mt-1">
       <img src="@/assets/SocialIcon/web_development_icon.svg">
       <img src="@/assets/SocialIcon/business_analysis_icon.svg">
       <img src="@/assets/SocialIcon/design_icon.svg">
@@ -209,7 +222,9 @@ const student = reactive({
   second_preference: '',
   skills: '',
   favourite_courses: '',
-  reference: ''
+  reference: '',
+  gender: '',
+  intern_status: 3,
 })
 
 const navigate = (url: string) => {
@@ -225,7 +240,7 @@ onMounted(() => {
       user_id: localStorage.getItem('app_uid')
     },
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + localStorage.getItem('authKey')
     }
   }).then(res => {
@@ -249,6 +264,10 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.mt-1 {
+  margin-top: 1rem;
+}
+
 .mt-3 {
   margin-top: 3rem;
 }

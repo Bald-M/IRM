@@ -12,7 +12,7 @@
       </div>
 
 
-      <div class="box-section">
+      <div class="box-section mt-3">
 
         <div v-for="item in boxes" :key="item.id" class="box">
           <Box :title="item.title" :content="item.content" :imgPath="item.imgPath" />

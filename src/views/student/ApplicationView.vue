@@ -1,19 +1,17 @@
 <template>
   <div class="container">
 
-    <Header />
-
     <Banner :title="banner.title" :content="banner.content" :button="banner.button" :imgPath="banner.backgroundImg"
-      :redirect="banner.redirect" class="mt-6 banner" />
+      :redirect="banner.redirect" class="mt-3" />
 
-    <div class="box-container mt-6">
+    <div class="box-container mt-3">
 
       <div>
         <el-text class="header">Application Steps</el-text>
       </div>
 
 
-      <div class="box-section">
+      <div class="box-section mt-3">
 
         <div v-for="item in boxes" :key="item.id" class="box">
           <Box :title="item.title" :content="item.content" :imgPath="item.imgPath" />
@@ -23,13 +21,13 @@
 
     </div>
 
-    <div class="form-container mt-6">
+    <div class="form-container mt-3 mb-3">
 
       <div>
         <el-text class="header">Complete Application Form</el-text>
       </div>
 
-      <div class="form-section">
+      <div class="form-section mt-3">
 
         <div class="step-section">
 
@@ -67,7 +65,7 @@
               :label-position="top" status-icon>
 
               <!-- First Page -->
-              <div v-show="currentPage === 1">
+              <div v-show="currentPage === 1" style="height: 400px;">
 
                 <el-form-item label="Full Name" prop="name">
                   <el-input v-model="form.name" clearable></el-input>
@@ -77,9 +75,29 @@
                   <el-input v-model="form.id" clearable></el-input>
                 </el-form-item>
 
-                <el-form-item label="Student Email" prop="studentEmail">
+                <!-- <el-form-item label="Student Email" prop="studentEmail">
                   <el-input v-model="form.studentEmail" clearable></el-input>
-                </el-form-item>
+                </el-form-item> -->
+
+                <el-row :gutter="20">
+                  <el-col :span="12">
+                    <el-form-item label="Gender" prop="gender">
+                      <el-select v-model="form.gender" placeholder="please select your gender">
+                        <el-option label="Male" value="Male" />
+                        <el-option label="Female" value="Female" />
+                      </el-select>
+                    </el-form-item>
+                  </el-col>
+
+                  <el-col :span="12">
+                    <el-form-item label="Student Type" prop="type">
+                      <el-select v-model="form.type" placeholder="please select your student type">
+                        <el-option label="Domestic Student" value="Domestic Student" />
+                        <el-option label="International Student" value="International Student" />
+                      </el-select>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
 
                 <el-form-item label="Personal Email" prop="personalEmail">
                   <el-input v-model="form.personalEmail" clearable></el-input>
@@ -88,6 +106,10 @@
                 <el-form-item label="Phone Number" prop="phoneNum">
                   <el-input v-model="form.phoneNum" clearable></el-input>
                 </el-form-item>
+
+                <el-form>
+
+                </el-form>
 
               </div>
 
@@ -134,13 +156,13 @@
                   </el-form-item>
 
                   <!-- Degree - SE - Software Engineering
-                  Degree - NE - Networking Engineering
-                  Postgraduate Diploma - SE - Software Engineering
-                  Postgraduate Diploma - NE - Network Engineering
-                  Masters - SE - Software Engineering
-                  Masters - NE - Network Engineering
-                  Masters - Database or Data Analytics
-                  Masters - BA or Project Management -->
+            Degree - NE - Networking Engineering
+            Postgraduate Diploma - SE - Software Engineering
+            Postgraduate Diploma - NE - Network Engineering
+            Masters - SE - Software Engineering
+            Masters - NE - Network Engineering
+            Masters - Database or Data Analytics
+            Masters - BA or Project Management -->
                   <el-form-item label="What is your programme?" prop="programme">
                     <el-radio-group v-model="form.programme">
                       <el-radio v-for="item in programmes" :key="item.id" :value="item.value" size="large" border>{{
@@ -202,7 +224,7 @@
 
                   <el-form-item label="What are your skills and experience?" prop="experience">
                     <!-- <el-text class="description" size="small">e.g. skills, computer languages, work experience in IT or
-                      leadership & communication</el-text> -->
+                leadership & communication</el-text> -->
                     <el-input auto-size v-model="form.experience" type="textarea"></el-input>
                   </el-form-item>
 
@@ -238,13 +260,12 @@
 
               </div>
 
-              <el-form-item>
+              <el-form-item class="mt-3">
                 <el-pagination v-model:current-page="currentPage" v-model:page-size="pageSize"
                   layout="prev, pager, next" :total="total" @current-change="handleCurrentChange" class="pagination" />
               </el-form-item>
 
             </el-form>
-
           </div>
 
         </div>
@@ -253,15 +274,13 @@
 
     </div>
 
-    <Footer class="mt-6" />
+
 
   </div>
 
 </template>
 
 <script lang="ts" setup>
-import Header from '@/components/SiteHeaderComponent.vue'
-import Footer from '@/components/SiteFooterComponent.vue'
 import Banner from '@/components/BannerComponent.vue'
 import Box from '@/components/SiteBoxComponent.vue'
 import backgroundImg from '@/assets/Background Image2.jpg'
@@ -273,11 +292,16 @@ import { ElMessage } from 'element-plus'
 import { ref, reactive, inject, computed, onMounted } from 'vue'
 import type { AxiosInstance } from 'axios'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 
-// https://element-plus.org/zh-CN/component/select.html 自定义下拉菜单底部 add an option
 
 const axios: AxiosInstance = inject('$axios') as AxiosInstance
 const router = useRouter()
+// Initialize the authentication store
+const authStore = useAuthStore()
+const authKey = authStore.authKey
+const email = authStore.email
+const appUID = authStore.uid
 
 const banner = reactive({
   title: 'Internship Application',
@@ -313,6 +337,8 @@ interface RuleForm {
   id: string,
   personalEmail: string,
   studentEmail: string,
+  gender: string,
+  type: string,
   phoneNum: string,
   personalStatement: string,
   cv: string,
@@ -335,7 +361,9 @@ const form = reactive<RuleForm>({
   name: '',
   id: '',
   personalEmail: '',
-  studentEmail: '',
+  studentEmail: email,
+  gender: '',
+  type: '',
   phoneNum: '',
   personalStatement: '',
   cv: '',
@@ -368,6 +396,12 @@ const rules = reactive<FormRules<RuleForm>>({
   studentEmail: [
     { required: true, message: 'This field is requried', trigger: 'blur' },
     { type: 'email', message: 'Invalid email address', trigger: 'blur' }
+  ],
+  gender: [
+    { required: true, message: 'This field is requried', trigger: 'change' }
+  ],
+  type: [
+    { required: true, message: 'This field is requried', trigger: 'change' }
   ],
   phoneNum: [
     { required: true, message: 'This field is requried', trigger: 'blur' }
@@ -422,6 +456,8 @@ const rules = reactive<FormRules<RuleForm>>({
 const formPostedFmt = computed(() => ({
   name: form.name,
   wintec_id: form.id,
+  gender: form.gender,
+  student_type: form.type,
   personal_email: form.personalEmail,
   student_email: form.studentEmail,
   phone_number: form.phoneNum,
@@ -715,8 +751,8 @@ const handleSubmit = async (formEl: FormInstance | undefined) => {
         method: 'post',
         data: formPostedFmt.value,
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Authorization': 'Bearer ' + localStorage.getItem('authKey'),
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + authKey,
         }
       }).then(res => {
         // console.log(res)
@@ -754,20 +790,20 @@ onMounted(() => {
     url: '/api/userProfileData',
     method: 'post',
     data: {
-      user_id: localStorage.getItem('app_uid')
+      user_id: appUID
     },
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + localStorage.getItem('authKey')
+      'Authorization': 'Bearer ' + authKey
     }
   }).then(res => {
     if (res.data && res.data.student) {
       console.log(res.data)
+      // form.studentEmail = student.student_email
       const student = res.data.student
       form.name = student.name
       form.id = student.wintec_id
       form.personalEmail = student.personal_email
-      form.studentEmail = student.student_email
       form.phoneNum = student.phone_number
       form.personalStatement = student.personal_statement
       form.cv = student.cv_link
@@ -817,14 +853,18 @@ onMounted(() => {
   margin-top: 6rem !important;
 }
 
+.mb-3 {
+  margin-bottom: 3rem !important;
+}
+
 .form-logo {
   width: 200px;
   height: 150px;
 }
 
-.container {
+/* .container {
   width: 100%;
-}
+} */
 
 .header {
   color: #FE7235;
@@ -837,11 +877,10 @@ onMounted(() => {
   justify-content: end;
 }
 
-.banner,
 .box-container,
 .form-container {
-  width: 1333px;
-  margin: 0 auto;
+  padding: 0 10vw;
+  box-sizing: border-box;
 }
 
 .box-section {
@@ -928,7 +967,7 @@ onMounted(() => {
 }
 
 .form {
-  width: 50%;
+  width: 60%;
   margin: 0 auto;
 }
 
@@ -938,7 +977,7 @@ onMounted(() => {
 
 .el-checkbox,
 .el-radio {
-  width: 250px;
+  width: 330px;
 }
 
 .el-radio,
@@ -946,7 +985,12 @@ onMounted(() => {
   margin: 5px 10px;
 }
 
-.el-form-item {
-  width: 630px;
+.el-scrollbar {
+  padding-right: 20px;
 }
+
+
+/* .el-form-item {
+  width: 630px;
+} */
 </style>

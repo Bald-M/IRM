@@ -22,9 +22,9 @@ const setLoading = (value: boolean) => {
 <style scoped>
 /* Container that wraps the content and ensures it takes full height */
 .container {
-  height: 100%;
-  display: flex;
+  height: 100vh;
   background: linear-gradient(to bottom, #1E5192, #FFFFFF);
+  display: flex;
   align-items: center;
   justify-content: center;
 }
