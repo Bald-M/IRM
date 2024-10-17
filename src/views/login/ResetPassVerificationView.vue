@@ -1,6 +1,6 @@
 <template>
 
-  <div class="container" v-loading="loading">
+  <div class="container">
     <el-form ref="ruleFormRef" class="form" status-icon>
 
       <!-- Wintec Logo -->
@@ -70,13 +70,16 @@ const router: Router = useRouter()
 // Emit loading state to parent component
 const emit = defineEmits(['loading'])
 
+// Retrieve email and server reference from the authentication store
 const email = authStore.email
 const serverRef = authStore.server_ref
 
+// Function to trigger loading state
 const triggerLoading = (value: boolean) => {
   emit('loading', value)
 }
 
+// Handle input in the OTP fields and move to the next field
 const handleInput = (index: number, event: any) => {
   const value = event.target.value
   codes.value[index] = value
@@ -91,8 +94,9 @@ const handleInput = (index: number, event: any) => {
   }
 }
 
+// Handle keyboard navigation (Backspace, Arrow keys) in OTP fields
 const handleKeydown = (index: number, event: any) => {
-  // Handle Delete Operation
+  // Handle Backspace to delete current input and focus previous field
   if (event.key === 'Backspace' && !event.target.value && index > 0) {
     const prevInput = event.target.previousElementSibling
     if (prevInput) {
@@ -117,6 +121,7 @@ const handleKeydown = (index: number, event: any) => {
   }
 }
 
+// Handle OTP verification process
 const handleVerify = () => {
   triggerLoading(true)
   let code = ''
@@ -136,14 +141,19 @@ const handleVerify = () => {
     }
   }).then(res => {
     console.log(res)
+    // Store OTP in local storage
     localStorage.setItem('otp', code)
+    // Show success message
     ElMessage.success(res.data.description)
     triggerLoading(false)
+    // Navigate to reset password page
     router.push('/resetPassword')
   }).catch(error => {
+    // Clear OTP inputs on error
     codes.value = ['', '', '', '', '', '']
     console.log(error)
     if (error.response && error.response.data) {
+      // Show error message
       ElMessage.error(error.response.data.error)
     } else {
       ElMessage.error('Network error or server not responding. Please try again later.')
@@ -152,6 +162,7 @@ const handleVerify = () => {
   })
 }
 
+// Handle resend OTP functionality
 const handleResend = () => {
   triggerLoading(true)
   axios({
@@ -161,11 +172,13 @@ const handleResend = () => {
       server_ref: serverRef,
     },
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/json'
     }
   }).then(res => {
+    // Clear OTP inputs after resending
     codes.value = ['', '', '', '', '', '']
     console.log(res)
+    // Show success message
     ElMessage.success(res.data.description)
     triggerLoading(false)
   }).catch(error => {
@@ -175,10 +188,12 @@ const handleResend = () => {
   })
 }
 
+// Navigate back to the login page
 const handleNavButton = () => {
   router.push('/login')
 }
 
+// Focus the first input field when the component is mounted
 onMounted(() => {
   if (inputRef.value && inputRef.value[0]) {
     inputRef.value[0].focus()
