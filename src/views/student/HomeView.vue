@@ -1,204 +1,371 @@
 <template>
-  <div class="container">
 
-    <Header />
+  <div>
 
-    <div class="tool">
-      
-      <el-badge is-dot>
-        <el-button :icon="Bell"></el-button>
-      </el-badge>
+    <Banner :title="banner.title" :content="banner.content" :button="banner.button" :imgPath="banner.backgroundImg"
+      :redirect="banner.redirect" class="mt-3" />
 
-      <el-badge>
-        <el-button :icon="User"></el-button>
-      </el-badge>
+    <div class="box-container mt-3">
 
-      <!-- Drawer -->
+      <div>
+        <el-text class="header">Why Join the IIS?</el-text>
+      </div>
+
+
+      <div class="box-section">
+
+        <div v-for="item in boxes" :key="item.id" class="box">
+          <Box :title="item.title" :content="item.content" :imgPath="item.imgPath" />
+        </div>
+
+      </div>
+
     </div>
 
-    <el-form :model="form" label-width="auto" class="form" :label-position="top">
+    <div class="instruction-container mt-3">
 
-      <!-- Declaration -->
-      <el-form-item>
-        <el-space wrap direction="vertical">
-          <el-text size="large">
-            I understand and agree that Wintec partner internships and industry projects are unpaid voluntary work for a minimum of 300 hours made up of 2 days a week over the 16 weeks of semester.
-          </el-text>
+      <div>
+        <el-text class="header">How does the IIS works?</el-text>
+      </div>
 
-          <el-radio-group v-model="form.declaration">
-            <el-radio :value="'Yes'" @change="toggleDisabledRadios(false)">Yes</el-radio>
-            <el-radio :value="'No'" @change="toggleDisabledRadios(true)">No</el-radio>
-          </el-radio-group>
-        </el-space>
+      <div class="instruction-section mt-3">
 
-      </el-form-item>
+        <div class="instruction-box">
+          <div class="instruction-box-image">
+            <img src="@/assets/fill_out_form_icon.svg" class="instruction-container-icon">
+          </div>
 
-      <!-- Average Grade -->
-      <el-form-item>
-        <el-space direction="vertical">
-          <el-text size="large">
-            What is your average grade (your estimate if ok)?
-          </el-text>
+          <div class="instruction-box-content">
+            <div>
+              <el-text class="title">Fill out this Form</el-text>
+            </div>
 
-          <el-radio-group v-model="form.averageGrade">
-            <el-radio :value="'C'" :disabled="disable">C grade</el-radio>
-            <el-radio :value="'B'" :disabled="disable">B grade</el-radio>
-            <el-radio :value="'A'" :disabled="disable">A grade</el-radio>
-          </el-radio-group>
-        </el-space>
-      </el-form-item>
+            <div>
+              <el-text class="explanation-content">Start your journey by filling out the Internship Application Form. Provide your basic information, academic background, and preferred internship details.</el-text>
+            </div>
 
+            <div class="mt-2">
+              <el-input disabled placeholder="Full Name"></el-input>
+            </div>
 
-      <!-- Programme of study -->
-      <el-form-item>
-        <el-space direction="vertical">
-          <el-text size="large">
-            What is your Programme of study
-          </el-text>
+            <div class="mt-1">
+              <el-input disabled placeholder="Student ID"></el-input>
+            </div>
 
-          <el-radio-group v-model="form.programmeOfStudy">
-            <el-radio :value="'Bachelor of Applied Information Technology'" :disabled="disable">Bachelor of Applied Information Technology</el-radio>
-            <el-radio :value="'Postgraduate Diploma in Applied Information Technology'" :disabled="disable">Postgraduate Diploma in Applied Information Technology</el-radio>
-            <el-radio :value="'Masters'" :disabled="disable">Masters</el-radio>
-          </el-radio-group>
-        </el-space>
-      </el-form-item>
+            <div class="mt-1">
+              <el-button class="button">Apply Now</el-button>
+            </div>
 
-      <!-- Area of study -->
-      <el-form-item>
-        <el-space direction="vertical">
-          <el-text size="large">
-            What is your Area of study
-          </el-text>
+          </div>
 
-          <el-radio-group v-model="form.areaOfStudy" @change="hideOtherInput">
-            <el-radio :value="'Network Engineering'" :disabled="disable">Network Engineering</el-radio>
-            <el-radio :value="'Software Engineering'" :disabled="disable">Software Engineering</el-radio>
-            <el-radio :value="'Others'" :disabled="disable">Others</el-radio>
-          </el-radio-group>
+        </div>
 
-          <el-input v-model="otherArea" clearable v-show="displayInput"></el-input>
-        </el-space>
-      </el-form-item>
+      </div>
 
-      <!-- Qualification Type -->
-      <el-form-item>
-        <el-space direction="vertical">
-          <el-text size="large">
-            Qualification Type (if other please be specific, eg Postgraduate BA)
-          </el-text>
+      <div class="instruction-section mt-3">
 
-          <el-radio-group v-model="form.qualificationType">
-            <el-radio :value="'Degree - SE - Software Engineering'" :disabled="disable">Degree - SE - Software Engineering</el-radio>
-            <el-radio :value="'Degree - NE - Networking Engineering'" :disabled="disable">Degree - NE - Networking Engineering</el-radio>
-            <el-radio :value="'Postgraduate Diploma - SE - Software Engineering'" :disabled="disable">Postgraduate Diploma - SE - Software Engineering</el-radio>
-            <el-radio :value="'Postgraduate Diploma - NE - Network Engineering'" :disabled="disable">Postgraduate Diploma - NE - Network Engineering</el-radio>
-            <el-radio :value="'Masters - SE - Software Engineering'" :disabled="disable">Masters - SE - Software Engineering</el-radio>
-            <el-radio :value="'Masters - NE - Network Engineering'" :disabled="disable">Masters - NE - Network Engineering</el-radio>
-            <el-radio :value="'Masters - Database or Data Analytics'" :disabled="disable">Masters - Database or Data Analytics</el-radio>
-            <el-radio :value="'Masters - BA or Project Management'" :disabled="disable">Masters - BA or Project Management</el-radio>
-          </el-radio-group>
+        <div class="instruction-box">
+          <div class="instruction-box-image">
+            <img src="@/assets/interview_with_IRM_icon.svg" class="instruction-container-icon">
+          </div>
 
-          <el-input v-model="otherArea" clearable v-show="displayInput"></el-input>
-        </el-space>
-      </el-form-item>
+          <div class="instruction-box-content">
+            <div>
+              <el-text class="title">Attend interview with IRM</el-text>
+            </div>
 
-      <el-form-item>
-        
-        <el-button type="primary">Submit</el-button>
+            <div>
+              <el-text class="explanation-content">After submitting your form, the industry relationship manager will
+                review your application and schedule an interview to discuss your internship preferences and career
+                goals.</el-text>
+            </div>
 
-        <el-button type="primary" @click="handleEditButton(editButtonText)">{{ editButtonText }}</el-button>
+            <div class="mt-2">
+              <div class="info-section">
 
-        <el-button type="primary" @click="signOut">Sign Out</el-button>
+                <div class="info-image">
+                  <img src="@/assets/exclamation_mark_icon.svg">
+                </div>
 
-      </el-form-item>
+                <div class="info-content">
+                  <el-text>Students must submit their forms before interview.</el-text>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="mt-1">
+              <el-button class="button">Learn More Information</el-button>
+            </div>
+
+          </div>
+
+        </div>
 
 
-    </el-form>
+      </div>
+
+
+      <div class="instruction-section mt-3">
+
+        <div class="instruction-box">
+          <div class="instruction-box-image">
+            <img src="@/assets/interview_with_client_icon.svg" class="instruction-container-icon">
+          </div>
+
+          <div class="instruction-box-content">
+            <div>
+              <el-text class="title">Attend interview with client</el-text>
+            </div>
+
+            <div>
+              <el-text class="explanation-content">Successful candidates will be forwarded to potential employers for an
+                interview. The client will review your application and assess your fit for their internship
+                opportunities.</el-text>
+            </div>
+
+            <div class="mt-2">
+
+              <div class="info-section">
+
+                <div class="info-image">
+                  <img src="@/assets/exclamation_mark_icon.svg">
+                </div>
+
+                <div class="info-content">
+                  <el-text>Ensure you have prepared all required documents.</el-text>
+                </div>
+
+              </div>
+
+              <div class="mt-1">
+                <el-button class="button">Learn More Information</el-button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="instruction-section mt-3 mb-3">
+
+        <div class="instruction-box">
+          <div class="instruction-box-image">
+            <img src="@/assets/offer_received_icon.svg" class="instruction-container-icon">
+          </div>
+
+          <div class="instruction-box-content">
+            <div>
+              <el-text class="title">Internship Offer Received</el-text>
+            </div>
+
+            <div>
+              <el-text class="explanation-content">Upon successful completion of the interviews, you will receive an
+                internship offer from the client. Confirm your placement and get ready to start your internship
+                journey.</el-text>
+            </div>
+
+            <div class="mt-2">
+
+              <div class="info-section">
+
+                <div class="info-image">
+                  <img src="@/assets/success_icon.svg">
+                </div>
+
+                <div class="info-content">
+                  <el-text>Congratulations! You're closer to your future career.</el-text>
+                </div>
+
+              </div>
+
+              <div class="mt-1">
+                <el-button class="button">Learn More Information</el-button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
 
   </div>
+
+
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive } from 'vue'
-import type { FormProps } from 'element-plus'
-import { Bell, User } from '@element-plus/icons-vue'
-import Header from '@/components/SiteHeaderComponent.vue'
+import { reactive } from 'vue'
+import Banner from '@/components/BannerComponent.vue'
+import Box from '@/components/SiteBoxComponent.vue'
+import backgroundImage from '@/assets/Background Image.jpg'
+import experienceIcon from '@/assets/experience_icon.svg'
+import networkIcon from '@/assets/networks_icon.svg'
+import prospectsIcon from '@/assets/prospects_icon.svg'
 
-const form = reactive({
-  declaration: 'Yes',
-  averageGrade: '',
-  areaOfStudy: '',
-  programmeOfStudy: '',
-  qualificationType: ''
+const banner = reactive({
+  title: 'Helping Students Achieve Their Future',
+  content: 'The Industry Internship System connects students with real-world industry opportunities, enabling them to gain practical experience, develop professional skills, and build a strong foundation for their future careers.',
+  button: 'Get Involved',
+  backgroundImg: backgroundImage,
+  redirect: ''
 })
 
-const top = ref<FormProps['labelPosition']>('top')
-const disable = ref(false)
-
-const otherArea = ref()
-
-const toggleDisabledRadios = (disabled: boolean) => {
-  switch (disabled) {
-    case true:
-      disable.value = true
-      break
-    case false:
-      disable.value = false
-      break
-  }
-}
-
-// Edit / Lock
-const editButtonText = ref('Lock')
-
-const handleEditButton = (value: string) => {
-  switch (value) {
-    case 'Edit':
-      editButtonText.value = 'Lock'
-      disable.value = false
-      break
-    case 'Lock':
-      editButtonText.value = 'Edit'
-      disable.value = true
-      break
-  }
-}
-
-const displayInput = ref(false)
-const hideOtherInput = (value: string) => {
-  if (value === 'Others') {
-    displayInput.value = true
-  } else {
-    displayInput.value = false
-  }
-}
-
-const signOut = () => {
-  localStorage.removeItem('authToken')
-  location.reload()
-}
+const boxes = reactive([
+  { id: 1, title: 'Gain Real-World Experience', content: 'Engage in internships that provide you with hands-on experience, helping you to apply what you\'ve learned in class to real-life scenarios.', imgPath: experienceIcon },
+  { id: 2, title: 'Build Professional Networks', content: 'Connect with industry professionals, build valuable relationships, and expand your network within your field of study.', imgPath: networkIcon },
+  { id: 3, title: 'Enhance Your Career Prospects', content: 'Leverage the Industry Internship System to strengthen your resume, gain recommendations, and increase your employability after graduation.', imgPath: prospectsIcon },
+])
 
 </script>
 
 <style scoped>
 
-/* Override */
-.el-space {
-  width: 100%;
+.mt-1 {
+  margin-top: 1rem !important;
 }
 
-.container {
+.mt-2 {
+  margin-top: 2rem !important;
+}
+
+.mt-3 {
+  margin-top: 3rem !important;
+}
+
+.mb-3 {
+  margin-bottom: 3rem !important;
+}
+
+.el-input {
+  width: 90%;
+}
+
+.el-button {
+  width: 90%;
+}
+
+
+.container {}
+
+.box-container,
+.instruction-container {
+  padding: 0 10vw;
+  box-sizing: border-box;
+}
+
+.instruction-box {
+  width: 100%;
   height: 100%;
+  background-color: white;
+  border-radius: 27px;
   display: flex;
-  flex-direction: column;
+  align-items: stretch;
+}
+
+.instruction-box-image {
+  flex: 1;
+  background-color: #FE6601;
+  border-radius: 27px 0 0 27px;
+  display: flex;
+  justify-content: center;
   align-items: center;
 }
 
-.tool {
-  width: 100%;
-  display: flex;
-  justify-content: end;
+.instruction-container-icon {
+  width: 150px;
+  height: 150px;
 }
 
+.instruction-box-content {
+  flex: 2;
+  padding: 30px 60px;
+}
+
+.info-section {
+  width: 90%;
+  border-radius: 7px;
+  display: flex;
+}
+
+.info-image {
+  width: 10%;
+  border-radius: 7px 0 0 7px;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.info-image>img {
+  height: 20px;
+  width: 20px;
+}
+
+.info-content {
+  width: 90%;
+  border-radius: 0 7px 7px 0;
+  background-color: #ECECEC;
+  padding: 5px 18px;
+}
+
+.info-content>.el-text {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.el-input {
+  width: 90%;
+}
+
+.el-button {
+  width: 90%;
+}
+
+.client-info-section {
+  display: flex;
+  justify-content: space-between;
+  border: #BBBBBB 1px solid;
+  border-radius: 7px;
+}
+
+.client-title,
+.client-link {
+  text-align: center;
+  padding: 10px;
+}
+
+a {
+  color: #FE7235;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.button {
+  background-color: #FE6601;
+  color: white;
+}
+
+.header {
+  color: #FE7235;
+  font-weight: bold;
+  font-size: 45px;
+}
+
+.box-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  gap: 20px;
+}
+
+.title {
+  color: #FE7235;
+  font-weight: bold;
+  font-size: 50px;
+}
+
+.explanation-content {
+  color: #9C9C9C;
+  font-size: 15px;
+}
 </style>

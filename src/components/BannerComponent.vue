@@ -6,7 +6,6 @@
 
       <div class="text-section">
         <div>
-          <!-- <el-text>Helping Students Acheive Their Future</el-text> -->
           <el-text>{{ title }}</el-text>
         </div>
 
@@ -47,67 +46,124 @@ defineProps<{
 </script>
 
 <style scoped>
+/* Container with padding on the sides */
 .container {
   width: 100%;
+  /* Padding as a percentage of the viewport width */
+  padding: 0 10vw;
+  box-sizing: border-box;
 }
 
+/* Section Flexbox Container */
 .section {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
+  /* Allow wrapping on smaller screens */
+  flex-wrap: wrap;
 }
 
+/* Text Section */
 .text-section {
-  max-width: 60%;
-  display: block;
+  padding-right: 20px;
 }
 
+/* Image Section */
 .image-section {
-  margin-left: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .image-section>img {
-  /* width: 890px;
-  height: 400px;
-  background-size: cover; */
-  width: 80%;
+  /* Make the image take full width 80% */
+  width: 100%;
+  /* Restrict max size */
+  max-width: 500px;;
 }
 
 .shadow {
   display: block;
   max-width: 100%;
   height: auto;
-  box-shadow: 10px 10px 0 orange;
-  border-radius: 10px; 
+  box-shadow: 10px 10px 0 #FE6601;
+  border-radius: 10px;
 }
 
-.text-section > div:first-child, .text-section > div:nth-child(2), .text-section > div:last-child {
-  max-width: 485px;
-}
-
-.text-section > div:first-child > .el-text {
-  color: #FE7235;
+/* Responsive Typography */
+.text-section>div:first-child>.el-text {
+  color: #FE6601;
   font-weight: bold;
-  font-size: 45px;
+   /* Use relative units */
+  font-size: 2.5rem;
 }
 
-
-.text-section > div:nth-child(2) > .el-text {
+.text-section>div:nth-child(2)>.el-text {
   color: #777777;
-  font-size: 30px;
+  font-size: 1.5rem;
 }
 
-.text-section > div:last-child {
+.text-section>div:last-child {
   margin-top: 20px;
 }
 
 .el-button {
-  width: 100%;
+  width: 80%;
   height: 40px;
 }
 
+/* Media Queries for Responsive Design */
 
+/* Phone */
+/* Dev in the future */
+@media screen and (max-width: 768px) {
+  /* .section {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .text-section {
+    width: 100%;
+    padding-right: 0;
+  }
+
+  .image-section {
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .image-section>img {
+    max-width: 300px;
+  } */
+}
+
+
+/* Tablet */
+/* Dev in the future */
+@media screen and (max-width: 992px) and (min-width: 768px) {
+  /* .section {
+    flex-direction: column;
+  }
+
+  .text-section, .image-section {
+    width: 100%;
+    text-align: center;
+  } */
+}
+
+/* Computer */
+@media screen and (min-width: 992px) {
+  /* .container {
+    padding: 0 150px;
+  } */
+
+  .text-section {
+    width: 50%;
+  }
+
+  .image-section {
+    width: 50%;
+  }
+}
 
 </style>

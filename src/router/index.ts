@@ -21,9 +21,9 @@ const router = createRouter({
       meta: { requireAuth: true, role: 'Student' }
     },
     {
-      path: '/auth',
+      path: '/authLayout',
       redirect: '/login',
-      component: () => import('@/views/login/AuthLayout.vue'),
+      component: () => import('@/views/login/LayoutView.vue'),
       children: [
         {
           path: '/login',
@@ -57,6 +57,17 @@ const router = createRouter({
           path: '/emailVerification',
           name: 'emailVerification',
           component: () => import('@/views/login/EmailVerificationView.vue')
+        }
+      ]
+    },
+    {
+      path: '/studentLayout',
+      component: () => import('@/views/student/LayoutView.vue'),
+      children: [
+        {
+          path: '/student/home',
+          name: 'studentHome',
+          component: () => import('@/views/student/HomeView.vue')
         }
       ]
     },

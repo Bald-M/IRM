@@ -323,10 +323,6 @@ const boxes = reactive([
   width: 90%;
 }
 
-/* .instruction-section {
-
-} */
-
 .client-info-section {
   display: flex;
   justify-content: space-between;
