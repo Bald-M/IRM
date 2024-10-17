@@ -9,28 +9,34 @@
           class="industry-internship-system-logo" />
       </div>
 
+      <!-- Header for the email verification prompt -->
       <div style="display: flex; justify-content: center;" class="mt-1">
         <el-text class="text-header">Please check your email</el-text>
       </div>
 
+      <!-- Sub-header displaying the email address -->
       <div style="display: flex; justify-content: center;">
         <el-text class="text-sub-header">We've sent a code to&nbsp;</el-text>
         <el-text class="text-sub-header" style="color: black;">{{ email }}</el-text>
       </div>
 
+      <!-- Input fields for the OTP code -->
       <div class="code-container">
         <input v-model="codes[index]" v-for="(code, index) in codes" :key="index" maxlength="1" class="code-input"
           @input="handleInput(index, $event)" @keydown="handleKeydown(index, $event)" ref="inputRef" />
       </div>
 
+      <!-- Button to verify the entered code -->
       <el-form-item class="mt-1">
         <el-button type="primary" @click="handleVerify">Verify</el-button>
       </el-form-item>
 
+      <!-- Button to navigate back to the login page -->
       <el-form-item class="mt-1">
         <el-button style="color: #FB9333;" @click="handleNavButton">Back to Login</el-button>
       </el-form-item>
 
+      <!-- Option to resend the verification email -->
       <div style="text-align: center;">
         <el-text>Didn't receive an email?&nbsp;</el-text>
         <el-text style="color: black; font-weight: bold; cursor: pointer;" @click="handleResend">Resend</el-text>
@@ -47,16 +53,21 @@
 import { ref, nextTick, onMounted, computed, inject } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
-import { type FormProps, type FormRules, type FormInstance, ElMessage } from 'element-plus'
+import { ElMessage } from 'element-plus'
 import type { Router } from 'vue-router'
 import type { AxiosInstance } from 'axios'
 
-const loading = ref(false)
+// Array to hold individual OTP digits
 const codes = ref(['', '', '', '', '', ''])
+// References to input elements
 const inputRef = ref<(HTMLInputElement | null)[]>([])
+// Access the authentication store
 const authStore = useAuthStore()
+// Inject Axios instance for making HTTP requests
 const axios: AxiosInstance = inject('$axios') as AxiosInstance
+// Use Vue Router for navigation
 const router: Router = useRouter()
+// Emit loading state to parent component
 const emit = defineEmits(['loading'])
 
 const email = authStore.email
