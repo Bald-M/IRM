@@ -5,6 +5,7 @@ import '@/assets/theme.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import ElementPlus from 'element-plus'
 import axios from './utils/http'
+import watcher from './utils/watchDog'
 import './utils/permission'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
@@ -30,3 +31,5 @@ app.use(ElementPlus)
 app.use(createPinia())
 app.use(router)
 app.mount('#app')
+
+watcher(1)
