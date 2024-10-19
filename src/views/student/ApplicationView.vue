@@ -820,6 +820,8 @@ onMounted(() => {
       form.secondPreference = student.second_preference
       form.internshipOptions = JSON.parse(student.internship_options)
       form.preferences = JSON.parse(student.preferred_companies)
+      form.gender = student.gender,
+      form.type = student.student_type
     } else {
       console.log('Response Error')
     }
