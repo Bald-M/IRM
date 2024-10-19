@@ -1,193 +1,51 @@
 <template>
-  <div class="container">
+  <div class="home-container">
     <Header />
 
-    <Banner :title="banner.title" :content="banner.content" :imgPath="banner.imgPath" :button="banner.button" :redirect="banner.redirect" class="banner mt-6"/>
+    <div>
+      <Banner :title="banner.title" :content="banner.content" :imgPath="banner.imgPath" :button="banner.button"
+        :redirect="banner.redirect" class="mt-3" />
 
-    <div class="box-container mt-6">
+      <div class="box-container mt-6">
 
-      <div>
-        <el-text class="header">Why Join the IIS?</el-text>
+        <div>
+          <el-text class="header">Who Benefits?</el-text>
+        </div>
+
+
+        <div class="box-section mt-3">
+
+          <div v-for="item in boxes" :key="item.id" class="box">
+            <Box :title="item.title" :content="item.content" :imgPath="item.imgPath" />
+          </div>
+
+        </div>
+
       </div>
 
+      <div class="instruction-container mt-3">
 
-      <div class="box-section">
+        <div>
+          <el-text class="header">How It Works?</el-text>
+        </div>
 
-        <div v-for="item in boxes" :key="item.id" class="box">
-          <Box :title="item.title" :content="item.content" :imgPath="item.imgPath" />
+        <div class="step-section mt-3">
+
+          <div style="display: flex; justify-content: center;" v-for="item in steps" :key="item.id">
+            <Step :stepNumber="item.stepNumber" :icon="item.icon" :iconPostion="item.iconPosition" :title="item.title" :description="item.description" />
+          </div>
+
         </div>
 
       </div>
 
     </div>
 
-    <div class="instruction-container mt-6">
+    <el-backtop :right="100" :bottom="100" />
 
-      <div>
-        <el-text class="header">How does the IIS works?</el-text>
-      </div>
-
-      <div class="instruction-section mt-3">
-
-        <div class="instruction-box">
-          <div class="instruction-box-image">
-            <img src="@/assets/fill_out_form_icon.svg" class="instruction-container-icon">
-          </div>
-
-          <div class="instruction-box-content">
-            <div>
-              <el-text class="title">Fill out this Form</el-text>
-            </div>
-
-            <div>
-              <el-text class="explanation-content">Start your journey by filling out the Internship Application Form.
-                Provide your basic information, academic background, and preferred internship details.</el-text>
-            </div>
-
-            <div class="mt-2">
-              <el-input disabled placeholder="Full Name"></el-input>
-            </div>
-
-            <div class="mt-1">
-              <el-input disabled placeholder="Email Address"></el-input>
-            </div>
-
-            <div class="mt-1">
-              <el-button class="button">Apply Now</el-button>
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-      <div class="instruction-section mt-3">
-
-        <div class="instruction-box">
-          <div class="instruction-box-image">
-            <img src="@/assets/interview_with_IRM_icon.svg" class="instruction-container-icon">
-          </div>
-
-          <div class="instruction-box-content">
-            <div>
-              <el-text class="title">Attend interview with IRM</el-text>
-            </div>
-
-            <div>
-              <el-text class="explanation-content">After submitting your form, the industry relationship manager will
-                review your application and schedule an interview to discuss your internship preferences and career
-                goals.</el-text>
-            </div>
-
-            <div class="mt-2">
-              <div class="info-section">
-
-                <div class="info-image">
-                  <img src="@/assets/exclamation_mark_icon.svg">
-                </div>
-
-                <div class="info-content">
-                  <el-text>Students must submit their forms before interview.</el-text>
-                </div>
-
-              </div>
-            </div>
-
-            <div class="mt-1">
-              <el-button class="button">Learn More Information</el-button>
-            </div>
-
-          </div>
-
-        </div>
+    <Footer class="mt-3" />
 
 
-      </div>
-
-
-      <div class="instruction-section mt-3">
-
-        <div class="instruction-box">
-          <div class="instruction-box-image">
-            <img src="@/assets/interview_with_client_icon.svg" class="instruction-container-icon">
-          </div>
-
-          <div class="instruction-box-content">
-            <div>
-              <el-text class="title">Attend interview with client</el-text>
-            </div>
-
-            <div>
-              <el-text class="explanation-content">Successful candidates will be forwarded to potential employers for an
-                interview. The client will review your application and assess your fit for their internship
-                opportunities.</el-text>
-            </div>
-
-            <div class="mt-2">
-
-              <div class="info-section">
-
-                <div class="info-image">
-                  <img src="@/assets/exclamation_mark_icon.svg">
-                </div>
-
-                <div class="info-content">
-                  <el-text>Ensure you have prepared all required documents.</el-text>
-                </div>
-
-              </div>
-
-              <div class="mt-1">
-                <el-button class="button">Learn More Information</el-button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="instruction-section mt-3">
-
-        <div class="instruction-box">
-          <div class="instruction-box-image">
-            <img src="@/assets/offer_received_icon.svg" class="instruction-container-icon">
-          </div>
-
-          <div class="instruction-box-content">
-            <div>
-              <el-text class="title">Internship Offer Received</el-text>
-            </div>
-
-            <div>
-              <el-text class="explanation-content">Upon successful completion of the interviews, you will receive an internship offer from the client. Confirm your placement and get ready to start your internship journey.</el-text>
-            </div>
-
-            <div class="mt-2">
-
-              <div class="info-section">
-
-                <div class="info-image">
-                  <img src="@/assets/success_icon.svg">
-                </div>
-
-                <div class="info-content">
-                  <el-text>Congratulations! You're closer to your future career.</el-text>
-                </div>
-
-              </div>
-
-              <div class="mt-1">
-                <el-button class="button">Learn More Information</el-button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-
-    <Footer class="mt-6" />
   </div>
 </template>
 
@@ -196,10 +54,18 @@ import Header from '@/components/SiteHeaderComponent.vue'
 import Footer from '@/components/SiteFooterComponent.vue'
 import Banner from '@/components/BannerComponent.vue'
 import Box from '@/components/SiteBoxComponent.vue'
+import Step from '@/components/HomeStepComponent.vue'
 import backgroundImage from '@/assets/Background Image.jpg'
-import experienceIcon from '@/assets/experience_icon.svg'
-import networkIcon from '@/assets/networks_icon.svg'
-import prospectsIcon from '@/assets/prospects_icon.svg'
+import studentIcon from '@/assets/Home/student.svg'
+import shakeHandsIcon from '@/assets/Home/shake_hands.svg'
+import eyesIcon from '@/assets/Home/eyes.svg'
+import fillOutFormIcon from '@/assets/Home/fill_out_form_icon 1.svg'
+import interviewWithIRMIcon from '@/assets/Home/interview_with_IRM_icon 2.svg'
+import fileIcon from '@/assets/Home/hand_with_file_icon 3.svg'
+import interviewWithClientIcon from '@/assets/Home/interview_with_client_icon 4.svg'
+import bellIcon from '@/assets/Home/bell_icon 5.svg'
+import signIcon from '@/assets/Home/sign_in_paper_icon 6.svg'
+import targetIcon from '@/assets/Home/target_icon 7.svg'
 import { reactive } from 'vue'
 
 const banner = reactive({
@@ -211,9 +77,19 @@ const banner = reactive({
 })
 
 const boxes = reactive([
-  { id: 1, title: 'Gain Real-World Experience', content: 'Engage in internships that provide you with hands-on experience, helping you to apply what you\'ve learned in class to real-life scenarios.', imgPath: experienceIcon },
-  { id: 2, title: 'Build Professional Networks', content: 'Connect with industry professionals, build valuable relationships, and expand your network within your field of study.', imgPath: networkIcon },
-  { id: 3, title: 'Enhance Your Career Prospects', content: 'Leverage the Industry Internship System to strengthen your resume, gain recommendations, and increase your employability after graduation.', imgPath: prospectsIcon },
+  { id: 1, title: 'Students', content: 'Easily submit your application, attend interviews, and track the status of your internship process.', imgPath: studentIcon },
+  { id: 2, title: 'Industry Clients', content: 'Browse student profiles, invite students for interviews, and select the best candidates for internships.', imgPath: shakeHandsIcon },
+  { id: 3, title: 'Industry Relationship Manager', content: 'Review applications, manage student profiles, and oversee the entire internship process.', imgPath: eyesIcon },
+])
+
+const steps = reactive([
+  { id: 1, stepNumber: 1, icon: fillOutFormIcon, iconPosition: 'left', title: 'Form Submission', description: 'The student creates an account here and submits the application form.'  },
+  { id: 2, stepNumber: 2, icon: interviewWithIRMIcon, iconPosition: 'right', title: 'IRM Interview', description: 'The Industry Relationship Manager (IRM) reviews the application and conducts an interview with the student.'  },
+  { id: 3, stepNumber: 3, icon: fileIcon, iconPosition: 'left', title: 'Profile Publication', description: 'Once approved by the IRM, the student\'s profile is published for industry clients to review.'  },
+  { id: 4, stepNumber: 4, icon: interviewWithClientIcon, iconPosition: 'right', title: 'Industry Interview', description: 'The Industry reviews the student profiles and conducts interviews with the student.'  },
+  { id: 5, stepNumber: 5, icon: bellIcon, iconPosition: 'left', title: 'Offer Notification', description: 'The industry notifies both the student and the IRM about successful applications.'  },
+  { id: 6, stepNumber: 6, icon: signIcon, iconPosition: 'right', title: 'Sign Contract', description: 'Intern and industry contracts are created, signed, and returned to IRM.'  },
+  { id: 7, stepNumber: 7, icon: targetIcon, iconPosition: 'left', title: 'Start Internship', description: 'Internship days, times, and start date are finalized, and the student starts their internship.'  },
 ])
 
 </script>
@@ -235,23 +111,16 @@ const boxes = reactive([
   margin-top: 6rem !important;
 }
 
-.container {
-  width: 100%;
+.home-container {
+  height: 100%;
+  background: linear-gradient(to bottom, white 0%, #FFEDD7);
 }
 
-.banner {
-  width: 1333px;
-  margin: 0 auto;
-}
 
-.box-container {
-  width: 1333px;
-  margin: 0 auto;
-}
-
+.box-container,
 .instruction-container {
-  width: 1333px;
-  margin: 0 auto;
+  padding: 0 10vw;
+  box-sizing: border-box;
 }
 
 
@@ -370,5 +239,4 @@ a {
   color: #9C9C9C;
   font-size: 15px;
 }
-
 </style>

@@ -77,11 +77,11 @@ const router = createRouter({
         }
       ]
     },
-    // {
-    //   path: '/home',
-    //   name: 'home',
-    //   component: () => import('@/views/HomeView.vue')
-    // },
+    {
+      path: '/home',
+      name: 'home',
+      component: () => import('@/views/HomeView.vue')
+    },
     {
       path: '/admin/panel',
       redirect: '/admin/panel/studentsList',

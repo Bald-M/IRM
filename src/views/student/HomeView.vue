@@ -203,8 +203,8 @@ import networkIcon from '@/assets/networks_icon.svg'
 import prospectsIcon from '@/assets/prospects_icon.svg'
 
 const banner = reactive({
-  title: 'Helping Students Achieve Their Future',
-  content: 'The Industry Internship System connects students with real-world industry opportunities, enabling them to gain practical experience, develop professional skills, and build a strong foundation for their future careers.',
+  title: 'Welcome to the Industry Internship System',
+  content: 'Designed to streamline and automate the internship process for students, industry clients, and industry relationship managers.',
   button: 'Get Involved',
   backgroundImg: backgroundImage,
   redirect: ''
