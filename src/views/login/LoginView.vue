@@ -14,7 +14,7 @@
       <el-form-item label="Email" class="mt-2" prop="email">
         <!-- Bind email input to form model -->
         <!-- Allow clearing of the input field -->
-        <el-input v-model="form.email" clearable placeholder="mail@example.com" />
+        <el-input v-model="form.email" clearable placeholder="mail@example.com" data-test="username-field" />
       </el-form-item>
 
       <!-- Form item for password input -->
@@ -23,7 +23,7 @@
         <!-- Mask the input as password -->
         <!-- Allow clearing of the input field -->
         <!-- Show password toggle option -->
-        <el-input v-model="form.password" type="password" clearable placeholder="******" show-password />
+        <el-input v-model="form.password" type="password" clearable placeholder="******" show-password data-test="password-field" />
       </el-form-item>
 
       <!-- Link for forgotten password, aligned to the right -->
