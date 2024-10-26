@@ -128,10 +128,13 @@ const handleLogin = async (formEl: FormInstance | undefined) => {
         // Redirect user based on their role
         switch (res.data.profile_data.user_type) {
           case 'Student':
-            router.push('/student/home')
+            router.push('/studentLayout')
             break
           case 'Industry':
             router.push('/client/panel')
+            break
+          case 'Admin':
+            router.push('/admin/panel')
             break
           default:
             router.push('/')

@@ -9,18 +9,6 @@ const router = createRouter({
       redirect: '/home',
     },
     {
-      path: '/student/application',
-      name: 'studentApplication',
-      component: () => import('@/views/student/ApplicationView.vue'),
-      meta: { requireAuth: true, role: 'Student' }
-    },
-    {
-      path: '/student/profile',
-      name: 'studentProfile',
-      component: () => import('@/views/student/ProfileView.vue'),
-      meta: { requireAuth: true, role: 'Student' }
-    },
-    {
       path: '/authLayout',
       redirect: '/login',
       component: () => import('@/views/login/LayoutView.vue'),
@@ -68,12 +56,20 @@ const router = createRouter({
         {
           path: '/student/home',
           name: 'studentHome',
-          component: () => import('@/views/student/HomeView.vue')
+          component: () => import('@/views/student/HomeView.vue'),
+          meta: { requireAuth: true, role: 'Student' }
         },
         {
           path: '/student/application',
           name: 'studentApplication',
-          component: () => import('@/views/student/ApplicationView.vue')
+          component: () => import('@/views/student/ApplicationView.vue'),
+          meta: { requireAuth: true, role: 'Student' }
+        },
+        {
+          path: '/student/profile',
+          name: 'studentProfile',
+          component: () => import('@/views/student/ProfileView.vue'),
+          meta: { requireAuth: true, role: 'Student' }
         }
       ]
     },
