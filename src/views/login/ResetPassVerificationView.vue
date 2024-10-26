@@ -70,7 +70,7 @@ const router: Router = useRouter()
 const emit = defineEmits(['loading'])
 
 // Retrieve email and server reference from the authentication store
-const email = authStore.email
+const email = computed(() => authStore.email)
 const serverRef = authStore.server_ref
 
 // Function to trigger loading state

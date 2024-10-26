@@ -1,6 +1,6 @@
 <template>
 
-  <div class="container" v-loading="loading">
+  <div class="container">
     <el-form ref="ruleFormRef" label-width="auto" class="form" status-icon>
 
       <!-- Wintec Logo -->
@@ -8,23 +8,29 @@
         <img src="@/assets/Industry Internship System Logo.svg" class="industry-internship-system-logo" />
       </div>
 
+      <!-- Header Text -->
       <div style="display: flex; justify-content: center;" class="mt-1">
         <el-text class="text-header">Please check your email</el-text>
       </div>
 
+      <!-- Email Information Text -->
       <div style="display: flex; justify-content: center;">
         <el-text class="text-sub-header">We've sent a code to&nbsp;</el-text>
         <el-text class="text-sub-header" style="color: black;">{{ email }}</el-text>
       </div>
 
+      <!-- Code Input Fields -->
       <div class="code-container">
+        <!-- Input fields for the verification code -->
         <input v-model="codes[index]" v-for="(code, index) in codes" :key="index" maxlength="1" class="code-input" @input="handleInput(index, $event)" @keydown="handleKeydown(index, $event)" ref="inputRef" />
       </div>
 
+      <!-- Verify Button -->
       <el-form-item class="mt-1">
         <el-button type="primary" @click="handleVerify">Verify</el-button>
       </el-form-item>
 
+      <!-- Resend Link -->
       <div style="text-align: center;">
         <el-text>Didn't receive an email?&nbsp;</el-text>
         <el-text style="color: black; font-weight: bold; cursor: pointer;" @click="handleResend">Resend</el-text>
@@ -41,23 +47,32 @@
 import {  ref, nextTick, onMounted, computed, inject } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
-import { type FormProps, type FormRules, type FormInstance, ElMessage } from 'element-plus'
+import { ElMessage } from 'element-plus'
 import type { Router } from 'vue-router'
 import type { AxiosInstance } from 'axios'
 
-const loading = ref(false)
+// Array to store each digit of the verification code
 const codes = ref(['', '', '', '', '', ''])
+// Reference array for input elements
 const inputRef = ref<(HTMLInputElement | null)[]>([])
+// Import the authentication store
 const authStore = useAuthStore()
+// Inject the Axios instance
 const axios: AxiosInstance = inject('$axios') as AxiosInstance
+// Setup the router instance
 const router: Router = useRouter()
+// Define emits for loading state
+const emit = defineEmits(['loading'])
 
+// Computed property for user email from auth store
 const email = computed(() => authStore.email)
+// Reference to the server's verification reference from the auth store
 const serverRef = authStore.server_ref
+// Handle input in each code box, auto-focuses to next box if filled
 const handleInput = (index: number, event: any) => {
   const value = event.target.value
   codes.value[index] = value
-  // Jump over to the next field
+  // If current box has a value, move to next box
   if (value && index < codes.value.length - 1) {
     const nextInput = event.target.nextElementSibling
     if (nextInput) {
@@ -68,8 +83,14 @@ const handleInput = (index: number, event: any) => {
   }
 }
 
+// Function to emit loading state changes
+const triggerLoading = (value: boolean) => {
+  emit('loading', value)
+}
+
+// Handle key events for code boxes, allowing navigation with arrows and backspace
 const handleKeydown = (index: number, event: any) => {
-  // Handle Delete Operation
+  // Backspace to clear and focus previous box if empty
   if (event.key === 'Backspace' && !event.target.value && index > 0) {
     const prevInput = event.target.previousElementSibling
     if (prevInput) {
@@ -77,14 +98,18 @@ const handleKeydown = (index: number, event: any) => {
         prevInput.focus()
       })
     }
-  } else if (event.key === 'ArrowRight') {
+  } 
+  // Right arrow to move to next box
+  else if (event.key === 'ArrowRight') {
     const nextInput = event.target.nextElementSibling
     if (nextInput) {
       nextTick(() => {
         nextInput.focus()
       })
     }
-  } else if (event.key === 'ArrowLeft') {
+  } 
+  // Left arrow to move to previous box
+  else if (event.key === 'ArrowLeft') {
     const prevInput = event.target.previousElementSibling
     if (prevInput) {
       nextTick(() => {
@@ -94,8 +119,9 @@ const handleKeydown = (index: number, event: any) => {
   }
 }
 
+// Send verification code to server for verification
 const handleVerify = () => {
-  loading.value = true
+  triggerLoading(true)
   let code = ''
   for(let i = 0; i < codes.value.length; i++) {
     code += codes.value[i]
@@ -108,12 +134,12 @@ const handleVerify = () => {
       otp: code
     },
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/json'
     }
   }).then(res => {
     console.log(res)
     ElMessage.success(res.data.description)
-    loading.value = false
+    triggerLoading(false)
     router.push('/login')
     authStore.clearAuthData()
     localStorage.removeItem('otp')
@@ -121,12 +147,13 @@ const handleVerify = () => {
     codes.value = ['', '', '', '', '', '']
     console.log(error)
     ElMessage.error(error.response.data.error)
-    loading.value = false
+    triggerLoading(false)
   })
 }
 
+// Resend verification code via API
 const handleResend = () => {
-  loading.value = true
+  triggerLoading(true)
   axios({
     url: '/api/sendOTP',
     method: 'post',
@@ -134,20 +161,22 @@ const handleResend = () => {
       server_ref: serverRef,
     },
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/json '
     }
   }).then(res => {
+    // Clear input fields on resend
     codes.value = ['', '', '', '', '', '']
-    console.log(res)
+    // console.log(res)
     ElMessage.success(res.data.description)
-    loading.value = false
+    triggerLoading(false)
   }).catch(error => {
     console.log(error)
     // ElMessage.error(error.response.data.error)
-    loading.value = false
+    triggerLoading(false)
   })
 }
 
+// Focus on the first code input field when the component is mounted
 onMounted(() => {
   if (inputRef.value && inputRef.value[0]) {
     inputRef.value[0].focus()
