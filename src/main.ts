@@ -6,7 +6,7 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import ElementPlus from 'element-plus'
 import axios from './utils/http'
 import watcher from './utils/watchDog'
-import './utils/permission'
+import setupRouterGuard from './utils/permission'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
@@ -32,4 +32,7 @@ app.use(createPinia())
 app.use(router)
 app.mount('#app')
 
+// Used functions
+setupRouterGuard()
 watcher(1)
+
