@@ -1,38 +1,41 @@
+// Import global styles
 import '@/assets/main.css'
 import 'element-plus/dist/index.css'
-//import '@/styles/element/index.scss'
 import '@/assets/theme.css'
+// Import Element Plus icon library
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import ElementPlus from 'element-plus'
+// Import custom axios instance and utility functions
 import axios from './utils/http'
 import watcher from './utils/watchDog'
 import setupRouterGuard from './utils/permission'
+// Import Vue modules and project files
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import App from './App.vue' // Root component
+import router from './router' // Project router
 
-import App from './App.vue'
-import router from './router'
-
+// Create the Vue application
 const app = createApp(App)
 
+// Register Element Plus icons globally
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
 
-app.config.globalProperties.$router = router
-app.provide('$router', router)
-
+// Make the custom axios instance globally available
 app.config.globalProperties.$axios = axios
 app.provide('$axios', axios)
 
 //console.log(import.meta.env)
 
-app.use(ElementPlus)
-app.use(createPinia())
-app.use(router)
-app.mount('#app')
+// Initialize plugins and mount the application
+app.use(ElementPlus) // Use Element Plus plugin
+app.use(createPinia()) // Use Pinia for state management
+app.use(router) // Use the router
+app.mount('#app') // Mount the app to the DOM
 
-// Used functions
-setupRouterGuard()
-watcher(1)
+// Setup functions
+setupRouterGuard() // Initialize the router guard
+watcher(1) // Start the watcher with parameter 1, Check for token expiration every 1 minute
 

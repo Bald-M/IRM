@@ -50,4 +50,5 @@ const watcher = (intervalMinutes: number) => {
   }, intervalMillis)
 }
 
+// Export the function for use in other module
 export default watcher
