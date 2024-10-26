@@ -52,24 +52,42 @@ const router = createRouter({
       path: '/studentLayout',
       redirect: '/student/home',
       component: () => import('@/views/student/LayoutView.vue'),
+      meta: { requireAuth: true, role: 'Student' },
       children: [
         {
           path: '/student/home',
           name: 'studentHome',
           component: () => import('@/views/student/HomeView.vue'),
-          meta: { requireAuth: true, role: 'Student' }
         },
         {
           path: '/student/application',
           name: 'studentApplication',
           component: () => import('@/views/student/ApplicationView.vue'),
-          meta: { requireAuth: true, role: 'Student' }
         },
         {
           path: '/student/profile',
           name: 'studentProfile',
           component: () => import('@/views/student/ProfileView.vue'),
-          meta: { requireAuth: true, role: 'Student' }
+        }
+      ]
+    },
+    {
+      path: '/adminLayout',
+      redirect: '/admin/studentsList',
+      component: () => import('@/views/admin/LayoutView.vue'),
+      meta: { requireAuth: true, role: 'Admin' },
+      children: [
+        {
+          path: '/admin/studentsList',
+          name: 'studentsList',
+          component: () => import('@/views/admin/StudentsListView.vue')
+        },
+        {
+          path: '/admin/studentsList/:id',
+          name: 'studentDetails',
+          component: () => import('@/views/admin/StudentsDetailsView.vue'),
+          // Allow Router Parameter
+          props: true
         }
       ]
     },
@@ -78,30 +96,26 @@ const router = createRouter({
       name: 'home',
       component: () => import('@/views/HomeView.vue')
     },
-    {
-      path: '/admin/panel',
-      redirect: '/admin/panel/studentsList',
-      name: 'adminHome',
-      component: () => import('@/views/admin/PanelView.vue'),
-      meta: { requireAuth: true, role: 'Admin' },
-      children: [
-        {
-          path: '/admin/panel/studentsList',
-          name: 'studentsList',
-          component: () => import('@/views/admin/StudentsListView.vue')
-        },
-        // Dynamic Router
-        // If Bob id is 123, when admin click on Bob, the router redirect to /admin/panel/studentsList/123
-        // StudentsDetailView.vue accept id as props
-        {
-          path: '/admin/panel/studentsList/:id',
-          name: 'studentDetails',
-          component: () => import('@/views/admin/StudentsDetailsView.vue'),
-          // Allow Router Parameter
-          props: true
-        }
-      ]
-    },
+    // {
+    //   path: '/admin/panel',
+    //   redirect: '/admin/panel/studentsList',
+    //   name: 'adminHome',
+    //   component: () => import('@/views/admin/PanelView.vue'),
+    //   meta: { requireAuth: true, role: 'Admin' },
+    //   children: [
+    //     {
+    //       path: '/admin/panel/studentsList',
+    //       name: 'studentsList',
+    //       component: () => import('@/views/admin/StudentsListView.vue')
+    //     },
+    //     {
+    //       path: '/admin/panel/studentsList/:id',
+    //       name: 'studentDetails',
+    //       component: () => import('@/views/admin/StudentsDetailsView.vue'),
+    //       props: true
+    //     }
+    //   ]
+    // },
     {
       path: '/client/panel',
       redirect: '/client/panel/candidatesList',

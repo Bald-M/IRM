@@ -1,52 +1,54 @@
 import { useAuthStore } from '../stores/auth'
-import { jwtDecode } from 'jwt-decode'
+import axios from 'axios'
+
 
 // Function to check if the token is expired
-const checkTokenExpiration = (token: string, authStore: any) => {
+const checkTokenExpiration = async (authStore: any) => {
   try {
-    // Get current time in seconds
-    const currentTime = Math.floor(Date.now() / 1000)
+    const app_uid = authStore.uid
 
-    if (token) {
-      // Decode the token
-      const decoded: any = jwtDecode(token)
-      console.log('Decoded token:', decoded)
-
-      // Check if the token has a valid expiration time and if it is expired
-      if (decoded.exp && decoded.exp < currentTime) {
-        alert('Token expired. Please login again')
-        // Clear the authentication data if the token is expired
-        authStore.clearAuthData()
-        window.location.reload()
+    const response = await axios.post(import.meta.env.VITE_APP_API_URL + '/api/getTokenExpirationDate', { app_user_id: app_uid }, {
+      headers: {
+        'Content-Type': 'application/json'
       }
+    })
+
+    const expirationDate = new Date(response.data.expiration_date)
+    // Subtract one hour
+    expirationDate.setHours(expirationDate.getHours() - 1);
+
+    // Get current time in seconds
+    const currentTime = new Date()
+
+    if (expirationDate < currentTime) {
+      alert('Token expired. Please login again')
     } else {
-      console.log('No valid authKey found.')
+      console.log('Token is valid until:', expirationDate)
     }
   } catch (error) {
     // Catch any errors while decoding the token
     console.error('Error decoding token:', error)
+    // alert('An error occurred while checking the token expiration.');
   }
 }
 
 // The watcher function checks token expiration at intervals
-const watcher = (intervalMinutes: number) => {
+const watcher = async (intervalMinutes: number) => {
   const authStore = useAuthStore()
   // Restore authentication data from the store
   authStore.restoreAuthData()
 
-  const token = authStore.authKey
 
-   // Immediately check the token status on initialization
-  checkTokenExpiration(token, authStore)
+  // Immediately check the token status on initialization
+  await checkTokenExpiration(authStore)
 
   // Convert the interval time from minutes to milliseconds
   const intervalMillis = intervalMinutes * 60 * 1000
 
   // Set an interval to check the token status periodically
-  setInterval(() => {
+  setInterval(async () => {
     console.log('Checking token expiration...')
-    const token = authStore.authKey
-    checkTokenExpiration(token, authStore)
+    await checkTokenExpiration(authStore)
   }, intervalMillis)
 }
 

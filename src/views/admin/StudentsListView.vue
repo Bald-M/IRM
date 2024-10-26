@@ -43,10 +43,10 @@
       </el-table>
     </div>
 
-    <div class="pagination-section mt-3">
+    <div class="pagination-section">
       <el-pagination v-model:current-page="currentPage" v-model:page-size="pageSize" :page-sizes="[100, 200, 300, 400]"
         :size="size" :disabled="disabled" :background="background" layout="total, sizes, prev, pager, next, jumper"
-        :total="400" />
+        :total="400" class="mt-3 mb-3" />
     </div>
 
   </div>
@@ -259,5 +259,9 @@ const tableData = [
 
 .mt-3 {
   margin-top: 3rem;
+}
+
+.mb-3 {
+  margin-bottom: 3rem !important;
 }
 </style>
