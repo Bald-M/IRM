@@ -38,10 +38,10 @@
         </div>
 
         <div class="nav-logo">
-          <img src="@/assets/facebook_logo.svg" class="logo" />
-          <img src="@/assets/instagram_logo.svg" class="logo" />
-          <img src="@/assets/youtube_logo.svg" class="logo" />
-          <img src="@/assets/linkedin_logo.svg" class="logo" />
+          <img src="@/assets/FooterIcon/facebook_logo.svg" class="logo" />
+          <img src="@/assets/FooterIcon/instagram_logo.svg" class="logo" />
+          <img src="@/assets/FooterIcon/youtube_logo.svg" class="logo" />
+          <img src="@/assets/FooterIcon/linkedin_logo.svg" class="logo" />
         </div>
 
       </div>

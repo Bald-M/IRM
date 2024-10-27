@@ -132,7 +132,7 @@ const handleVerify = () => {
     method: 'post',
     data: {
       server_ref: serverRef,
-      email,
+      email: email.value,
       otp: code
     },
     headers: {
@@ -152,12 +152,12 @@ const handleVerify = () => {
     codes.value = ['', '', '', '', '', '']
     console.log(error)
     // Check if error.response exists to prevent undefined errors
-    if (error.response && error.response.data) {
-      // Show error message
-      ElMessage.error(error.response.data.error)
-    } else {
-      ElMessage.error('Network error or server not responding. Please try again later.')
-    }
+    // if (error.response && error.response.data) {
+    //   // Show error message
+    //   ElMessage.error(error.response.data.error)
+    // } else {
+    //   ElMessage.error('Network error or server not responding. Please try again later.')
+    // }
     triggerLoading(false)
   })
 }
