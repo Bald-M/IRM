@@ -37,5 +37,6 @@ app.mount('#app') // Mount the app to the DOM
 
 // Setup functions
 setupRouterGuard() // Initialize the router guard
-watcher(1) // Start the watcher with parameter 1, Check for token expiration every 1 minute
+watcher(1) 
+
 

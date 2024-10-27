@@ -7,6 +7,10 @@ const checkTokenExpiration = async (authStore: any) => {
   try {
     const app_uid = authStore.uid
 
+    if (!app_uid) {
+      return
+    }
+
     const response = await axios.post(import.meta.env.VITE_APP_API_URL + '/api/getTokenExpirationDate', { app_user_id: app_uid }, {
       headers: {
         'Content-Type': 'application/json'
@@ -14,14 +18,15 @@ const checkTokenExpiration = async (authStore: any) => {
     })
 
     const expirationDate = new Date(response.data.expiration_date)
-    // Subtract one hour
-    expirationDate.setHours(expirationDate.getHours() - 1);
 
     // Get current time in seconds
     const currentTime = new Date()
 
+
     if (expirationDate < currentTime) {
       alert('Token expired. Please login again')
+      authStore.clearAuthData()
+      window.location.reload()
     } else {
       console.log('Token is valid until:', expirationDate)
     }
@@ -38,7 +43,6 @@ const watcher = async (intervalMinutes: number) => {
   // Restore authentication data from the store
   authStore.restoreAuthData()
 
-
   // Immediately check the token status on initialization
   await checkTokenExpiration(authStore)
 
@@ -50,6 +54,7 @@ const watcher = async (intervalMinutes: number) => {
     console.log('Checking token expiration...')
     await checkTokenExpiration(authStore)
   }, intervalMillis)
+
 }
 
 // Export the function for use in other module
