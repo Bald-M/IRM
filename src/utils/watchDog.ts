@@ -6,14 +6,15 @@ import axios from 'axios'
 const checkTokenExpiration = async (authStore: any) => {
   try {
     const app_uid = authStore.uid
-
+    const auth_key = authStore.authKey
     if (!app_uid) {
       return
     }
 
-    const response = await axios.post(import.meta.env.VITE_APP_API_URL + '/api/getTokenExpirationDate', { app_user_id: app_uid }, {
+    const response = await axios.post(import.meta.env.VITE_APP_API_URL + '/api/getTokenExpirationDate', { app_user_id: app_uid  }, {
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + auth_key
       }
     })
 
@@ -34,6 +35,7 @@ const checkTokenExpiration = async (authStore: any) => {
   } catch (error: any) {
     // Catch any errors while decoding the token
     // console.error('Error decoding token:', error)
+    console.log(error)
     if (error.response.status === 401) {
       alert('Your account was accessed from another device. Please log in again.')
       authStore.clearAuthData()
@@ -41,6 +43,7 @@ const checkTokenExpiration = async (authStore: any) => {
     }
   }
 }
+
 
 // The watcher function checks token expiration at intervals
 const watcher = async (intervalMinutes: number) => {
