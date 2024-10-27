@@ -732,7 +732,7 @@ const handleCurrentChange = () => {
 
 // Submit Form
 interface PageFields {
-  [key: string]: string[];
+  [key: string]: string[]
 }
 
 const pageFields: PageFields = {
@@ -798,7 +798,7 @@ onMounted(() => {
     }
   }).then(res => {
     if (res.data && res.data.student) {
-      console.log(res.data)
+      // console.log(res.data)
       // form.studentEmail = student.student_email
       const student = res.data.student
       form.name = student.name
@@ -827,11 +827,13 @@ onMounted(() => {
     }
   }).catch(err => {
     if (err.response) {
-      console.error('Server Error:', err.response.status, err.response.data);
-    } else if (err.request) {
-      console.error('Network Error:', err.request);
-    } else {
-      console.error('Request Error:', err.message);
+      console.error('Server Error:', err.response.status, err.response.data)
+    } 
+    else if (err.request) {
+      console.error('Network Error:', err.request)
+    } 
+    else {
+      console.error('Request Error:', err.message)
     }
   })
 })

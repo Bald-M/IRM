@@ -1,8 +1,7 @@
 <template>
-  <div class="container">
-    <Header />
+  <div class="mb-3">
 
-    <div class="mt-6 profile-container">
+    <div class="mt-3 profile-container">
       <div class="profile-header">
         <div>
           <el-text class="header">Student Profile</el-text>
@@ -10,7 +9,8 @@
 
         <div class="profile-bar">
           <el-text class="profile-bar-text">To edit your profile, go to&nbsp;</el-text>
-          <el-text class="profile-bar-text" style="text-decoration: underline; cursor: pointer;" @click="handleNavigation('/student/application')">Application&nbsp;</el-text>
+          <el-text class="profile-bar-text" style="text-decoration: underline; cursor: pointer;"
+            @click="handleNavigation('/student/application')">Application&nbsp;</el-text>
           <el-text class="profile-bar-text">and edit your application form.</el-text>
         </div>
       </div>
@@ -19,13 +19,10 @@
 
     </div>
 
-    <Footer class="mt-6"/>
   </div>
 </template>
 
 <script lang="ts" setup>
-import Header from '@/components/SiteHeaderComponent.vue'
-import Footer from '@/components/SiteFooterComponent.vue'
 import Profile from '@/components/StudentDetailComponent.vue'
 import { useRouter } from 'vue-router'
 const router = useRouter()
@@ -36,7 +33,6 @@ const handleNavigation = (url: string) => {
 </script>
 
 <style scoped>
-
 .mt-3 {
   margin-top: 3rem !important;
 }
@@ -45,8 +41,8 @@ const handleNavigation = (url: string) => {
   margin-top: 6rem !important;
 }
 
-.container {
-  width: 100%;
+.mb-3 {
+  margin-bottom: 3rem !important;
 }
 
 .profile-container {
@@ -64,7 +60,7 @@ const handleNavigation = (url: string) => {
   background-color: #FE6601;
   border-radius: 12px;
   display: flex;
-  margin-left: 3rem;;
+  margin-left: 3rem;
   padding: 0 2rem;
 }
 
@@ -85,5 +81,4 @@ const handleNavigation = (url: string) => {
   font-weight: bold;
   color: #FE6601;
 }
-
 </style>
