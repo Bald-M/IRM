@@ -27,13 +27,18 @@ const checkTokenExpiration = async (authStore: any) => {
       alert('Token expired. Please login again')
       authStore.clearAuthData()
       window.location.reload()
-    } else {
+    } 
+    else {
       console.log('Token is valid until:', expirationDate)
     }
-  } catch (error) {
+  } catch (error: any) {
     // Catch any errors while decoding the token
-    console.error('Error decoding token:', error)
-    // alert('An error occurred while checking the token expiration.');
+    // console.error('Error decoding token:', error)
+    if (error.response.status === 401) {
+      alert('Your account was accessed from another device. Please log in again.')
+      authStore.clearAuthData()
+      window.location.reload()
+    }
   }
 }
 
