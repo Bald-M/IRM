@@ -38,10 +38,10 @@
         </div>
 
         <div class="nav-logo">
-          <img src="@/assets/FooterIcon/facebook_logo.svg" class="logo" />
-          <img src="@/assets/FooterIcon/instagram_logo.svg" class="logo" />
-          <img src="@/assets/FooterIcon/youtube_logo.svg" class="logo" />
-          <img src="@/assets/FooterIcon/linkedin_logo.svg" class="logo" />
+          <img src="@/assets/FooterIcon/facebook_logo.svg" class="logo" @click="navigate('https://www.facebook.com/wintec/?_rdr')" />
+          <img src="@/assets/FooterIcon/instagram_logo.svg" class="logo" @click="navigate('https://www.instagram.com/wintecnz/?hl=en')" />
+          <img src="@/assets/FooterIcon/youtube_logo.svg" class="logo"  @click="navigate('https://www.youtube.com/@WintecHamiltonNZ?app=desktop')"/>
+          <img src="@/assets/FooterIcon/linkedin_logo.svg" class="logo" @click="navigate('https://www.linkedin.com/school/waikato-institute-of-technology/posts/?feedView=all')" />
         </div>
 
       </div>
@@ -50,6 +50,14 @@
 
   </footer>
 </template>
+
+<script lang="ts" setup>
+const navigate = (url: string) => {
+  window.open(url, '_blank')
+}
+
+</script>
+
 
 <style scoped>
 footer {
@@ -123,7 +131,9 @@ footer {
 
 .logo {
   height: 40px;
+  width: 40px;
   margin: 0 8px;
+  cursor: pointer;
 }
 
 .divider::before {

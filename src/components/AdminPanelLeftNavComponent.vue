@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="admin-panel-left-nav-comp">
 
     <!-- Dynamic -->
     <div class="avater-container">
@@ -38,7 +38,7 @@
           <a>Change Password</a>
         </div>
 
-        <div class="nav-item" :class="{ active: selected === 4 }" :index="4" @click="handleRouter">
+        <div class="nav-item" :class="{ active: selected === 4 }" :index="4" @click="logOut">
           <img src="@/assets/LeftNavIcon/logout.png" class="icon" />
           <a>Log Out</a>
         </div>
@@ -47,7 +47,7 @@
 
     </div>
 
-    <div class="logo-section mt-6">
+    <div class="logo-section">
       <img src="@/assets/Logo/Industry Internship System Logo_White.svg">
     </div>
 
@@ -56,17 +56,15 @@
 </template>
 
 <script lang="ts" setup>
-
 import { ref, watch } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
-import type { Router, RouteLocationNormalizedLoaded } from 'vue-router'
-
+import { useRoute } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 
 const selected = ref(0)
 
-const router: Router = useRouter() as Router
-const route: RouteLocationNormalizedLoaded = useRoute()
 
+const route = useRoute()
+const authStore = useAuthStore()
 
 // Watch for route changes and update the selected value accordingly
 watch(
@@ -88,6 +86,11 @@ watch(
 )
 
 
+const logOut = () => {
+  authStore.clearAuthData()
+  window.location.reload()
+}
+
 const handleRouter = (event: any) => {
 
   const targetElement = event.currentTarget as HTMLElement
@@ -97,7 +100,6 @@ const handleRouter = (event: any) => {
 
   switch (selected.value) {
     case 1:
-      router.push('/admin/panel/studentsList')
       break
     case 2:
       break
@@ -107,7 +109,6 @@ const handleRouter = (event: any) => {
       break
   }
 }
-
 
 </script>
 
@@ -121,10 +122,11 @@ const handleRouter = (event: any) => {
   margin-top: 6rem;
 }
 
-.container {
-  height: 100%;
-  width: 100%;
-  background-color: #FE6601;
+.admin-panel-left-nav-comp {
+  display: flex;
+  flex-direction: column; /* Align children in a column */
+  height: 100vh; /* Use full height of the viewport */
+  background-color: #FE6601; /* Uncomment if needed */
 }
 
 .avater-container {
@@ -133,7 +135,7 @@ const handleRouter = (event: any) => {
   padding: 40px 0;
 }
 
-.avater-container>img {
+.avater-container > img {
   width: 100px;
 }
 
@@ -142,13 +144,31 @@ const handleRouter = (event: any) => {
   padding: 0 14px;
 }
 
+.avater-container,
+.greeting-container,
+.mt-3 {
+  flex-shrink: 0; /* Prevent these elements from shrinking */
+}
+
+.logo-section {
+  margin-top: auto; /* Pushes this section to the bottom */
+  display: flex;
+  justify-content: center;
+  align-items: flex-end; /* Align logo at the bottom */
+}
+
+.logo-section > img {
+  width: 100%;
+  height: 160px;
+}
+
 .name,
 a {
-  color: white
+  color: white;
 }
 
 .greeting,
-.dashboard-text>.el-text {
+.dashboard-text .el-text {
   font-size: 20px;
   color: rgb(253, 190, 133);
 }
@@ -187,16 +207,4 @@ a {
   width: 18px;
   height: 18px;
 }
-
-.logo-section {
-  display: flex;
-  justify-content: center;
-  align-items: end;
-}
-
-.logo-section > img {
-  width: 220px;
-}
-
-
 </style>

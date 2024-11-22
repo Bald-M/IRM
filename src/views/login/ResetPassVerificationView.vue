@@ -139,7 +139,7 @@ const handleVerify = () => {
       'Content-Type': 'application/json'
     }
   }).then(res => {
-    console.log(res)
+    // console.log(res)
     // Store OTP in local storage
     localStorage.setItem('otp', code)
     // Show success message
@@ -177,7 +177,7 @@ const handleResend = () => {
   }).then(res => {
     // Clear OTP inputs after resending
     codes.value = ['', '', '', '', '', '']
-    console.log(res)
+    // console.log(res)
     // Show success message
     ElMessage.success(res.data.description)
     triggerLoading(false)

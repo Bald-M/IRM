@@ -1,14 +1,19 @@
 <template>
   <div class="grid-container">
+    <!-- Sidebar navigation for the admin panel -->
     <aside class="nav">
       <Nav />
     </aside>
+    <!-- Header section for the admin panel -->
     <header class="header">
       <Header title="INDUSTRY INTERNSHIP SYSTEM ADMINISTRATION" />
     </header>
+    <!-- Main content area where routed views are displayed -->
     <main class="main">
       <RouterView />
     </main>
+    <!-- Back-to-top button positioned 100px from the right and bottom -->
+    <el-backtop :right="100" :bottom="100" />
   </div>
 </template>
 

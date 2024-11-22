@@ -244,9 +244,6 @@ const boxes = reactive([
   width: 90%;
 }
 
-
-.container {}
-
 .box-container,
 .instruction-container {
   padding: 0 10vw;

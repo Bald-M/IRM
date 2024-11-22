@@ -1,8 +1,8 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 
 // history: createWebHistory(import.meta.env.BASE_URL),
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
@@ -92,42 +92,28 @@ const router = createRouter({
       ]
     },
     {
-      path: '/home',
-      name: 'home',
-      component: () => import('@/views/HomeView.vue')
-    },
-    // {
-    //   path: '/admin/panel',
-    //   redirect: '/admin/panel/studentsList',
-    //   name: 'adminHome',
-    //   component: () => import('@/views/admin/PanelView.vue'),
-    //   meta: { requireAuth: true, role: 'Admin' },
-    //   children: [
-    //     {
-    //       path: '/admin/panel/studentsList',
-    //       name: 'studentsList',
-    //       component: () => import('@/views/admin/StudentsListView.vue')
-    //     },
-    //     {
-    //       path: '/admin/panel/studentsList/:id',
-    //       name: 'studentDetails',
-    //       component: () => import('@/views/admin/StudentsDetailsView.vue'),
-    //       props: true
-    //     }
-    //   ]
-    // },
-    {
-      path: '/client/panel',
-      redirect: '/client/panel/candidatesList',
-      component: () => import('@/views/client/PanelView.vue'),
+      path: '/clientLayout',
+      redirect: '/client/candidatesList',
+      component: () => import('@/views/client/LayoutView.vue'),
       meta: { requireAuth: true, role: 'Industry' },
       children: [
         {
-          path: '/client/panel/candidatesList',
+          path: '/client/candidatesList',
           name: 'candidateList',
           component: () => import('@/views/client/CandidatesListView.vue')
+        },
+        {
+          path: '/client/candidatesList/:id',
+          name: 'candidateDetails',
+          component: () => import('@/views/client/CandidatesDetailView.vue'),
+          props: true
         }
       ]
+    },
+    {
+      path: '/home',
+      name: 'home',
+      component: () => import('@/views/HomeView.vue')
     },
     {
       path: '/unauthorized',

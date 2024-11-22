@@ -131,7 +131,7 @@ const handleLogin = async (formEl: FormInstance | undefined) => {
             router.push('/studentLayout')
             break
           case 'Industry':
-            router.push('/client/panel')
+            router.push('/clientLayout')
             break
           case 'Admin':
             router.push('/adminLayout')

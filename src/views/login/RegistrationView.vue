@@ -192,7 +192,7 @@ const handleRegistration = async (formEl: FormInstance | undefined) => {
           'Content-Type': 'application/json'
         }
       }).then(res => {
-        console.log(res)
+        // console.log(res)
         // Display success message
         ElMessage.success(res.data.description)
         triggerLoading(false)

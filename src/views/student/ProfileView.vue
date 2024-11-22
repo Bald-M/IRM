@@ -1,12 +1,15 @@
 <template>
-  <div class="mb-3">
-
-    <div class="mt-3 profile-container">
+  <div>
+    <!-- Container for the student profile page -->
+    <div class="mt-3 profile-container mb-5">
+      <!-- Profile header section -->
       <div class="profile-header">
         <div>
+          <!-- Title for the profile section -->
           <el-text class="header">Student Profile</el-text>
         </div>
 
+        <!-- Information bar with navigation link -->
         <div class="profile-bar">
           <el-text class="profile-bar-text">To edit your profile, go to&nbsp;</el-text>
           <el-text class="profile-bar-text" style="text-decoration: underline; cursor: pointer;"
@@ -15,7 +18,8 @@
         </div>
       </div>
 
-      <Profile class="profile mt-3" />
+      <!-- Student profile details section -->
+      <Profile class="mt-3" />
 
     </div>
 
@@ -25,8 +29,9 @@
 <script lang="ts" setup>
 import Profile from '@/components/StudentDetailComponent.vue'
 import { useRouter } from 'vue-router'
-const router = useRouter()
 
+const router = useRouter()
+// Function to handle navigation to a specified URL
 const handleNavigation = (url: string) => {
   router.push(url)
 }
@@ -41,8 +46,8 @@ const handleNavigation = (url: string) => {
   margin-top: 6rem !important;
 }
 
-.mb-3 {
-  margin-bottom: 3rem !important;
+.mb-5 {
+  margin-bottom: 5rem !important;
 }
 
 .profile-container {
@@ -67,13 +72,6 @@ const handleNavigation = (url: string) => {
 .profile-bar-text {
   color: white;
   font-weight: bold;
-}
-
-.profile {
-  height: 90%;
-  background-color: white;
-  border-radius: 24px;
-  border: 2px #FE6601 solid;
 }
 
 .header {

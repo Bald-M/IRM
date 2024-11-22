@@ -4,18 +4,32 @@
     <div class="header-section">
 
       <div class="header-text">
-        <div><el-text class="name">Allie Esber</el-text></div>
         <div>
+          <el-text class="name">{{ name }}</el-text>
+        </div>
+
+        <div v-if="status === 1">
           <el-text>Avilable</el-text>
           <div class="available"></div>
         </div>
+
+        <div v-else-if="status === 2">
+          <el-text>For Review</el-text>
+          <div class="review"></div>
+        </div>
+
+        <div v-else-if="status === 0">
+          <el-text>Placed</el-text>
+          <div class="unavailable"></div>
+        </div>
+
       </div>
 
       <div class="header-logo">
-        <img src="@/assets/SocialIcon/cv_icon_orange.svg" />
-        <img src="@/assets/SocialIcon/linkedin_icon_orange.svg" />
-        <img src="@/assets/SocialIcon/github_icon_orange.svg" />
-        <img src="@/assets/SocialIcon/portfolio_icon_orange.svg" />
+        <img src="@/assets/SocialIcon/cv_icon_orange.svg" @click="navigate(cv_link)" />
+        <img src="@/assets/SocialIcon/linkedin_icon_orange.svg" @click="navigate(linkedin_link)" />
+        <img src="@/assets/SocialIcon/github_icon_orange.svg" @click="navigate(github_link)" />
+        <img src="@/assets/SocialIcon/portfolio_icon_orange.svg" @click="navigate(portfolio_link)" />
       </div>
 
     </div>
@@ -24,13 +38,13 @@
 
       <div class="mt-2">
         <el-text class="statement">
-          My passion lies at the intersection of software programming, web design, and business analysis. With a commitment to innovation and a hunger for continuous leaning, I'm excited to leverage my skills to make impact in the ever-evolving landscape of technology and business.
+          {{ personal_statement }}
         </el-text>
       </div>
 
       <div class="mt-2">
         <el-text class="option-key">Internship Options: </el-text>
-        <el-text class="option-value">Web development, Business Analysis, UX/UI design</el-text>
+        <el-text class="option-value">{{ internship_options.replace(/[\[\]"" ]/g, ' ') }}</el-text>
       </div>
     </div>
 
@@ -44,8 +58,26 @@
 
 </template>
 
-<style scoped>
+<script lang="ts" setup>
+defineProps<{
+  name: string,
+  status: number,
+  cv_link: string,
+  linkedin_link: string,
+  github_link: string,
+  portfolio_link: string,
+  personal_statement: string,
+  internship_options: string
+}>()
 
+const navigate = (url: string) => {
+  window.open(url, '_blank')
+}
+
+</script>
+
+
+<style scoped>
 .mt-2 {
   margin-top: 2rem !important;
 }
@@ -60,12 +92,22 @@
 .header-section {
   display: flex;
   justify-content: space-between;
+  height: 110px
 }
 
 .header-logo>img {
   width: 40px;
   height: 40px;
   margin-left: 5px;
+  cursor: pointer;
+}
+
+.info-section {
+  height: 350px;
+}
+
+.info-section>:first-child {
+  height: 150px;
 }
 
 .footer-section>img {
@@ -74,12 +116,15 @@
   height: 40px;
 }
 
-.statement, .option-value {
+.statement,
+.option-value {
   color: #3A3541;
   font-weight: 500;
 }
 
-.available, .unavailable, .review {
+.available,
+.unavailable,
+.review {
   width: 10px;
   height: 10px;
   content: '';
@@ -100,7 +145,8 @@
   background-color: #FE6601;
 }
 
-.name, .option-key {
+.name,
+.option-key {
   font-weight: bold;
   color: #0D99FF;
 }
@@ -109,6 +155,4 @@
   font-size: 24px;
   text-decoration: underline;
 }
-
-
 </style>

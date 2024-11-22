@@ -24,11 +24,6 @@
           </div>
         </div>
 
-        <!-- Dynamic -->
-        <!-- Display username if login -->
-        <!-- Display sign in if not login -->
-        <!-- Navigate to login view if not login -->
-        <!-- If item is selected, active it and img should change to white -->
         <div class="link-item" v-if="isLoggedIn" @mouseover="showMenu" @mouseout="hideMenu" >
           <div class="link">
             <img src="@/assets/HeaderIcon/sign_in_icon_blue.svg" class="icon" />
@@ -153,14 +148,6 @@ header {
 
 .link-item:hover {
   cursor: pointer;
-  /* display: flex;
-  align-items: center;
-  background-color: #ff6600;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 20px;
-  font-size: 16px;
-  font-weight: bold; */
 }
 
 .link-item>span:hover {

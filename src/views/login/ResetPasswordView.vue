@@ -48,12 +48,12 @@
 <script lang="ts" setup>
 import { ref, reactive, inject } from 'vue'
 import { ElMessage, type FormProps, type FormInstance, type FormRules } from 'element-plus'
-import type { Router } from 'vue-router'
 import type { AxiosInstance } from 'axios'
 import { useAuthStore } from '@/stores/auth'
+import { useRouter } from 'vue-router'
 
 // Injecting the Vue Router instance for programmatic navigation
-const router: Router = inject('$router') as Router
+const router = useRouter()
 // Injecting Axios for making HTTP requests
 const axios: AxiosInstance = inject('$axios') as AxiosInstance
 // Using Pinia store for authentication-related data
@@ -131,7 +131,6 @@ const rules = reactive<FormRules<RuleForm>>({
 // Function to handle password reset process
 // It validates the form, sends a request to the server, and handles the response
 const resetPassword = async (formEl: FormInstance | undefined) => {
-  console.log(formEl)
   if (!formEl) return
   await formEl.validate((valid, fields) => {
     if (valid) {
@@ -149,7 +148,7 @@ const resetPassword = async (formEl: FormInstance | undefined) => {
           'Content-Type': 'application/json'
         }
       }).then(res => {
-        console.log(res)
+        // console.log(res)
         // Display success message
         ElMessage.success(res.data.description)
         // Redirect to the login page upon successful password reset
@@ -172,11 +171,10 @@ const resetPassword = async (formEl: FormInstance | undefined) => {
         triggerLoading(false)
       })
     } else {
-      console.log(fields)
+      // console.log(fields)
       triggerLoading(false)
     }
   })
-
 }
 // Function to navigate back to the login page when the "Back to Login" button is clicked
 const backToLogin = () => {

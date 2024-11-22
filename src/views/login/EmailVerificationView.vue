@@ -5,7 +5,7 @@
 
       <!-- Wintec Logo -->
       <div style="display: flex; justify-content: center;">
-        <img src="@/assets/Industry Internship System Logo.svg" class="industry-internship-system-logo" />
+        <img src="@/assets/Logo/Industry Internship System Logo_Orange and Blue.svg" class="industry-internship-system-logo" />
       </div>
 
       <!-- Header Text -->
@@ -137,7 +137,7 @@ const handleVerify = () => {
       'Content-Type': 'application/json'
     }
   }).then(res => {
-    console.log(res)
+    // console.log(res)
     ElMessage.success(res.data.description)
     triggerLoading(false)
     router.push('/login')

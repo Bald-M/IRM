@@ -1,27 +1,10 @@
 <template>
-  <div class="student-detail-comp">
+  <div class="admin-panel-student-detail-comp">
 
     <div class="header-section">
 
       <div class="header-text">
         <el-text>{{ student.name }}</el-text>
-
-        <div v-if="student.intern_status === 1">
-          <el-text>Internship Status</el-text>
-          <div class="available"></div>
-        </div>
-
-        <div v-else-if="student.intern_status === 2">
-          <el-text>Internship Status</el-text>
-          <div class="review"></div>
-        </div>
-
-        <div v-else-if="student.intern_status === 0">
-          <el-text>Internship Status</el-text>
-          <div class="unavilable"></div>
-        </div>
-
-
       </div>
 
       <div class="header-logo">
@@ -35,18 +18,6 @@
 
     <div>
       <el-row :gutter="20">
-        <el-col :span="8">
-          <div>
-            <div>
-              <el-text class="attribute" size="large">Student ID</el-text>
-            </div>
-            <div>
-              <el-text class="value" size="large">{{ student.wintec_id }}</el-text>
-            </div>
-          </div>
-
-        </el-col>
-
         <el-col :span="8">
           <div>
             <el-text class="attribute" size="large">Student Programme</el-text>
@@ -201,12 +172,13 @@
 import { reactive, inject, onMounted } from 'vue'
 import type { AxiosInstance } from 'axios'
 import { useAuthStore } from '@/stores/auth'
+import { useRoute } from 'vue-router'
 
 const axios: AxiosInstance = inject('$axios') as AxiosInstance
 const authStore = useAuthStore()
-
+const route = useRoute()
 const authKey = authStore.authKey
-const user_id = authStore.uid
+const user_id = route.params.id
 
 const student = reactive({
   name: '',
@@ -251,7 +223,7 @@ onMounted(() => {
     }
   }).then(res => {
     if (res.data && res.data.student) {
-      // console.log(res.data)
+      console.log(res.data)
       Object.assign(student, res.data.student)
     } else {
       console.log('Response Error')
@@ -278,7 +250,7 @@ onMounted(() => {
   margin-top: 3rem;
 }
 
-.student-detail-comp {
+.admin-panel-student-detail-comp {
   background-color: white;
   border: 2px #FE6601 solid;
   border-radius: 24px;
@@ -293,7 +265,13 @@ onMounted(() => {
 .header-text>.el-text:first-child {
   font-size: 32px;
   font-weight: bold;
-  color: #FE6601;
+  color: black;
+}
+
+.header-text>.el-text:nth-child(2) {
+  font-size: 20px;
+  color: #3A3541;
+  margin-left: 1.5rem;
 }
 
 
@@ -311,7 +289,7 @@ onMounted(() => {
 }
 
 .attribute {
-  color: #FE6601;
+  color: #0D99FF;
   font-weight: bold;
 }
 

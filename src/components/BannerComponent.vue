@@ -39,9 +39,6 @@ defineProps<{
   imgPath: string
 }>()
 
-// const handleLinkButton = (path: string) => {
-//   alert(path)
-// }
 
 </script>
 

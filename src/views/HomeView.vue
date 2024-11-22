@@ -41,9 +41,9 @@
 
     </div>
 
-    <el-backtop :right="100" :bottom="100" />
-
     <Footer class="mt-3" />
+
+    <el-backtop :right="100" :bottom="100" />
 
 
   </div>

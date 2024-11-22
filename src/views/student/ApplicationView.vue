@@ -75,10 +75,6 @@
                   <el-input v-model="form.id" clearable></el-input>
                 </el-form-item>
 
-                <!-- <el-form-item label="Student Email" prop="studentEmail">
-                  <el-input v-model="form.studentEmail" clearable></el-input>
-                </el-form-item> -->
-
                 <el-row :gutter="20">
                   <el-col :span="12">
                     <el-form-item label="Gender" prop="gender">
@@ -122,7 +118,8 @@
                       website for
                       prospective employers to view. This states what you are interested in the IT sector. Industry see
                       this next to your name and link to your CV etc.</el-text>
-                    <el-input type="textarea" v-model="form.personalStatement"></el-input>
+                    <el-input type="textarea" maxlength="330" show-word-limit
+                      v-model="form.personalStatement"></el-input>
                   </el-form-item>
 
                   <el-form-item label="CV/Resume" prop="cv">
@@ -155,14 +152,7 @@
 
                   </el-form-item>
 
-                  <!-- Degree - SE - Software Engineering
-            Degree - NE - Networking Engineering
-            Postgraduate Diploma - SE - Software Engineering
-            Postgraduate Diploma - NE - Network Engineering
-            Masters - SE - Software Engineering
-            Masters - NE - Network Engineering
-            Masters - Database or Data Analytics
-            Masters - BA or Project Management -->
+
                   <el-form-item label="What is your programme?" prop="programme">
                     <el-radio-group v-model="form.programme">
                       <el-radio v-for="item in programmes" :key="item.id" :value="item.value" size="large" border>{{
@@ -223,8 +213,6 @@
                 <el-scrollbar height="400px" always>
 
                   <el-form-item label="What are your skills and experience?" prop="experience">
-                    <!-- <el-text class="description" size="small">e.g. skills, computer languages, work experience in IT or
-                leadership & communication</el-text> -->
                     <el-input auto-size v-model="form.experience" type="textarea"></el-input>
                   </el-form-item>
 
@@ -274,8 +262,6 @@
 
     </div>
 
-
-
   </div>
 
 </template>
@@ -294,7 +280,7 @@ import type { AxiosInstance } from 'axios'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 
-
+// Inject Axios instance for API requests
 const axios: AxiosInstance = inject('$axios') as AxiosInstance
 const router = useRouter()
 // Initialize the authentication store
@@ -303,6 +289,7 @@ const authKey = authStore.authKey
 const email = authStore.email
 const appUID = authStore.uid
 
+// Banner data for the page header
 const banner = reactive({
   title: 'Internship Application',
   content: 'Submit your application to express interest in an internship through the Industry Internship System. Completing this form is mandatory for eligibility in the selection process. The IRM and partners use this information to choose candidates for interviews. Early submission increases your chances of securing an internship.',
@@ -311,15 +298,17 @@ const banner = reactive({
   redirect: ''
 })
 
+// Information boxes for application steps
 const boxes = reactive([
   { id: 1, title: 'Step 1: Gather Your Information', content: 'Before beginning your application, make sure you have all necessary documents ready, including your CV, LinkedIn profile, and any other details.', imgPath: gatherInformation },
   { id: 2, title: 'Step 2: Fill Out the Application', content: 'Carefully complete each section of the form, providing accurate and detailed information to ensure your application is thoroughly reviewed.', imgPath: fillOutApplication },
   { id: 3, title: 'Step 3: Submit and Wait', content: 'After submitting your form, the Industry Relationship Manager (IRM) will review your application, and you\'ll be notified of the next steps.', imgPath: submitAndWait },
 ])
 
+// Variable to track the current step in the application form
 const currentStep = ref(0)
 
-// Step
+// Steps displayed in the form stepper
 const steps = reactive([
   { id: 1, label: 'Personal Information' },
   { id: 2, label: 'Academic & Career Information' },
@@ -327,11 +316,13 @@ const steps = reactive([
   { id: 4, label: 'Internship References' },
 ])
 
-// Form
+// Set up form position property
 const top = ref<FormProps['labelPosition']>('top')
 
+// Reference to the form instance for validation and submission
 const ruleFormRef = ref<FormInstance>()
 
+// Define the structure of the form's data
 interface RuleForm {
   name: string,
   id: string,
@@ -357,6 +348,7 @@ interface RuleForm {
   secondPreference: string
 }
 
+// Reactive data object to store form values
 const form = reactive<RuleForm>({
   name: '',
   id: '',
@@ -382,6 +374,8 @@ const form = reactive<RuleForm>({
   secondPreference: ''
 })
 
+
+// Validation rules for the form fields
 const rules = reactive<FormRules<RuleForm>>({
   name: [
     { required: true, message: 'This field is required', trigger: 'blur' },
@@ -408,6 +402,7 @@ const rules = reactive<FormRules<RuleForm>>({
   ],
   personalStatement: [
     { required: true, message: 'This field is requried', trigger: 'blur' },
+    { max: 330, message: 'Length should no longer than 330', trigger: 'blur' }
   ],
   cv: [
     { required: true, message: 'This field is requried', trigger: 'blur' }
@@ -453,6 +448,7 @@ const rules = reactive<FormRules<RuleForm>>({
   ]
 })
 
+// Format the form data for submission
 const formPostedFmt = computed(() => ({
   name: form.name,
   wintec_id: form.id,
@@ -478,8 +474,8 @@ const formPostedFmt = computed(() => ({
   references: form.tutors
 }))
 
-// Select Options
 
+// Options for internship areas and preferred companies
 const internshipOptions = ref([
   {
     id: 1,
@@ -553,6 +549,7 @@ const internshipOptions = ref([
   },
 ])
 
+// Options for preferred companies
 const companies = ref([
   {
     id: 1,
@@ -621,6 +618,7 @@ const companies = ref([
   },
 ])
 
+// Define a reactive reference for the preferences list
 const preferences = ref([
   {
     id: 1,
@@ -654,6 +652,8 @@ const preferences = ref([
   },
 ])
 
+
+// Define a reactive reference for the grades list
 const grades = ref([
   {
     id: 1,
@@ -672,6 +672,7 @@ const grades = ref([
   }
 ])
 
+// Define a reactive reference for the programmes list
 const programmes = ref([
   {
     id: 1,
@@ -690,6 +691,7 @@ const programmes = ref([
   }
 ])
 
+// Define a reactive reference for the studies list
 const studies = ref([
   {
     id: 1,
@@ -718,23 +720,28 @@ const studies = ref([
   },
 ])
 
+// Define a reactive reference for the term status
 const term = ref(false)
 
-// Pagination
+// Pagination settings
+// Current page number
 const currentPage = ref(1)
+// Number of items per page
 const pageSize = ref(5)
+// Total number of items
 const total = ref(20)
 
-// As the page updating, step also update
+// Function to handle page change and update the current step
 const handleCurrentChange = () => {
   currentStep.value = currentPage.value - 1
 }
 
-// Submit Form
+// Interface defining the structure of page fields
 interface PageFields {
   [key: string]: string[]
 }
 
+// Define the fields required for each page in the form
 const pageFields: PageFields = {
   1: ['name', 'id', 'studentEmail', 'personalEmail', 'phoneNum'],
   2: ['personalStatement', 'cv', 'linkedin', 'portfolio', 'github', 'grade', 'programme', 'areaOfStudy'],
@@ -742,9 +749,11 @@ const pageFields: PageFields = {
   4: ['experience', 'courses', 'tutors'],
 }
 
+// Function to handle form submission
 const handleSubmit = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
   await formEl.validate((valid, fields) => {
+    // If form is valid, send a POST request to complete the application
     if (valid) {
       axios({
         url: '/api/completeApplication',
@@ -754,23 +763,26 @@ const handleSubmit = async (formEl: FormInstance | undefined) => {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + authKey,
         }
-      }).then(res => {
+      }).then(() => {
         // console.log(res)
+        // Show success message
         ElMessage.success('Application saved')
+        // Redirect to student profile
         router.push('/student/profile')
       }).catch(error => {
         console.log(error)
-        // 先检查 error.response 是否存在，防止未定义错误
+        // Check if error response exists to prevent undefined errors
         if (error.response && error.response.data) {
-          // 提示用户错误信息
+          // Display error message from the response
           ElMessage.error(error.response.data.error)
         } else {
-          // 如果 error.response 不存在，提示网络问题或服务器未响应
+          // If no response, display a network error message
           ElMessage.error('Network error or server not responding. Please try again later.')
         }
       })
     } else {
-      console.log(fields)
+      // console.log(fields)
+      // If form is invalid, determine which page has errors and navigate to it
       if (fields) {
         for (let page in pageFields) {
           const fieldList = pageFields[page]
@@ -785,11 +797,13 @@ const handleSubmit = async (formEl: FormInstance | undefined) => {
   })
 }
 
+// Lifecycle hook to fetch user profile data on component mount
 onMounted(() => {
   axios({
     url: '/api/userProfileData',
     method: 'post',
     data: {
+      // Send user ID to fetch the profile data
       user_id: appUID
     },
     headers: {
@@ -798,6 +812,7 @@ onMounted(() => {
     }
   }).then(res => {
     if (res.data && res.data.student) {
+      // If student data is received, populate the form fields
       // console.log(res.data)
       // form.studentEmail = student.student_email
       const student = res.data.student
@@ -821,17 +836,18 @@ onMounted(() => {
       form.internshipOptions = JSON.parse(student.internship_options)
       form.preferences = JSON.parse(student.preferred_companies)
       form.gender = student.gender,
-      form.type = student.student_type
+        form.type = student.student_type
     } else {
       console.log('Response Error')
     }
   }).catch(err => {
+    // Handle different types of errors during the API request
     if (err.response) {
       console.error('Server Error:', err.response.status, err.response.data)
-    } 
+    }
     else if (err.request) {
       console.error('Network Error:', err.request)
-    } 
+    }
     else {
       console.error('Request Error:', err.message)
     }
@@ -992,9 +1008,4 @@ onMounted(() => {
 .el-scrollbar {
   padding-right: 20px;
 }
-
-
-/* .el-form-item {
-  width: 630px;
-} */
 </style>

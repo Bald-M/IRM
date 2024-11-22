@@ -41,14 +41,13 @@ import { ref, reactive, inject } from 'vue'
 import { ElMessage, type FormProps, type FormInstance, type FormRules } from 'element-plus'
 import { useAuthStore } from '@/stores/auth'
 import { Message } from '@element-plus/icons-vue'
-import type { Router } from 'vue-router'
 import { useRouter } from 'vue-router'
 import type { AxiosInstance } from 'axios'
 
 // Inject Axios instance for making HTTP requests
 const axios: AxiosInstance = inject('$axios') as AxiosInstance
 // Use Vue Router for navigation
-const router: Router = useRouter()
+const router = useRouter()
 // Access the authentication store
 const authStore = useAuthStore()
 // Emit loading state changes
@@ -84,7 +83,6 @@ const triggerLoading = (value: boolean) => {
 
 // Function to handle the send button click event
 const handleSendButton = async (formEl: FormInstance | undefined) => {
-  console.log(formEl)
   if (!formEl) return
   await formEl.validate((valid, fields) => {
     if (valid) {
@@ -120,7 +118,7 @@ const handleSendButton = async (formEl: FormInstance | undefined) => {
         triggerLoading(false)
       })
     } else {
-      console.log(fields)
+      // console.log(fields)
       triggerLoading(false)
     }
   })

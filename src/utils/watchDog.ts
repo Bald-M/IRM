@@ -19,25 +19,20 @@ const checkTokenExpiration = async (authStore: any) => {
     })
 
     const expirationDate = new Date(response.data.expiration_date)
+    console.log('Token is valid until:', expirationDate)
 
-    // Get current time in seconds
-    const currentTime = new Date()
-
-
-    if (expirationDate < currentTime) {
-      alert('Token expired. Please login again')
-      authStore.clearAuthData()
-      window.location.reload()
-    } 
-    else {
-      console.log('Token is valid until:', expirationDate)
-    }
   } catch (error: any) {
     // Catch any errors while decoding the token
     // console.error('Error decoding token:', error)
     console.log(error)
-    if (error.response.status === 401) {
-      alert('Your account was accessed from another device. Please log in again.')
+    if (error.response) {
+      if (error.response.data.error === 'Authentication failed: Invalid or expired token') {
+        alert('Authentication failed: Invalid or expired token')
+        authStore.clearAuthData()
+        window.location.reload()
+      }
+    } else {
+      alert('Network Error')
       authStore.clearAuthData()
       window.location.reload()
     }
